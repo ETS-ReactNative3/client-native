@@ -3,9 +3,11 @@ import EStyleSheet from 'react-native-extended-stylesheet';
 
 import { createStackNavigator } from 'react-navigation';
 import { createStore, applyMiddleware, compose } from "redux"
+import { Provider } from "react-redux"
 
 // screens
 import LoginScreen from './src/screens/LoginScreen';
+import SignupScreen from './src/screens/SignupScreen';
 
 // prepare extended stylesheet
 EStyleSheet.build();
@@ -14,16 +16,26 @@ EStyleSheet.build();
 let Nav = createStackNavigator({
   Login: {
     screen: LoginScreen 
-  }
+  },
+  Signup: {
+    screen: SignupScreen
+  },
 }, {
   initialRouteName: "Login",
   headerMode: 'none'
 });
 
+// create store
+const store = createStore(()=>({}));
+
 
 // entry component
 export default () => {
-  return <Nav/>
+  return (
+    <Provider store={store}>
+      <Nav/>
+    </Provider>
+  );
 }
 
 
