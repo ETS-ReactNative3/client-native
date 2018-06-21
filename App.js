@@ -1,8 +1,11 @@
 import React from 'react';
 import EStyleSheet from 'react-native-extended-stylesheet';
+import thunk from 'redux-thunk';
+import reducers from './src/reducers';
 
 import { createStackNavigator } from 'react-navigation';
 import { createStore, applyMiddleware, compose } from "redux"
+import { apiMiddleware } from 'redux-api-middleware';
 import { Provider } from "react-redux"
 
 // screens
@@ -24,9 +27,13 @@ let Nav = createStackNavigator({
   initialRouteName: "Login"
 });
 
-// create store
-const store = createStore(()=>({}));
 
+// apply redux middlewares
+const createStoreWithMiddleware = applyMiddleware(
+  apiMiddleware, thunk)(createStore);
+
+// create store
+const store = createStoreWithMiddleware(reducers);
 
 // entry component
 export default () => {

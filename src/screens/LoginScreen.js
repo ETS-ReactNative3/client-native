@@ -3,10 +3,15 @@ import LoginScreen from '../components/LoginScreen';
 
 import { connect } from 'react-redux'
 
+import { login } from '../actions/user';
+
 const mapStateToProps = state => ({
 }) ;
 
 const mapDispatchToProps = (dispatch, props) => ({
+  login(email, pwd) {
+    return dispatch(login(email, pwd));
+  }
 });
 
 export class LoginScreenContainer extends React.Component {
@@ -14,14 +19,17 @@ export class LoginScreenContainer extends React.Component {
     this.props.navigation.push("SignUp")
   }
 
+  onSignInPress = () => {
+    this.props.login("react-native@deepscent.io", "deepscent123!@#");
+  }
+
   render() {
     return <LoginScreen
-      onSignInPress={this.onSignUpPress}
+      onSignInPress={this.onSignInPress}
       onSignUpPress={this.onSignUpPress}/>;
   }
 }
 
-console.log(LoginScreenContainer);
 export default connect(
   mapStateToProps,
   mapDispatchToProps
