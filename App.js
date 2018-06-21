@@ -7,7 +7,7 @@ import { Provider } from "react-redux"
 
 // screens
 import LoginScreen from './src/screens/LoginScreen';
-import SignupScreen from './src/screens/SignUpScreen';
+import SignUpScreen from './src/screens/SignUpScreen';
 
 // prepare extended stylesheet
 EStyleSheet.build();
