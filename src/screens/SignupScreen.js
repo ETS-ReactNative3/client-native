@@ -1,4 +1,4 @@
 import React from 'react';
-import SignupScreen from '../components/SignupScreen';
+import SignUpScreen from '../components/SignUpScreen';
 
-export default SignupScreen;
+export default SignUpScreen;
