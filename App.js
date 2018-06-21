@@ -21,8 +21,7 @@ let Nav = createStackNavigator({
     screen: SignupScreen
   },
 }, {
-  initialRouteName: "Login",
-  headerMode: 'none'
+  initialRouteName: "Login"
 });
 
 // create store
