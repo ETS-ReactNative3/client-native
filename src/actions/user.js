@@ -5,7 +5,7 @@ export const LOGIN = "USER/LOGIN";
 export const LOGIN_SUCCESS =  "USER/LOGIN_SUCCESS";
 export const LOGIN_FAILURE = "USER/LOGIN_FAILURE";
 
-const API_URL = "http://localhost:5000/";
+const API_URL = "https://develop.deepscent.io/";
 
 function createEndpoint(path) {
   return API_URL + path;
@@ -18,9 +18,11 @@ export const login = (email, pwd) => {
       endpoint: createEndpoint("auth/login"),
       method: "POST",
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        'Referrer': 'arom-native',
+        'Origin': 'arom-native'
       },
-      body: JSON.stringify({email, pwd})
+      body: JSON.stringify({email, pwd}),
     }
   };
 }
