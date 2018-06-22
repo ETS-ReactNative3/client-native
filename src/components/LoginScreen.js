@@ -1,12 +1,19 @@
 import React from 'react';
 import { Text, View, Button } from 'react-native';
 import EStyleSheet from 'react-native-extended-stylesheet';
+import LoadingOverlay from '../components/LoadingOverlay';
 
-const LoginScreen = ({onSignUpPress, onSignInPress}) => (
+const LoginScreen = ({
+  onSignUpPress,
+  onSignInPress,
+  loading=false,
+  error=null,
+  token=null
+}) => (
   <View style={styles.container}>
-    <Text>Open up App.js to start working on your app!</Text>
-    <Text>Changes you make will automatically reload.</Text>
-    <Text>Shake your phone to open the developer menu.</Text>
+    <LoadingOverlay visible={loading}/>
+    { error && <Text> login error: {error} </Text> }
+    { token && <Text> login succeed: {token} </Text> }
     <Button title="sign in" onPress={onSignInPress}/>
     <Button title="sign up" onPress={onSignUpPress}/>
   </View>
