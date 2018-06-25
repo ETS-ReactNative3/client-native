@@ -20,10 +20,12 @@ const mapDispatchToProps = (dispatch, props) => ({
 
 export class LoginScreenContainer extends React.Component {
   onSignUpPress = () => {
+    console.log("onSignUpPress Clicked");
     this.props.navigation.push("SignUp")
   }
 
-  onSignInPress = () => {
+  onSignInPress = (id, pw) => {
+    console.log("onSignInPress Clicked");
     this.props.login("react-native@deepscent.io", "deepscent123!@#");
   }
 

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: sketchtool 50.2 (55047) - http://www.bohemiancoding.com/sketch -->
+    <title>DF7ED8EC-8611-4F7E-862F-51806A01AED1</title>
+    <desc>Created with sketchtool.</desc>
+    <defs></defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" opacity="0.7">
+        <g id="3" transform="translate(-320.000000, -40.000000)">
+            <g id="Bar/Top" transform="translate(0.000000, 24.000000)">
+                <g id="Left/arrow" transform="translate(320.000000, 16.000000)">
+                    <g>
+                        <rect id="Rectangle" stroke="#979797" stroke-width="1.2" fill="#D8D8D8" opacity="0" x="0.6" y="0.6" width="22.8" height="22.8"></rect>
+                        <g id="more" transform="translate(11.000000, 4.000000)" fill="#000000" fill-rule="nonzero">
+                            <ellipse id="Oval" cx="1.5" cy="1.77779167" rx="1.48838372" ry="1.77779167"></ellipse>
+                            <ellipse id="Oval" cx="1.5" cy="8" rx="1.48838372" ry="1.77779167"></ellipse>
+                            <ellipse id="Oval" cx="1.5" cy="14.2222083" rx="1.48838372" ry="1.77779167"></ellipse>
+                        </g>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

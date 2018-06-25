@@ -24,7 +24,8 @@ let Nav = createStackNavigator({
     screen: SignUpScreen
   },
 }, {
-  initialRouteName: "Login"
+  initialRouteName: "Login",
+  headerMode: 'none'
 });
 
 
