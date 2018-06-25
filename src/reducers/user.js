@@ -1,6 +1,7 @@
 import { handleActions } from "redux-actions";
 import Immutable from "immutable";
 import {
+  SET_TOKEN,
   LOGIN,
   LOGIN_SUCCESS,
   LOGIN_FAILURE
@@ -19,19 +20,23 @@ const initalState = {
 };
 
 export default handleActions({
-    [LOGIN] (userState) {
-      return userState
-        .set('auth', Immutable.fromJS({...initalState.auth, loading: true}));
-    },
-    [LOGIN_SUCCESS] (userState, {payload}) {
-      return userState
-        .set('auth', Immutable.fromJS({...initalState.auth, token: payload}));
-    },
-    [LOGIN_FAILURE] (userState, {payload}) {
-      return userState
-        .set('auth', Immutable.fromJS({...initalState.auth, error: payload}));
-    }
+  [SET_TOKEN] (userState, { payload }) {
+    return userState
+      .set('auth', Immutable.fromJS({...initalState, token: payload}));
   },
-  Immutable.fromJS(initalState)
+  [LOGIN] (userState) {
+    return userState
+      .set('auth', Immutable.fromJS({...initalState.auth, loading: true}));
+  },
+  [LOGIN_SUCCESS] (userState, {payload}) {
+    return userState
+      .set('auth', Immutable.fromJS({...initalState.auth, token: payload}));
+  },
+  [LOGIN_FAILURE] (userState, {payload}) {
+    return userState
+      .set('auth', Immutable.fromJS({...initalState.auth, error: payload}));
+  }
+},
+Immutable.fromJS(initalState)
 );
 
