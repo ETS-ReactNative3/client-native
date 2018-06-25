@@ -21,7 +21,7 @@ const mapDispatchToProps = (dispatch, props) => ({
 export class LoginScreenContainer extends React.Component {
   onSignUpPress = () => {
     console.log("onSignUpPress Clicked");
-    this.props.navigation.push("SignUp")
+    this.props.navigation.push("SignUpFirst")
   }
 
   onLoginPress = (email, pwd) => {

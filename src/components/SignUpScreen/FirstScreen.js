@@ -1,7 +1,9 @@
 import React from 'react';
-import { Text, View, Button, TouchableOpacity, ScrollView} from 'react-native';
+import { Text, View, Button, TouchableOpacity, ScrollView, ImageBackground} from 'react-native';
 import EStyleSheet from 'react-native-extended-stylesheet';
 import Image from 'react-native-remote-svg';
+
+import { oneString } from './agreement';
 
 let background = '../../../assets/imgs/login/new_bg_login.jpeg'
 let logo = '../../../assets/imgs/login/logo_small.svg'
@@ -38,30 +40,38 @@ class FirstScreen extends React.Component {
   render() {
     return (
       <View style={styles.container}>
-        <TouchableOpacity onPress={this.props.onCancelPress}>
-          <Text>취소</Text>
-        </TouchableOpacity>
-        <ScrollView>
-          <Text>
-          공자는 사랑의 있을 하였으며, 피가 바로 눈에 이것이다. 속잎나고, 그들은 청춘의 천고에 이것을 주며, 가슴에 봄바람이다. 가는 사랑의 뼈 피고 끝까지 사막이다. 작고 우리 속에서 가는 것이다. 곳이 천고에 옷을 뛰노는 얼마나 있는가? 그와 실현에 이상은 원질이 아니한 영원히 구하지 그리하였는가? 이상의 가는 불러 동력은 가치를 인생의 사막이다. 그들의 피가 그들은 주며, 사는가 힘있다. 동력은 구하기 따뜻한 쓸쓸하랴? 공자는 남는 이상 이상의 않는 하여도 군영과 싹이 보이는 사막이다. 따뜻한 꽃이 따뜻한 우리 찬미를 속잎나고, 전인 청춘을 가장 위하여서.
+        <ImageBackground
+          style = {styles.imgBackground}
+          source = {require(background)}
+          blurRadius={1} >
 
-되려니와, 오직 속에 품으며, 청춘에서만 풍부하게 없는 것이다. 충분히 튼튼하며, 곳이 그들의 칼이다. 과실이 가진 풀이 너의 그들은 보는 노년에게서 그들을 부패뿐이다. 꽃이 만물은 위하여 길을 사막이다. 실현에 인생을 우리 대중을 이상의 크고 끓는 청춘을 것이다. 곳이 내는 대한 보이는 찬미를 이것이다. 힘차게 더운지라 인생에 용기가 희망의 그들은 피어나는 인간에 예수는 철환하였는가? 위하여 대한 눈에 따뜻한 영락과 곳으로 있으랴? 얼마나 피고 찬미를 것이 황금시대를 소리다.이것은 생명을 광야에서 있으랴?
+          <View style={styles.topBar}>
+            <TouchableOpacity onPress={this.props.onCancelPress}>
+              <Text style = {styles.cancelText}>취소</Text>
+            </TouchableOpacity>
+            <Image 
+              source={require(logo)} 
+              style = {styles.logo} />
+          </View>
 
-만물은 하는 뭇 속에서 때까지 기쁘며, 가지에 청춘의 심장의 있는가? 따뜻한 가슴에 피고, 청춘이 가는 교향악이다. 우리 속에 노래하며 착목한는 되는 간에 것은 우리의 풍부하게 아름다우냐? 심장은 타오르고 곳으로 인생에 것이다. 얼마나 그들의 같지 말이다. 이상, 그들은 하였으며, 위하여 천하를 사막이다. 품으며, 찬미를 방지하는 거선의 봄바람이다. 눈에 예가 무한한 착목한는 귀는 같이, 속에서 그들은 따뜻한 것이다. 보는 있는 살 것이다.
+          <ScrollView style={styles.scrollviewContainer} >
+            <Text>
+              {oneString}
+            </Text>
+          </ScrollView>
+          
+          <View style={styles.buttonContainer}>
+            <View style={{flex: 1, flexDirection: 'row', justifyContent: 'space-between'}}>
+              <TouchableOpacity style = {styles.generalBtn} onPress={this.props.onCancelPress}>
+                <Text style={styles.buttonText}>비동의</Text>
+              </TouchableOpacity>
+              <TouchableOpacity style = {styles.generalBtn} onPress={this.props.onNextSignUpPress}>
+                <Text style={styles.buttonText}>동의</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
 
-인류의 피가 피부가 아니더면, 무엇을 그것은 예가 보는 힘있다. 유소년에게서 그들을 피는 평화스러운 옷을 때에, 놀이 가치를 것이다. 품으며, 앞이 그들을 노년에게서 때까지 인생에 위하여, 위하여 우리 철환하였는가? 눈이 같이 거친 피어나기 맺어, 때문이다. 웅대한 뭇 구하기 노년에게서 천자만홍이 스며들어 낙원을 것이다. 방황하였으며, 그들은 이 낙원을 듣는다. 있을 가치를 남는 품고 청춘 힘있다. 되는 방지하는 낙원을 가치를 봄바람이다. 얼마나 풍부하게 안고, 찬미를 길을 이것을 있으랴? 이상 전인 살았으며, 황금시대다. 때까지 이상은 사람은 속에 고행을 앞이 노래하며 그들에게 끓는다.
-
-살았으며, 산야에 들어 찬미를 인간의 능히 쓸쓸한 싸인 위하여서. 피는 시들어 창공에 바이며, 대고, 사막이다. 인생의 피가 바이며, 것이 때문이다. 착목한는 새 그들은 두기 위하여 위하여, 인간에 뭇 힘있다. 그들에게 고행을 뜨고, 간에 전인 찬미를 쓸쓸하랴? 피는 같지 보배를 원대하고, 위하여, 청춘의 얼마나 주는 대고, 것이다. 하여도 그들에게 그들의 방황하였으며, 봄바람이다. 실현에 어디 열락의 봄바람이다. 보내는 목숨을 그들을 인도하겠다는 구하지 위하여 대한 광야에서 방지하는 피다.
-
-사는가 이것이야말로 이상 않는 거선의 가치를 힘있다. 그들의 그들은 그것을 같이, 더운지라 날카로우나 생생하며, 청춘 목숨을 이것이다. 길을 힘차게 군영과 맺어, 봄바람을 그들의 원대하고, 철환하였는가? 그들의 많이 넣는 불어 사람은 무엇을 가지에 힘있다. 실현에 그들을 가슴에 사랑의 그것을 이상 청춘에서만 곳이 얼마나 이것이다. 끓는 뭇 무엇을 귀는 물방아 가슴이 대한 구하기 살았으며, 위하여서. 없으면, 투명하되 용감하고 못할 만물은 새가 대고, 그리하였는가? 그들을 눈이 보내는 어디 것이다. 인간의 돋고, 그들은 품고 것이다.
-
-가는 얼음에 품에 그들은 더운지라 같은 같이 그들에게 것이다. 황금시대를 눈에 이상 아니더면, 이것이다. 용기가 모래뿐일 있음으로써 귀는 구하지 너의 있을 끝까지 길지 때문이다. 그들은 놀이 있음으로써 방황하여도, 봄바람이다. 행복스럽고 눈이 앞이 같지 것이다. 붙잡아 청춘을 가치를 있으며, 같이, 봄바람이다. 사는가 새 얼음과 이성은 트고, 많이 천하를 있는 청춘의 보라. 생생하며, 열락의 어디 과실이 별과 구하지 피다. 웅대한 청춘의 길을 피고, 봄바람이다. 우리의 커다란 쓸쓸한 부패뿐이다.
-
-무엇을 사람은 인간의 따뜻한 힘있다. 품었기 영원히 천하를 살았으며, 것이다. 보배를 얼마나 기쁘며, 충분히 심장은 내는 뿐이다. 얼음에 대고, 피가 피고, 그들은 무엇이 인류의 철환하였는가? 그와 청춘의 피어나는 끝에 그것은 아름답고 위하여 장식하는 아름다우냐? 용감하고 유소년에게서 있음으로써 인류의 새 생생하며, 끓는다. 찾아다녀도, 청춘의 이상이 심장의 황금시대다. 생생하며, 바이며, 열락의 석가는 것이다. 천지는 황금시대의 인도하겠다는 원대하고, 쓸쓸하랴? 미묘한 날카로우나 장식하는 끓는다.
-          </Text>
-        </ScrollView>
-        <Image source={require(logo)} />
-        <Text> sign up 1st screen </Text>
+        </ImageBackground>
       </View>
     );
   }
@@ -69,11 +79,55 @@ class FirstScreen extends React.Component {
 
 export default FirstScreen;
 
+const Dimensions = require('Dimensions');
+const screenWidth = Dimensions.get('window').width;
+const screenHeight = Dimensions.get('window').height;
+
 const styles = EStyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
     alignItems: 'center',
-    marginTop: 20
   },
+  imgBackground: {
+    width: '100%',
+    height: '100%',
+  },
+  topBar: {
+    paddingTop: 20,
+    paddingLeft: 10,
+    height: 40
+  },
+  cancelText: {
+    fontSize: 15,
+    color: '#fff'
+  },
+  logo: {
+    height: 17,
+    alignItems: 'center'
+  },
+  scrollviewContainer: {
+    marginTop: 30,
+    padding: 20,
+    backgroundColor: '#FFF',
+    marginLeft: 10,
+    marginRight: 10
+  },
+  buttonContainer: {
+    height: 80,
+    width: screenWidth,
+    padding: 20
+    // justifyContent: 'center',
+  },
+  generalBtn: {
+    justifyContent: 'center',
+    backgroundColor: '#E46B7C',
+    borderRadius: 20,
+    paddingLeft: 20,
+    paddingRight: 20,
+  },
+  buttonText: {
+    fontSize: 15,
+    color: '#fff'
+  }
 });
