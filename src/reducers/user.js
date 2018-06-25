@@ -4,7 +4,10 @@ import {
   SET_TOKEN,
   LOGIN,
   LOGIN_SUCCESS,
-  LOGIN_FAILURE
+  LOGIN_FAILURE,
+  REFRESH_TOKEN,
+  REFRESH_TOKEN_SUCCESS,
+  REFRESH_TOKEN_FAILURE
 } from '../actions/user';
 
 const initalState = {
@@ -22,7 +25,7 @@ const initalState = {
 export default handleActions({
   [SET_TOKEN] (userState, { payload }) {
     return userState
-      .set('auth', Immutable.fromJS({...initalState, token: payload}));
+      .set('auth', Immutable.fromJS({...initalState.auth, token: payload}));
   },
   [LOGIN] (userState) {
     return userState
@@ -35,6 +38,10 @@ export default handleActions({
   [LOGIN_FAILURE] (userState, {payload}) {
     return userState
       .set('auth', Immutable.fromJS({...initalState.auth, error: payload}));
+  },
+  [REFRESH_TOKEN_SUCCESS] (userState, {payload}) {
+    return userState
+      .set('auth', Immutable.fromJS({...initalState.auth, token: payload}));
   }
 },
 Immutable.fromJS(initalState)
