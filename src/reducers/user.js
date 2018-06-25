@@ -23,16 +23,16 @@ const initalState = Immutable.fromJS({
 export default handleActions({
   [SET_TOKEN] (userState, { payload }) {
     let token = Immutable.fromJS(payload);
-    return userState
-      .set('auth', initalState.get('auth').set('token', token));
+    let auth = initalState.get('auth').set('token', token);
+    return userState.set('auth', auth);
   },
   [LOGIN] (userState) {
-    return userState
-      .set('auth', initalState.get('auth').set('loading', true));
+    let auth = initalState.get('auth').set('loading', true);
+    return userState.set('auth', auth);
   },
   [LOGIN_FAILURE] (userState, {payload}) {
-    return userState
-      .set('auth', Immutable.get('auth').set('error', payload));
+    let auth = initalState.get('auth').set('error', payload);
+    return userState.set('auth', auth);
   }
 },
 initalState
