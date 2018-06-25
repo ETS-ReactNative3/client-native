@@ -60,12 +60,11 @@ export const loadToken = () => async (dispatch) => {
 };
 
 export const LOGIN = "USER/LOGIN";
-export const LOGIN_SUCCESS =  "USER/LOGIN_SUCCESS";
 export const LOGIN_FAILURE = "USER/LOGIN_FAILURE";
 
 export const login = (email, pwd) => async (dispatch, getState) => {
   const apiCall = createApiAction({
-    types: [LOGIN, LOGIN_SUCCESS, LOGIN_FAILURE],
+    types: [LOGIN, SET_TOKEN, LOGIN_FAILURE],
     path: 'auth/login',
     params: {email, pwd}
   });
@@ -75,12 +74,11 @@ export const login = (email, pwd) => async (dispatch, getState) => {
 };
 
 export const REFRESH_TOKEN = "USER/REFRESH_TOKEN";
-export const REFRESH_TOKEN_SUCCESS = "USER/REFRESH_TOKEN_SUCCESS";
 export const REFRESH_TOKEN_FAILURE = "USER/REFRESH_TOKEN_FAILURE";
 
 export const refreshToken = (refresh_token, token) => async (dispatch) => {
   const apiCall = createAuthorizedApiAction({
-    types: [REFRESH_TOKEN, REFRESH_TOKEN_SUCCESS, REFRESH_TOKEN_FAILURE],
+    types: [REFRESH_TOKEN, SET_TOKEN, REFRESH_TOKEN_FAILURE],
     path: 'auth/refresh_token',
     params: { refresh_token },
   });
