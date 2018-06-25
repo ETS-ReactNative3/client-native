@@ -3,8 +3,8 @@ import { Text, View, Button, TextInput, Image, ImageBackground, Keyboard, Toucha
 import EStyleSheet from 'react-native-extended-stylesheet';
 import LoadingOverlay from '../components/LoadingOverlay';
 
-let background = '../assets/imgs/login/new_bg_login.jpeg';
-let logo = '../assets/imgs/login/logo.png';
+let background = '../../assets/imgs/login/new_bg_login.jpeg';
+let logo = '../../assets/imgs/login/logo.png';
 
 class LoginScreen extends React.Component {
   constructor(props) {

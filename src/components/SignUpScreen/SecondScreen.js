@@ -3,8 +3,8 @@ import { Text, View, Button, TouchableOpacity} from 'react-native';
 import EStyleSheet from 'react-native-extended-stylesheet';
 import Image from 'react-native-remote-svg';
 
-let background = '../../assets/imgs/login/new_bg_login.jpeg'
-let logo = '../../assets/imgs/login/logo_small.svg'
+let background = '../../../assets/imgs/login/new_bg_login.jpeg'
+let logo = '../../../assets/imgs/login/logo_small.svg'
 
 
 // {
