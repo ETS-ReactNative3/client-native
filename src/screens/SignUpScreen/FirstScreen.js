@@ -1,5 +1,5 @@
 import React from 'react';
-import SignUpScreen from '../components/SignUpScreen';
+import SignUpScreen from '../../components/SignUpScreen/FirstScreen';
 
 export class SignUpScreenContainer extends React.Component {
   onCancelPress = () => {

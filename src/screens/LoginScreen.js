@@ -24,15 +24,16 @@ export class LoginScreenContainer extends React.Component {
     this.props.navigation.push("SignUp")
   }
 
-  onSignInPress = (id, pw) => {
-    console.log("onSignInPress Clicked");
-    this.props.login("react-native@deepscent.io", "deepscent123!@#");
+  onLoginPress = (email, pwd) => {
+    console.log("onLoginPress Clicked email:" + email + " password: " + pwd);
+    this.props.login(email, pwd);
+    // this.props.login("react-native@deepscent.io", "deepscent123!@#");
   }
 
   render() {
     return <LoginScreen
       {...this.props}
-      onSignInPress={this.onSignInPress}
+      onLoginPress={this.onLoginPress}
       onSignUpPress={this.onSignUpPress}/>;
   }
 }

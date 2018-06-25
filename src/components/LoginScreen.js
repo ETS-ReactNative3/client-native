@@ -6,123 +6,69 @@ import LoadingOverlay from '../components/LoadingOverlay';
 let background = '../assets/imgs/login/new_bg_login.jpeg';
 let logo = '../assets/imgs/login/logo.png';
 
-class Login extends React.Component {
+class LoginScreen extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      id: '',
-      password: ''
+      email: '',
+      pwd: ''
     }
   }
 
-  LoginScreen = ({
-    onSignUpPress,
-    onSignInPress,
-    loading=false,
-    error=null,
-    token=null
-  }) => (
-    <View style={styles.container}>
-      <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
-        <ImageBackground
-          style = {styles.imgBackground}
-          source = {require(background)}
-        >
-          <LoadingOverlay visible={loading}/>
-          { error && <Text> login error: {error} </Text> }
-          { token && <Text> login succeed: </Text> }
-          <View style = {styles.generalStyle}>
-            <Image source={require(logo)} style={[styles.imgLogo,{marginTop: 60, marginBottom: 20}]} />
-            <View style = {styles.generalStyle}>
-              <TextInput
-                style={styles.textInput}
-                placeholder="ID"
-              />
-              <TextInput
-                style={[styles.textInput, {marginBottom: 20}]}
-                placeholder="Password"
-              />
-              <TouchableOpacity style = {[styles.generalBtn, styles.loginBtn]} onPress={() => onSignInPress("d","b")}>
-                <Text style={styles.buttonText}>Login</Text>
-              </TouchableOpacity>
-              <TouchableOpacity style = {[styles.forgotpwBtn, {marginBottom: 100}]}>
-                <Text style={styles.buttonText}>Forgot Password</Text>
-  
-              </TouchableOpacity>
-              <TouchableOpacity style = {[styles.generalBtn, styles.facebookBtn]}>
-                <Text style={styles.buttonText}>FACKBOOK LOGIN</Text>
-              </TouchableOpacity>
-              <TouchableOpacity style = {[styles.generalBtn, styles.kakaoBtn]}>
-                <Text style={styles.buttonText}>KAKAO LOGIN</Text>
-              </TouchableOpacity>
-  
-              <TouchableOpacity style = {styles.forgotpwBtn} onPress={onSignUpPress}>
-                <Text style={styles.buttonText}>Sign up</Text>
-              </TouchableOpacity>
-            </View>
-          </View>
-        </ImageBackground>
-      </TouchableWithoutFeedback>
-    </View>
-  );
-
   render() {
-    return LoginScreen(this.props.onSignUpPress, this.props.onSignInPress)
+    return (
+      <View style={styles.container}>
+        <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
+          <ImageBackground
+            style = {styles.imgBackground}
+            source = {require(background)}
+          >
+            <LoadingOverlay visible={this.props.loading}/>
+            { this.props.error && <Text> login error: {this.props.error} </Text> }
+            { this.props.token && <Text> login succeed: </Text> }
+            <View style = {styles.generalStyle}>
+              <Image source={require(logo)} style={[styles.imgLogo,{marginTop: 60, marginBottom: 20}]} />
+              <View style = {styles.generalStyle}>
+                <TextInput
+                  style={styles.textInput}
+                  placeholder="ID"
+                  onChangeText = {(inputEmail) => this.setState({email: inputEmail})}
+                  value={this.state.email}
+                />
+                <TextInput
+                  style={[styles.textInput, {marginBottom: 20}]}
+                  placeholder="Password"
+                  onChangeText = {(inputPwd) => this.setState({pwd: inputPwd})}
+                  value={this.state.pwd}
+                  secureTextEntry={true}
+                />
+                <TouchableOpacity style = {[styles.generalBtn, styles.loginBtn]} onPress={() => this.props.onLoginPress(this.state.email, this.state.pwd)}>
+                  <Text style={styles.buttonText}>Login</Text>
+                </TouchableOpacity>
+                <TouchableOpacity style = {[styles.forgotpwdBtn, {marginBottom: 100}]}>
+                  <Text style={styles.buttonText}>Forgot Password</Text>
+    
+                </TouchableOpacity>
+                <TouchableOpacity style = {[styles.generalBtn, styles.facebookBtn]}>
+                  <Text style={styles.buttonText}>FACKBOOK LOGIN</Text>
+                </TouchableOpacity>
+                <TouchableOpacity style = {[styles.generalBtn, styles.kakaoBtn]}>
+                  <Text style={styles.buttonText}>KAKAO LOGIN</Text>
+                </TouchableOpacity>
+    
+                <TouchableOpacity style = {styles.forgotpwdBtn} onPress={this.props.onSignUpPress}>
+                  <Text style={styles.buttonText}>Sign up</Text>
+                </TouchableOpacity>
+              </View>
+            </View>
+          </ImageBackground>
+        </TouchableWithoutFeedback>
+      </View>
+    );
   }
 }
 
-const LoginScreen = ({
-  onSignUpPress,
-  onSignInPress,
-  loading=false,
-  error=null,
-  token=null
-}) => (
-  <View style={styles.container}>
-    <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
-      <ImageBackground
-        style = {styles.imgBackground}
-        source = {require(background)}
-      >
-        <LoadingOverlay visible={loading}/>
-        { error && <Text> login error: {error} </Text> }
-        { token && <Text> login succeed: </Text> }
-        <View style = {styles.generalStyle}>
-          <Image source={require(logo)} style={[styles.imgLogo,{marginTop: 60, marginBottom: 20}]} />
-          <View style = {styles.generalStyle}>
-            <TextInput
-              style={styles.textInput}
-              placeholder="ID"
-            />
-            <TextInput
-              style={[styles.textInput, {marginBottom: 20}]}
-              placeholder="Password"
-            />
-            <TouchableOpacity style = {[styles.generalBtn, styles.loginBtn]} onPress={() => onSignInPress("d","b")}>
-              <Text style={styles.buttonText}>Login</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style = {[styles.forgotpwBtn, {marginBottom: 100}]}>
-              <Text style={styles.buttonText}>Forgot Password</Text>
-
-            </TouchableOpacity>
-            <TouchableOpacity style = {[styles.generalBtn, styles.facebookBtn]}>
-              <Text style={styles.buttonText}>FACKBOOK LOGIN</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style = {[styles.generalBtn, styles.kakaoBtn]}>
-              <Text style={styles.buttonText}>KAKAO LOGIN</Text>
-            </TouchableOpacity>
-
-            <TouchableOpacity style = {styles.forgotpwBtn} onPress={onSignUpPress}>
-              <Text style={styles.buttonText}>Sign up</Text>
-            </TouchableOpacity>
-          </View>
-        </View>
-      </ImageBackground>
-    </TouchableWithoutFeedback>
-  </View>
-);
-
-export default Login;
+export default LoginScreen;
 
 const Dimensions = require('Dimensions');
 const screenWidth = Dimensions.get('window').width;
@@ -178,7 +124,7 @@ const styles = EStyleSheet.create({
     backgroundColor: '#e46b7c',
     alignItems: 'center',
   },
-  forgotpwBtn: {
+  forgotpwdBtn: {
     alignSelf: 'center',
   },
   facebookBtn: {

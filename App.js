@@ -10,7 +10,8 @@ import { Provider } from "react-redux"
 
 // screens
 import LoginScreen from './src/screens/LoginScreen';
-import SignUpScreen from './src/screens/SignUpScreen';
+import FirstScreen from './src/screens/SignUpScreen/FirstScreen';
+import SecondScreen from './src/screens/SignUpScreen/SecondScreen';
 
 // prepare extended stylesheet
 EStyleSheet.build();
@@ -20,11 +21,14 @@ let Nav = createStackNavigator({
   Login: {
     screen: LoginScreen 
   },
-  SignUp: {
-    screen: SignUpScreen
+  SignUpFirst: {
+    screen: FirstScreen
   },
+  SignUpSecond: {
+    screen: SecondScreen
+  }
 }, {
-  initialRouteName: "Login",
+  initialRouteName: "SignUpFirst",
   headerMode: 'none'
 });
 
