@@ -94,7 +94,7 @@ const styles = EStyleSheet.create({
     height: '100%',
   },
   topBar: {
-    paddingTop: 20,
+    marginTop: 40,
     paddingLeft: 10,
     height: 40
   },

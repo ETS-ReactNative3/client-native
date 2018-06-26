@@ -34,7 +34,7 @@ let Nav = createStackNavigator({
     screen: SecondScreen
   }
 }, {
-  initialRouteName: "SignUpSecond",
+  initialRouteName: "Login",
   headerMode: 'none'
 });
 

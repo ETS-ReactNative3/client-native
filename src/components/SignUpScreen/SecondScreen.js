@@ -262,6 +262,9 @@ class SecondScreen extends React.Component {
                 />
               </View>
             </View>
+            <TouchableOpacity style={styles.submitBtn} onPress={printState}>
+              <Text style = {styles.submitText}>Submit</Text>
+            </TouchableOpacity>
             <Button
                 onPress={printState}
                 title="click"
@@ -296,7 +299,7 @@ const styles = EStyleSheet.create({
     height: '100%',
   },
   topBar: {
-    paddingTop: 20,
+    marginTop: 40,
     paddingLeft: 10,
     height: 40
   },
@@ -333,6 +336,19 @@ const styles = EStyleSheet.create({
   },
   scentDropdownView: {
     width: '33%'
+  },
+  submitBtn: {
+    backgroundColor: '#D5E16E',
+    width: 150,
+    height: 50,
+    alignItems: 'center',
+    justifyContent:'center',
+    borderRadius: 5,
+    alignSelf: 'flex-end'
+  },
+  submitText: {
+    color: '#000',
+    fontSize: 20
   }
 });
 
