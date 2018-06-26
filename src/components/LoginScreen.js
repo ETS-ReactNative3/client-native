@@ -18,7 +18,7 @@ class LoginScreen extends React.Component {
   render() {
     return (
       <View style={styles.container}>
-        <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
+        <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={true}>
           <ImageBackground
             style = {styles.imgBackground}
             source = {require(background)}
@@ -42,7 +42,9 @@ class LoginScreen extends React.Component {
                   value={this.state.pwd}
                   secureTextEntry={true}
                 />
-                <TouchableOpacity style = {[styles.generalBtn, styles.loginBtn]} onPress={() => this.props.onLoginPress(this.state.email, this.state.pwd)}>
+                <TouchableOpacity style = {[styles.generalBtn, styles.loginBtn]} onPress={() => {
+                  console.log("components/LoginScreen first");
+                  this.props.onLoginPress(this.state.email, this.state.pwd)}}>
                   <Text style={styles.buttonText}>Login</Text>
                 </TouchableOpacity>
                 <TouchableOpacity style = {[styles.forgotpwdBtn, {marginBottom: 100}]}>

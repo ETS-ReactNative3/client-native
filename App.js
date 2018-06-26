@@ -18,6 +18,7 @@ import tokenRefresher from './src/middlewares/tokenRefresher';
 import LoginScreen from './src/screens/LoginScreen';
 import FirstScreen from './src/screens/SignUpScreen/FirstScreen';
 import SecondScreen from './src/screens/SignUpScreen/SecondScreen';
+import HomeScreen from './src/screens/HomeScreen';
 
 // prepare extended stylesheet
 EStyleSheet.build();
@@ -32,9 +33,12 @@ let Nav = createStackNavigator({
   },
   SignUpSecond: {
     screen: SecondScreen
-  }
+  },
+  Home: {
+    screen: HomeScreen
+  },
 }, {
-  initialRouteName: "SignUpFirst",
+  initialRouteName: "Login",
   headerMode: 'none'
 });
 

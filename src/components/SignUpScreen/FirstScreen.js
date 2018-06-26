@@ -71,7 +71,7 @@ export default FirstScreen;
 
 const styles = EStyleSheet.create({
   container: {
-    flex: 1,
+    flex: 2,
     backgroundColor: '#fff',
     alignItems: 'center',
     marginTop: 20

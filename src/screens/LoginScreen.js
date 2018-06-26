@@ -21,20 +21,28 @@ const mapDispatchToProps = (dispatch, props) => ({
 export class LoginScreenContainer extends React.Component {
   onSignUpPress = () => {
     console.log("onSignUpPress Clicked");
-    this.props.navigation.push("SignUp")
+    this.props.navigation.push("SignUpFirst")
   }
 
-  onLoginPress = (email, pwd) => {
-    console.log("onLoginPress Clicked email:" + email + " password: " + pwd);
-    this.props.login(email, pwd);
+  onLoginPress = async (email, pwd) => {
+    console.log("onLoginPress Clicked email:" + email + " password: " + pwd + " second");
+    await this.props.login(email, pwd);
+    console.log (this.props.token, this.props.error );
+    if (this.props.error) {
+      console.log ("error!");
+    }
+    else {
+      this.props.navigation.push ("Home");
+    }
     // this.props.login("react-native@deepscent.io", "deepscent123!@#");
   }
 
-  render() {
+  render() {    
+    console.log ("waiting for input and return LoginScreen");
     return <LoginScreen
       {...this.props}
       onLoginPress={this.onLoginPress}
-      onSignUpPress={this.onSignUpPress}/>;
+      onSignUpPress={this.onSignUpPress}/>
   }
 }
 
