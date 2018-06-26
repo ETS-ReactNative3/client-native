@@ -43,7 +43,7 @@ class FirstScreen extends React.Component {
         <ImageBackground
           style = {styles.imgBackground}
           source = {require(background)}
-          blurRadius={1} >
+          blurRadius={20} >
 
           <View style={styles.topBar}>
             <TouchableOpacity onPress={this.props.onCancelPress}>
