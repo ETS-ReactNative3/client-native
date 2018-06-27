@@ -1,7 +1,7 @@
 import React from 'react';
 import LoginScreen from '../components/LoginScreen';
 
-import { connect } from 'react-redux'
+import { connect } from 'react-redux';
 import { login } from '../actions/user';
 import { Alert } from 'react-native';
 import _ from 'lodash';

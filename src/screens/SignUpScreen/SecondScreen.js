@@ -1,5 +1,6 @@
 import React from 'react';
 import SignUpScreen from '../../components/SignUpScreen/SecondScreen';
+import { NavigationActions } from 'react-navigation'
 
 import { connect } from 'react-redux';
 import { signup } from '../../actions/user';
@@ -17,10 +18,12 @@ const mapDispatchToProps = (dispatch, props) => ({
   }
 })
 
+
 export class SignUpScreenContainer extends React.Component {
+
   onCancelPress = () => {
     console.log("onCancelPress Clicked");
-    this.props.navigation.pop()
+    this.props.navigation.popToTop();
   }
   onSubmitPress = async (state) => {
     for (key in state) {
@@ -34,6 +37,7 @@ export class SignUpScreenContainer extends React.Component {
     await this.props.signup(state['email'], state['pwd'], state['name'], state['birthday'], state['gender'], state['place'],state['space'], state['purpose'], state['prefer_scents']);
     // wait(7000);
     if (this.props.success) {
+      this.props.navigation.popToTop();
       console.log("Success");
     } else {
       console.log("failure");

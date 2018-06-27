@@ -11,6 +11,7 @@ import { Dropdown } from 'react-native-material-dropdown';
 // Custom components
 import UnderlinedTextInput from '../common/UnderlinedTextInput';
 import ToggleSwitch from '../common/ToggleSwitch';
+import LoadingOverlay from '../../components/LoadingOverlay'
 
 let background = '../../../assets/imgs/login/new_bg_login.jpeg'
 let logo = '../../../assets/imgs/login/logo_small.svg'
@@ -81,7 +82,8 @@ class SecondScreen extends React.Component {
           style = {styles.imgBackground}
           source = {require(background)}
           blurRadius={90} >
-
+          <LoadingOverlay visible={this.props.loading}/>
+          { this.props.error && <Text style={{marginTop: 50}}> signup error: {String(this.props.error)} </Text> }
           <View style={styles.topBar}>
             <TouchableOpacity onPress={this.props.onCancelPress}>
               <Text style = {styles.cancelText}>취소</Text>

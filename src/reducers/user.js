@@ -11,7 +11,7 @@ import {
   SIGNUP_FAILURE
 } from '../actions/user';
 
-const initalState = Immutable.fromJS({
+const initialState = Immutable.fromJS({
   auth: {
     loading: false,
     error: null,
@@ -31,30 +31,30 @@ const initalState = Immutable.fromJS({
 export default handleActions({
   [SET_TOKEN] (userState, { payload }) {
     let token = Immutable.fromJS(payload);
-    let auth = initalState.get('auth').set('token', token);
+    let auth = initialState.get('auth').set('token', token);
     return userState.set('auth', auth);
   },
   [LOGIN] (userState) {
-    let auth = initalState.get('auth').set('loading', true);
+    let auth = initialState.get('auth').set('loading', true);
     return userState.set('auth', auth);
   },
   [LOGIN_FAILURE] (userState, {payload}) {
-    let auth = initalState.get('auth').set('error', payload);
+    let auth = initialState.get('auth').set('error', payload);
     return userState.set('auth', auth);
   },
   [SIGNUP] (userState) {
-    let signup = initalState.get('signup').set('loading', true);
+    let signup = initialState.get('signup').set('loading', true);
     return userState.set('signup',signup);
   },
   [SIGNUP_SUCCESS] (userState) {
-    let signup = initalState.get('signup').set('success', true);
+    let signup = initialState.get('signup').set('success', true);
     return userState.set('signup',signup);
   },
   [SIGNUP_FAILURE] (userState, {payload}) {
-    let signup = initalState.get('signup').set('error', payload);
+    let signup = initialState.get('signup').set('error', payload);
     return userState.set('signup', signup);
   }
 },
-initalState
+initialState
 );
 
