@@ -73,6 +73,20 @@ export const login = (email, pwd) => async (dispatch, getState) => {
   await dispatch(saveToken());
 };
 
+export const SIGNUP = "USER/SIGNUP";
+export const SIGNUP_SUCCESS = "USER/SIGNUP_SUCCESS";
+export const SIGNUP_FAILURE = "USER/SIGNUP_FAILURE";
+
+export const signup = (email, pwd, name, birthday, gender, place, space, purpose, prefer_scents) => async (dispatch, getState) => {
+  const apiCall = createApiAction({
+    types: [SIGNUP, SIGNUP_SUCCESS, SIGNUP_FAILURE],
+    path: 'auth/signup',
+    params: {email, pwd, name, birthday, gender, place, space, purpose, prefer_scents}
+  });
+
+  await dispatch(apiCall);
+}
+
 export const REFRESH_TOKEN = "USER/REFRESH_TOKEN";
 export const REFRESH_TOKEN_FAILURE = "USER/REFRESH_TOKEN_FAILURE";
 

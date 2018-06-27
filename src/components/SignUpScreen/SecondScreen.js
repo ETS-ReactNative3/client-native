@@ -262,7 +262,8 @@ class SecondScreen extends React.Component {
                 />
               </View>
             </View>
-            <TouchableOpacity style={styles.submitBtn} onPress={printState}>
+            <TouchableOpacity style={styles.submitBtn} onPress={() => this.props.onSubmitPress(this.state)
+              }>
               <Text style = {styles.submitText}>Submit</Text>
             </TouchableOpacity>
             <Button

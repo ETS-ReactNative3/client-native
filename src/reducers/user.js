@@ -5,7 +5,10 @@ import {
   LOGIN,
   LOGIN_FAILURE,
   REFRESH_TOKEN,
-  REFRESH_TOKEN_FAILURE
+  REFRESH_TOKEN_FAILURE,
+  SIGNUP,
+  SIGNUP_SUCCESS,
+  SIGNUP_FAILURE
 } from '../actions/user';
 
 const initalState = Immutable.fromJS({
@@ -17,6 +20,11 @@ const initalState = Immutable.fromJS({
       refresh_token: null,
       exp_time: null
     }
+  },
+  signup: {
+    loading: false,
+    success: null,
+    error: null
   }
 });
 
@@ -33,6 +41,18 @@ export default handleActions({
   [LOGIN_FAILURE] (userState, {payload}) {
     let auth = initalState.get('auth').set('error', payload);
     return userState.set('auth', auth);
+  },
+  [SIGNUP] (userState) {
+    let signup = initalState.get('signup').set('loading', true);
+    return userState.set('signup',signup);
+  },
+  [SIGNUP_SUCCESS] (userState) {
+    let signup = initalState.get('signup').set('success', true);
+    return userState.set('signup',signup);
+  },
+  [SIGNUP_FAILURE] (userState, {payload}) {
+    let signup = initalState.get('signup').set('error', payload);
+    return userState.set('signup', signup);
   }
 },
 initalState
