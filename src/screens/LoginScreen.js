@@ -27,7 +27,7 @@ export class LoginScreenContainer extends React.Component {
   onLoginPress = async (email, pwd) => {
     console.log("onLoginPress Clicked email:" + email + " password: " + pwd + " second");
     await this.props.login(email, pwd);
-    console.log (this.props.token, this.props.error );
+    console.log (this.props.token, this.props.error);
     if (this.props.error) {
       console.log ("error!");
     }
