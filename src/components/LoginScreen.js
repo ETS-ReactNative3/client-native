@@ -47,6 +47,7 @@ class LoginScreen extends React.Component {
                   this.props.onLoginPress(this.state.email, this.state.pwd)}}>
                   <Text style={styles.buttonText}>Login</Text>
                 </TouchableOpacity>
+                { this.props.error && <Text style = {styles.wrongText}> Wrong input! </Text> }
                 <TouchableOpacity style = {[styles.forgotpwdBtn, {marginBottom: 100}]}>
                   <Text style={styles.buttonText}>Forgot Password</Text>
     
@@ -134,5 +135,9 @@ const styles = EStyleSheet.create({
   },
   kakaoBtn: {
     backgroundColor: '#FBE353'
+  },
+  wrongText: {
+    color: '#ff0000',
+    textAlign: 'center',
   }
 });

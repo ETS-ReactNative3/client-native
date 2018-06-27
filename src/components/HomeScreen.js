@@ -1,6 +1,6 @@
 import React from 'react';
-import { Text, View, Button, TouchableOpacity, ScrollView} from 
-'react-native';
+import { Text, View, ImageBackground,TouchableOpacity, StyleSheet} from 'react-native';
+import { createMaterialBottomTabNavigator } from 'react-navigation-material-bottom-tabs';
 import EStyleSheet from 'react-native-extended-stylesheet';
 import Image from 'react-native-remote-svg';
 
@@ -11,16 +11,15 @@ class HomeScreen extends React.Component {
   render () {
     return (
       <View style = {styles.container}>
-        <TouchableOpacity onPress = {this.props.onCancelPress}>
-          <Text> go back </Text>
-        </TouchableOpacity>
+        <Image source = {require (logo)} style = {styles.imgLogo} />
       </View>
     )
   }
 
 }
 
-export default HomeScreen;
+const Dimensions = require('Dimensions');
+const screenWidth = Dimensions.get('window').width;
 
 const styles = EStyleSheet.create ({
   container: {
@@ -29,4 +28,19 @@ const styles = EStyleSheet.create ({
     alignItems: 'center',
     marginTop: 20
   },
+  imgLogo: {
+    width: screenWidth-200,
+    alignItems: 'center',
+    //resizeMode: 'contain'
+  },
+});
+
+
+export default createMaterialBottomTabNavigator({
+  Home: { 
+    screen: HomeScreen 
+  },
+}, {
+  initialRouteName: 'Home',
+  activeTintColor: '#F44336',
 });
