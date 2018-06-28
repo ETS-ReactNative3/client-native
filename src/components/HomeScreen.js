@@ -14,12 +14,16 @@ class HomeScreen extends React.Component {
   render () {
     return (
       <View style = {styles.container}>
-        <Image source = {require (logo)} style = {styles.imgLogo} />
+        <Text>This is home</Text>
+        <Text>This is home</Text>
+        <Text>This is home</Text>
+        <Text>This is home</Text>
       </View>
     )
   }
-
 }
+
+export default HomeScreen;
 
 const Dimensions = require('Dimensions');
 const screenWidth = Dimensions.get('window').width;
@@ -36,20 +40,4 @@ const styles = EStyleSheet.create ({
     alignItems: 'center',
     //resizeMode: 'contain'
   },
-});
-
-
-export default createMaterialBottomTabNavigator({
-  Home: { 
-    screen: HomeScreen 
-  },
-  Alarm: {
-    screen: AlarmScreen
-  },
-  Control: {
-    screen: ControlScreen
-  }
-}, {
-  initialRouteName: 'Home',
-  activeTintColor: '#F44336',
 });
