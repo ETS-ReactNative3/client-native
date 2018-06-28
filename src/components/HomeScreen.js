@@ -4,6 +4,9 @@ import { createMaterialBottomTabNavigator } from 'react-navigation-material-bott
 import EStyleSheet from 'react-native-extended-stylesheet';
 import Image from 'react-native-remote-svg';
 
+import AlarmScreen from '../screens/AlarmScreen';
+import ControlScreen from '../screens/ControlScreen';
+
 let background = '../../assets/imgs/login/new_bg_login.jpeg'
 let logo = '../../assets/imgs/login/logo_small.svg'
 
@@ -40,6 +43,12 @@ export default createMaterialBottomTabNavigator({
   Home: { 
     screen: HomeScreen 
   },
+  Alarm: {
+    screen: AlarmScreen
+  },
+  Control: {
+    screen: ControlScreen
+  }
 }, {
   initialRouteName: 'Home',
   activeTintColor: '#F44336',

@@ -38,7 +38,7 @@ let Nav = createStackNavigator({
     screen: HomeScreen
   },
 }, {
-  initialRouteName: "Login",
+  initialRouteName: "Home",
   headerMode: 'none'
 });
 
