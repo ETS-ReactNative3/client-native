@@ -4,6 +4,7 @@ import EStyleSheet from 'react-native-extended-stylesheet';
 import Carousel, { Pagination } from 'react-native-snap-carousel';
 import Icon from 'react-native-vector-icons/FontAwesome'
 import Slider from "react-native-slider";
+import Device from "./Device";
 
 let data = [];
 const clockIcon = (<Icon name="clock-o" size={20} color="#000" />);
@@ -19,7 +20,7 @@ class DeviceSlide extends React.Component {
     }
   }
 
-  
+
   // _renderItem ({item, index}) {
   //   return (
   //       <View style={styles.smallContainer}>
@@ -79,6 +80,7 @@ class DeviceSlide extends React.Component {
           scrollEnabled={this.state.isSliding ? false : true}
           renderItem={({item, index}) => (
             <View style={styles.smallContainer}>
+              <Device />
               <View style={styles.rowView}>
                 <View style={{justifyContent:'center', padding: 10}}>
                   <Text style={[styles.title, {paddingBottom: 5}]}>

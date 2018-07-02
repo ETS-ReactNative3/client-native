@@ -17,7 +17,30 @@ class Device extends React.Component {
     return (
       <View>
         <Text>Carousel</Text>
+        <Slider
+          style={{width: 250, marginLeft: 30}}
+          value={this.state.light}
+          onSlidingStart={() => {
+            this.setState({
+              isSliding: true
+            })
+          }}
+          onSlidingComplete={() => {
+            this.setState({
+              isSliding: false
+            })
+          }}
+          onValueChange={(value) => {
+            this.setState({
+              light: Math.round(value),
+            })
+          }}
+          minimumValue = {0}
+          maximumValue = {100}
+        />
       </View>
     )
   }
 }
+
+export default Device;
