@@ -38,8 +38,11 @@ let Nav = createStackNavigator({
     screen: TabScreen
   },
 }, {
-  initialRouteName: "Tab",
-  headerMode: 'none'
+  initialRouteName: "Login",
+  headerMode: 'none',
+  navigationOptions: {
+    gesturesEnabled: false,
+  }
 });
 
 
@@ -58,6 +61,7 @@ export default class App extends React.Component {
 
   render() {
     if(this.state.isReady) {
+      console.log ("App.js isReady true");
       return (
         <Provider store={store}>
           <Nav/>
@@ -76,6 +80,7 @@ export default class App extends React.Component {
   }
 
   async initApp() {
+    console.log ("App.js initApp()");
     await store.dispatch(loadToken());
   }
 }

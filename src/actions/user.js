@@ -49,6 +49,7 @@ export const setToken = createAction(SET_TOKEN);
 export const saveToken = () => async (dispatch, getState) => {
   const token = getState().getIn(['user', 'auth', 'token']);
   await AsyncStorage.setItem('token', JSON.stringify(token.toJS()));
+  console.log( "actions/user.js THE TOKEN IS: " + token)
 };
 
 export const loadToken = () => async (dispatch) => {
@@ -57,6 +58,7 @@ export const loadToken = () => async (dispatch) => {
   if (token && token.auth_token) {
     dispatch(setToken(token));
   }
+  console.log ("actions/user.js loadToken: " + raw)
 };
 
 export const LOGIN = "USER/LOGIN";
@@ -71,6 +73,7 @@ export const login = (email, pwd) => async (dispatch, getState) => {
 
   await dispatch(apiCall);
   await dispatch(saveToken());
+  console.log ("actions/user.js export login")
 };
 
 export const SIGNUP = "USER/SIGNUP";
@@ -99,6 +102,7 @@ export const refreshToken = (refresh_token, token) => async (dispatch) => {
 
   await dispatch(apiCall);
   await dispatch(saveToken());
+  console.log ("actions/user.js export refreshToken")
 }
 
 export const SEND_DEVICE_STATE = "USER/SEND_STATE";

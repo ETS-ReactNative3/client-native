@@ -37,7 +37,15 @@ export class LoginScreenContainer extends React.Component {
     // this.props.login("react-native@deepscent.io", "deepscent123!@#");
   }
 
+  componentDidMount () {
+    console.log ("screens/LoginScreen.js token: " + this.props.token)
+    if (this.props.token) {
+      this.props.navigation.push ("Home");
+    }
+  }
+
   render() {    
+
     console.log ("waiting for input and return LoginScreen");
     return <LoginScreen
       {...this.props}
