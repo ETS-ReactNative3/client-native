@@ -39,7 +39,10 @@ let Nav = createStackNavigator({
   },
 }, {
   initialRouteName: "Login",
-  headerMode: 'none'
+  headerMode: 'none',
+  navigationOptions: {
+    gesturesEnabled: false,
+  }
 });
 
 
