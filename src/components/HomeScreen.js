@@ -12,6 +12,7 @@ let logo = '../../assets/imgs/login/logo_small.svg'
 
 class HomeScreen extends React.Component {
   render () {
+    console.log ("components/HomeScreen");
     return (
       <View style = {styles.container}>
         <Image source = {require (logo)} style = {styles.imgLogo} />

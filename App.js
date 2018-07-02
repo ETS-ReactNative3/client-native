@@ -38,7 +38,7 @@ let Nav = createStackNavigator({
     screen: HomeScreen
   },
 }, {
-  initialRouteName: "Home",
+  initialRouteName: "Login",
   headerMode: 'none'
 });
 
@@ -58,6 +58,7 @@ export default class App extends React.Component {
 
   render() {
     if(this.state.isReady) {
+      console.log ("App.js isReady true");
       return (
         <Provider store={store}>
           <Nav/>
@@ -76,6 +77,7 @@ export default class App extends React.Component {
   }
 
   async initApp() {
+    console.log ("App.js initApp()");
     await store.dispatch(loadToken());
   }
 }

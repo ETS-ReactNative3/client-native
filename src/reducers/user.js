@@ -36,6 +36,7 @@ export default handleActions({
   },
   [LOGIN] (userState) {
     let auth = initialState.get('auth').set('loading', true);
+    console.log ("reducers/user.js AUTH IS: " + auth)
     return userState.set('auth', auth);
   },
   [LOGIN_FAILURE] (userState, {payload}) {
