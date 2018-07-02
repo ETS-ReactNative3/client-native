@@ -4,7 +4,6 @@ import { Text, View } from 'react-native';
 import EStyleSheet from 'react-native-extended-stylesheet';
 import Slider from "react-native-slider";
 import { Dropdown } from 'react-native-material-dropdown';
-import CircularSlider from 'react-native-circular-slider';
 
 
 const aromMachine = [{
@@ -63,20 +62,6 @@ class ControlScreen extends React.Component {
         />
         <View style={{alignContent: 'center', justifyContent: 'center', marginLeft: 100}}>
           <Text>asdfkldsamkfmklafs</Text>
-          <CircularSlider
-            style = {{width: 10}}
-            startAngle={this.state.startAngle}
-            angleLength={this.state.angleLength}
-            onUpdate={({ startAngle, angleLength }) => this.setState({ startAngle, angleLength })}
-            segments={5}
-            strokeWidth={10}
-            radius={100}
-            gradientColorFrom="#ff9800"
-            gradientColorTo="#ffcf00"
-            showClockFace
-            clockFaceColor="#9d9d9d"
-            bgCircleColor="#171717"
-          />
         </View>
       </View>
     )
