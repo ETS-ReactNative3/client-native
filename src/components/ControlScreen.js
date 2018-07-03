@@ -4,6 +4,8 @@ import { Text, View } from 'react-native';
 import EStyleSheet from 'react-native-extended-stylesheet';
 import Slider from "react-native-slider";
 import { Dropdown } from 'react-native-material-dropdown';
+import CircleSlider from './common/CircleSlider';
+import CircularSlider from './common/CircularSlider'
 
 
 const aromMachine = [{
@@ -60,9 +62,11 @@ class ControlScreen extends React.Component {
           minimumValue = {0}
           maximumValue = {100}
         />
-        <View style={{alignContent: 'center', justifyContent: 'center', marginLeft: 100}}>
-          <Text>asdfkldsamkfmklafs</Text>
-        </View>
+        <CircularSlider />
+        <CircleSlider
+          value={90}
+          onValueChange={(value)=>{console.log(Math.round(value*100/365))}}
+        />
       </View>
     )
   }
