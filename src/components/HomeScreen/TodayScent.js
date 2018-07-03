@@ -6,7 +6,6 @@ import Icon from 'react-native-vector-icons/FontAwesome'
 const bookmarkIcon = (<Icon name="bookmark" size={20} color="#000" />)
 const shareIcon = (<Icon name="share-alt" size={20} color="#000" />)
 
-const myImportantData = () => store.getState();
 
 class TodayScent extends React.Component {
   constructor (props) {
@@ -42,7 +41,6 @@ class TodayScent extends React.Component {
 
     return (
       <View style = {styles.container}>
-        {console.log(myImportantData)}
         <Text style = {styles.title}>Today's Scent</Text>
         <View style={styles.smallContainer}>
           { todayScent }

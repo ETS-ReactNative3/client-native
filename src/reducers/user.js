@@ -11,7 +11,10 @@ import {
   SIGNUP_FAILURE,
   SEND_DEVICE_STATE,
   SEND_DEVICE_STATE_SUCCESS,
-  SEND_DEVICE_STATE_FAILURE
+  SEND_DEVICE_STATE_FAILURE,
+  LOGOUT,
+  LOGOUT_SUCCESS,
+  LOGOUT_FAILURE
 } from '../actions/user';
 
 const initialState = Immutable.fromJS({
@@ -70,6 +73,21 @@ export default handleActions({
   [SEND_DEVICE_STATE_SUCCESS] (userState, {payload}) {
     let send_device_state = initialState.get('devices').set(디바이스아이이, playload);
     return userState.set('devices', send_device_state);
+  },
+  [LOGOUT] (userState) {
+    console.log("Signout");
+    let signout = initialState.get('auth').set('loading', true);
+    return userState.set('auth', signout);
+  },
+  [LOGOUT_SUCCESS] (userState) {
+    console.log("SIgnout success");
+    let signout = initialState.get('auth');
+    return userState.set('auth', signout);
+  },
+  [LOGOUT_FAILURE] (userState, {payload}) {
+    console.log("Signout failure    ",payload);
+    let signout = initialState.get('auth').set('error', payload);
+    return userState.set('auth', signout);
   }
 },
 initialState

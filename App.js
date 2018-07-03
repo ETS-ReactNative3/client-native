@@ -38,7 +38,7 @@ let Nav = createStackNavigator({
     screen: TabScreen
   },
 }, {
-  initialRouteName: "Tab",
+  initialRouteName: "Login",
   headerMode: 'none',
   navigationOptions: {
     gesturesEnabled: false,
