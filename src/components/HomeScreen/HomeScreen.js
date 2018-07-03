@@ -1,5 +1,5 @@
 import React from 'react';
-import { Text, View, Dimensions} from 'react-native';
+import { Text, View, Dimensions, TouchableOpacity } from 'react-native';
 import { createMaterialBottomTabNavigator } from 'react-navigation-material-bottom-tabs';
 import EStyleSheet from 'react-native-extended-stylesheet';
 import Icon from 'react-native-vector-icons/FontAwesome';

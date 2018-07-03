@@ -73,8 +73,9 @@ export const login = (email, pwd) => async (dispatch, getState) => {
 
   await dispatch(apiCall);
   await dispatch(saveToken());
-  console.log ("actions/user.js export login")
+  console.log ("actions/user.js export login");
 };
+
 
 export const SIGNUP = "USER/SIGNUP";
 export const SIGNUP_SUCCESS = "USER/SIGNUP_SUCCESS";
@@ -115,4 +116,20 @@ export const sendDeviceState = (device_id, power, light, name, fan1, fan2, fan3,
     path: 'devices/'+device_id+'/state',
     params: {"state": {power, light, name, fan1, fan2, fan3, fan4}}
   })
+}
+
+
+export const LOGOUT = "USER/LOGOUT";
+export const LOGOUT_SUCCESS = "USER/LOGOUT_SUCCESS";
+export const LOGOUT_FAILURE = "USER/LOGOUT_FAILURE";
+
+export const logout = () => async (dispatch) => {
+  console.log("Logout pressed");
+  const apiCall = createAuthorizedApiAction({
+    types: [LOGOUT, LOGOUT_SUCCESS, LOGOUT_FAILURE],
+    path: 'auth/logout',
+    params: {}
+  });
+  await dispatch(apiCall);
+  await AsyncStorage.setItem('token', '');
 }
