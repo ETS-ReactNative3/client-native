@@ -32,7 +32,8 @@ export class LoginScreenContainer extends React.Component {
       console.log ("error!");
     }
     else {
-      this.props.navigation.push ("Home");
+      console.log ("screens/LoginScreen.js onLoginPress: " + this.props.token)
+      this.props.navigation.push ("Tab");
     }
     // this.props.login("react-native@deepscent.io", "deepscent123!@#");
   }
@@ -40,7 +41,7 @@ export class LoginScreenContainer extends React.Component {
   componentDidMount () {
     console.log ("screens/LoginScreen.js token: " + this.props.token)
     if (this.props.token) {
-      this.props.navigation.push ("Home");
+      this.props.navigation.push ("Tab");
     }
   }
 
