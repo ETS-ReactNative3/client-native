@@ -20,15 +20,11 @@ class DeviceSlide extends React.Component {
     }
   }
 
-
-  // _renderItem ({item, index}) {
-  //   return (
-  //       <View style={styles.smallContainer}>
-        
-  //         <Text style={styles.title}>{ item["abc123"]["name"] }</Text>
-  //       </View>
-  //   );
-  // }
+  setIsSliding = (currentState) => {
+    this.setState({
+      isSliding: currentState
+    })
+  }
 
   get pagination () {
     const { entries, activeSlide } = this.state;
@@ -80,7 +76,7 @@ class DeviceSlide extends React.Component {
           scrollEnabled={this.state.isSliding ? false : true}
           renderItem={({item, index}) => (
             <View style={styles.smallContainer}>
-              <Device />
+              <Device onSlidingStateChange = {this.setIsSliding}/>
               <View style={styles.rowView}>
                 <View style={{justifyContent:'center', padding: 10}}>
                   <Text style={[styles.title, {paddingBottom: 5}]}>

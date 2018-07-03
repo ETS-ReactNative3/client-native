@@ -21,14 +21,10 @@ class Device extends React.Component {
           style={{width: 250, marginLeft: 30}}
           value={this.state.light}
           onSlidingStart={() => {
-            this.setState({
-              isSliding: true
-            })
+            this.props.onSlidingStateChange(true)
           }}
           onSlidingComplete={() => {
-            this.setState({
-              isSliding: false
-            })
+            this.props.onSlidingStateChange(false)
           }}
           onValueChange={(value) => {
             this.setState({
