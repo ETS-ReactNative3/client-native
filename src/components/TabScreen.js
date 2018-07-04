@@ -11,13 +11,15 @@ import SettingScreen from '../screens/SettingScreen';
 
 let iconPath = '../../assets/icon/';
 
+const TabBarComponent = (props) => (<BottomTabBar {...props} />);
+
 const TabScreen = createBottomTabNavigator(
   {
     Home: {
        screen: HomeScreen,
        navigationOptions: {
-         tabBarIcon: (props) => <Image style = {[styles.icon, props.focused && styles.focusedIcon]} source = {require ( iconPath + 'home.png')} />,
-       }
+        tabBarIcon: (props) => <Image style = {[styles.icon, props.focused && styles.focusedIcon]} source = {require ( iconPath + 'home.png')} />,
+        }
       },
     Alarm: { 
       screen: AlarmScreen,
@@ -54,7 +56,8 @@ const TabScreen = createBottomTabNavigator(
         height: 50
       }
 
-    }
+    },
+    tabBarComponent: (props) => <TabBarComponent {...props} style = {{borderTopWidth: 0}}/>,
   }
 );
 

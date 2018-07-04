@@ -1,46 +1,11 @@
-import { RSAA } from 'redux-api-middleware';
 import { createAction } from "redux-actions"
 import { AsyncStorage } from 'react-native';
 import Immutable from 'immutable';
 
-const API_URL = "https://develop.deepscent.io/";
-
-function createEndpoint(path) {
-  return API_URL + path;
-}
-
-export function createApiAction({types, path, params, token}) {
-  let headers = {
-    'Content-Type': 'application/json',
-    'Referrer': 'arom-native',
-    'Origin': 'arom-native'
-  };
-
-  if (token)
-    headers['Authorization'] = token;
-
-  return {
-    [RSAA]: {
-      types,
-      endpoint: createEndpoint(path),
-      method: "POST",
-      headers,
-      body: JSON.stringify(params),
-    }
-  };
-}
-
-export function createAuthorizedApiAction({types, path, params}) {
-  return async (dispatch, getState) => {
-    const token = getState().getIn(['user', 'auth', 'token', 'auth_token']);
-    await dispatch(createApiAction({
-      types,
-      path,
-      params,
-      token
-    }));
-  };
-}
+import {
+  createApiAction,
+  createAuthorizedApiAction
+} from './api'
 
 export const SET_TOKEN = "USER/SET_TOKEN";
 
@@ -54,6 +19,7 @@ export const saveToken = () => async (dispatch, getState) => {
 
 export const loadToken = () => async (dispatch) => {
   const raw = await AsyncStorage.getItem('token');
+  console.log ("Hello" + raw);
   const token = JSON.parse(raw);
   if (token && token.auth_token) {
     dispatch(setToken(token));
