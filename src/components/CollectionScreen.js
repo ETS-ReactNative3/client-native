@@ -6,25 +6,33 @@ class CollectionScreen extends React.Component {
     constructor (props) {
         super (props);
     };
+
+  componentDidMount() {
+    this.props.loadCollection();
+  }
+  
+
     render() {
-        var dummy = [
-            {key : "Apple"},
-            {key : "Banana"},
-            {key : "Vanilla"}
-        ];
+      if (this.props.list) {
+        var dummy = this.props.list.toJS();
+        dummy = dummy.map(x => ({...x, key: x.recipe_id}));
+
         return (
-        <View>
-            <Text> Hello </Text>
-            <FlatList
-                data = {dummy}
-                renderItem={
-                    ({item}) => (console.log ('The item is: ' + item) || 
-                    <Text>{item.key}</Text>)
-                }
-            >
-            </FlatList>
-        </View>
-        )
+          <View>
+              <Text> Hello </Text>
+              <FlatList
+                  data = {dummy}
+                  renderItem={
+                      ({item}) => (console.log ('The item is: ' + item) || 
+                      <Text key={item.recipe_id}>{item.name}</Text>)
+                  }
+              >
+              </FlatList>
+          </View>
+          )
+
+      }
+      return <View/>
    }
 }
 export default CollectionScreen;

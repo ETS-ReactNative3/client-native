@@ -1,6 +1,8 @@
 import { RSAA } from 'redux-api-middleware';
+import querystring from 'querystring';
 
 const API_URL = "https://develop.deepscent.io/";
+
 
 function createEndpoint(path) {
   return API_URL + path;
@@ -8,6 +10,7 @@ function createEndpoint(path) {
 
 export function createApiAction({
   types, path, params, token, method="POST"}) {
+
   let headers = {
     'Content-Type': 'application/json',
     'Referrer': 'arom-native',
@@ -17,13 +20,23 @@ export function createApiAction({
   if (token)
     headers['Authorization'] = token;
 
+  let endpoint = createEndpoint(path);
+  let body = undefined;
+
+  if (method == 'GET') {
+    endpoint = endpoint + '?' + querystring.stringify(params);
+  }
+  else {
+    body = JSON.stringify(params);
+  }
+
   return {
     [RSAA]: {
       types,
-      endpoint: createEndpoint(path),
+      endpoint,
       method,
       headers,
-      body: JSON.stringify(params),
+      body,
     }
   };
 }

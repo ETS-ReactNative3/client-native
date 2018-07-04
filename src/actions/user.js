@@ -1,4 +1,3 @@
-import { RSAA } from 'redux-api-middleware';
 import { createAction } from "redux-actions"
 import { AsyncStorage } from 'react-native';
 import Immutable from 'immutable';
