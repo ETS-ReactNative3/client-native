@@ -62,7 +62,12 @@ class ControlScreen extends React.Component {
           minimumValue = {0}
           maximumValue = {100}
         />
-        <CircularSlider />
+        <CircularSlider 
+          radius={50}
+          lineWidth={10}
+          btnRadius={15}
+          lineColor='#fff'
+          />
         <CircleSlider
           value={90}
           onValueChange={(value)=>{console.log(Math.round(value*100/365))}}
