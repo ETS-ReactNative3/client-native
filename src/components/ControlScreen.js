@@ -4,7 +4,6 @@ import { Text, View } from 'react-native';
 import EStyleSheet from 'react-native-extended-stylesheet';
 import Slider from "react-native-slider";
 import { Dropdown } from 'react-native-material-dropdown';
-import CircleSlider from './common/CircleSlider';
 import CircularSlider from './common/CircularSlider'
 
 
@@ -13,6 +12,8 @@ const aromMachine = [{
 }, {
   value: 'Arom2'
 }]
+
+let firstCircularPosition = {x: 0, y: 0};
 class ControlScreen extends React.Component {
   constructor(props) {
     super(props);
@@ -62,16 +63,26 @@ class ControlScreen extends React.Component {
           minimumValue = {0}
           maximumValue = {100}
         />
+        <View
+          ref="Marker"
+          onLayout={({nativeEvent}) => {
+            this.refs.Marker.measure((x, y, width, height, pageX, pageY) => {
+            console.log(x, y, width, height, pageX, pageY);
+            firstCircularPosition = {x: x, y: y}
+            })
+          }}
+          style={{backgroundColor: 'red'}}
+        >
+        {console.log("firstCircularPosition is ",firstCircularPosition)}
         <CircularSlider 
           radius={50}
           lineWidth={10}
           btnRadius={15}
+          startX={0}
+          startY={185}
           lineColor='#fff'
           />
-        <CircleSlider
-          value={90}
-          onValueChange={(value)=>{console.log(Math.round(value*100/365))}}
-        />
+        </View>
       </View>
     )
   }

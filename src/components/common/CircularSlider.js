@@ -6,7 +6,7 @@ class CircularSlider extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      endAngle: 180
+      endAngle:200
     }
     this._panResponder = PanResponder.create({
       // Ask to be the responder:
@@ -31,36 +31,46 @@ class CircularSlider extends React.Component {
         const radius = this.props.radius;
         const lineWidth = this.props.lineWidth;
         const btnRadius = this.props.btnRadius;
+        const centerX = radius + btnRadius;
+        const centerY = radius + btnRadius;
 
         const finalWidth = btnRadius > lineWidth/2 ? radius+btnRadius : radius+lineWidth/2;
         console.log("finalWidth is",finalWidth);
         console.log("this.state.endAngle is",this.state.endAngle);
         const circleX = radius*2+radius*Math.cos(this.state.endAngle*Math.PI/180)
         const circleY = radius*2+radius*Math.sin(this.state.endAngle*Math.PI/180)
-        const adjustedX = circleX - gestureState.x0;
-        const adjustedY = circleY - gestureState.y0;
         const originX = gestureState.x0;
         console.log("originX is",originX);
         const originY = gestureState.y0;
         console.log("originY is",originY);
-        const moveX = gestureState.moveX;
+        const moveX = gestureState.moveX - this.props.startX;
         console.log("moveX is", moveX);
-        const moveY = gestureState.moveY;
+        const moveY = gestureState.moveY - this.props.startY;
         console.log("moveY is",moveY);
-        if (Math.abs(moveX - originX) > 0.001 || Math.abs(moveY - originY) > 0.001 ) {
-          const changedAngle = Math.acos(
-            ( 2*Math.pow(radius,2) - (Math.pow(originX-moveX,2) + Math.pow(originY-moveY,2)) ) / 
-            (2*Math.pow(radius,2) )
-          )
-          console.log("Changed Angle is",changedAngle);
-          newAngle = this.state.endAngle + changedAngle
-          if (newAngle >= 360) {
-            newAngle = newAngle - 360;
-          }
-          this.setState({
-            endAngle: newAngle
-          })
+        console.log("this.props.startX, startY", this.props.startX, this.props.startY);
+
+        const closestX = centerX + radius * (moveX - centerX) / Math.pow(
+          Math.pow(moveX-centerX,2) + Math.pow(moveY-centerY,2)
+          ,1/2)
+        const closestY = centerY + radius * (moveY - centerY) / Math.pow(
+          Math.pow(moveX-centerX,2) + Math.pow(moveY-centerY,2)
+        ,1/2)
+        let currentAngle = Math.acos(
+          ( 2*Math.pow(radius, 2) - 
+          (Math.pow(centerX - closestX,2) + Math.pow(centerY-radius-closestY, 2)) ) / (2*Math.pow(radius,2))
+        )
+        currentAngle = currentAngle * 180 / Math.PI;
+        if (moveX < centerX) {
+          console.log("Original current angle is",currentAngle);
+          currentAngle = 360-currentAngle;
         }
+        console.log("centerX, center Y is",centerX, centerY);
+        console.log("absolue clidked is",gestureState.moveX, gestureState.moveY);
+        console.log("moveX, moveY is",moveX, moveY);
+        console.log("ClosestX, closestY, currentAngle is",closestX, closestY, currentAngle)
+        this.setState({
+          endAngle: currentAngle
+        })
       },
       onPanResponderTerminationRequest: (evt, gestureState) => true,
       onPanResponderReleast: (evt, gestureState) => {
@@ -151,7 +161,6 @@ class CircularSlider extends React.Component {
 
     return(
       <View>
-        <Text>Circular slider should come here</Text>
         {this.state.endAngle >= 360 ? this.state.endAngle %= 360 : null}
         {drawArc(this.props.radius, 0, this.state.endAngle, this.props.lineWidth, this.props.btnRadius)}
       </View>
