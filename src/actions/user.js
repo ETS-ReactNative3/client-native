@@ -54,6 +54,7 @@ export const saveToken = () => async (dispatch, getState) => {
 
 export const loadToken = () => async (dispatch) => {
   const raw = await AsyncStorage.getItem('token');
+  console.log ("Hello" + raw);
   const token = JSON.parse(raw);
   if (token && token.auth_token) {
     dispatch(setToken(token));
