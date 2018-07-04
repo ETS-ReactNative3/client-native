@@ -63,16 +63,6 @@ class ControlScreen extends React.Component {
           minimumValue = {0}
           maximumValue = {100}
         />
-        <View
-          ref="Marker"
-          onLayout={({nativeEvent}) => {
-            this.refs.Marker.measure((x, y, width, height, pageX, pageY) => {
-            console.log(x, y, width, height, pageX, pageY);
-            firstCircularPosition = {x: x, y: y}
-            })
-          }}
-          style={{backgroundColor: 'red'}}
-        >
         {console.log("firstCircularPosition is ",firstCircularPosition)}
         <CircularSlider 
           radius={50}
@@ -81,8 +71,7 @@ class ControlScreen extends React.Component {
           startX={0}
           startY={185}
           lineColor='#fff'
-          />
-        </View>
+        />
       </View>
     )
   }

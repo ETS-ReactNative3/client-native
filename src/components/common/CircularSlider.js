@@ -6,7 +6,9 @@ class CircularSlider extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      endAngle:200
+      endAngle:200,
+      absoluteStartX:0,
+      absoluteStartY:0
     }
     this._panResponder = PanResponder.create({
       // Ask to be the responder:
@@ -43,11 +45,11 @@ class CircularSlider extends React.Component {
         console.log("originX is",originX);
         const originY = gestureState.y0;
         console.log("originY is",originY);
-        const moveX = gestureState.moveX - this.props.startX;
+        const moveX = gestureState.moveX - this.state.absoluteStartX;
         console.log("moveX is", moveX);
-        const moveY = gestureState.moveY - this.props.startY;
+        const moveY = gestureState.moveY - this.state.absoluteStartY;
         console.log("moveY is",moveY);
-        console.log("this.props.startX, startY", this.props.startX, this.props.startY);
+        console.log("this.state.absoluteStartX, absoluteStartY", this.state.absoluteStartX, this.state.absoluteStartY);
 
         const closestX = centerX + radius * (moveX - centerX) / Math.pow(
           Math.pow(moveX-centerX,2) + Math.pow(moveY-centerY,2)
@@ -160,7 +162,18 @@ class CircularSlider extends React.Component {
     }
 
     return(
-      <View>
+      <View
+        ref="Marker"
+        onLayout={({nativeEvent}) => {
+          this.refs.Marker.measure((x, y, width, height, pageX, pageY) => {
+          console.log(x, y, width, height, pageX, pageY);
+          this.setState({
+            absoluteStartX: pageX,
+            absoluteStartY: pageY
+          })
+          })
+        }}
+      >
         {this.state.endAngle >= 360 ? this.state.endAngle %= 360 : null}
         {drawArc(this.props.radius, 0, this.state.endAngle, this.props.lineWidth, this.props.btnRadius)}
       </View>
