@@ -1,7 +1,7 @@
 import React from 'react';
 import AlarmScreen from '../components/AlarmScreen'
 import { createStackNavigator } from 'react-navigation';
-import Header from '../components/common/Header'
+import Header from '../components/Headers/MainHeader'
 
 export class AlarmScreenContainer extends React.Component {
 

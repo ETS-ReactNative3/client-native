@@ -1,11 +1,8 @@
 import React from 'react';
-import { View, Text, Image, TouchableOpacity } from 'react-native';
-import { createStackNavigator } from 'react-navigation';
-import HomeScreen from '../components/HomeScreen/HomeScreen';
-import Header from '../components/common/Header';
+import HomeScreen from '../../components/HomeScreen/HomeScreen';
 
 let data = [];
-const logoPath = '../../assets/imgs/home/logo.png';
+const logoPath = '../../../assets/imgs/home/logo.png';
 export class HomeScreenContainer extends React.Component {
   render() {
     return <HomeScreen 
@@ -110,15 +107,4 @@ export class HomeScreenContainer extends React.Component {
     />
   }
 }
-
-const stackNav = createStackNavigator({
-  Main: {
-    screen: HomeScreenContainer,
-    navigationOptions:({navigaton}) => ({
-      header:    // Your custom header
-      <Header />
-    })
-  }
-})
-
-export default stackNav;
+export default HomeScreenContainer;

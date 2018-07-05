@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import { logout } from '../actions/user';
 import _ from 'lodash';
 
-import Header from '../components/common/Header'
+import Header from '../components/Headers/MainHeader'
 
 const mapStateToProps = state => ({
   loading: state.getIn(['user', 'auth', 'loading']),
