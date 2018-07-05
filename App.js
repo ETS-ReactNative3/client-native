@@ -35,10 +35,11 @@ let Nav = createStackNavigator({
     screen: SecondScreen
   },
   Tab: {
-    screen: TabScreen
+    screen: ({navigation}) => <TabScreen
+    screenProps = {{ rootNavigation: navigation}} />
   },
 }, {
-  initialRouteName: "Tab",
+  initialRouteName: "Login",
   headerMode: 'none',
   navigationOptions: {
     gesturesEnabled: false,

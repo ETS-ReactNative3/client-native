@@ -23,7 +23,7 @@ export class SettingScreenContainer extends React.Component {
 
   onLogoutPress = async () => {
     await this.props.logout();
-    this.props.navigation.popToTop();
+    this.props.screenProps.rootNavigation.popToTop();
   }
 
   render() {
@@ -32,7 +32,6 @@ export class SettingScreenContainer extends React.Component {
     />
   }
 }
-
 
 const connectFunc = connect(
   mapStateToProps,
