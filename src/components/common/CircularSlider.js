@@ -1,15 +1,93 @@
 import React from 'react';
-import { View, Text } from 'react-native';
-import Svg,{ Circle, Path } from 'react-native-svg';
+import { View, PanResponder } from 'react-native';
+import Svg,{ Circle, Path, Rect, Text } from 'react-native-svg';
 
 class CircularSlider extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      value: 0
+      endAngle:200,
+      absoluteStartX:0,
+      absoluteStartY:0
+    }
+    this._panResponder = PanResponder.create({
+      // Ask to be the responder:
+      onStartShouldSetPanResponder: (evt, gestureState) => true,
+      onStartShouldSetPanResponderCapture: (evt, gestureState) => true,
+      onMoveShouldSetPanResponder: (evt, gestureState) => true,
+      onMoveShouldSetPanResponderCapture: (evt, gestureState) => true,
+
+      onPanResponderGrant: (evt, gestureState) => {
+        // The gesture has started. Show visual feedback so the user knows
+        // What is happening!
+
+        // gestureState.d{x, y} will be set to zero now
+        console.log("Pan responder clicked, gestureState.d{x, y} values are",gestureState.d);
+      },
+      onPanResponderMove: (evt, gestureState) => {
+        // The most recent move distance is gestureState.move{X, Y}
+
+        // The accumulated gesture distance since becoming responder is
+        // gestureState.d{x, y}
+
+        const radius = this.props.radius;
+        const lineWidth = this.props.lineWidth;
+        const btnRadius = this.props.btnRadius;
+        const centerX = radius + btnRadius;
+        const centerY = radius + btnRadius;
+
+        const finalWidth = btnRadius > lineWidth/2 ? radius+btnRadius : radius+lineWidth/2;
+        console.log("finalWidth is",finalWidth);
+        console.log("this.state.endAngle is",this.state.endAngle);
+        const circleX = radius*2+radius*Math.cos(this.state.endAngle*Math.PI/180)
+        const circleY = radius*2+radius*Math.sin(this.state.endAngle*Math.PI/180)
+        const originX = gestureState.x0;
+        console.log("originX is",originX);
+        const originY = gestureState.y0;
+        console.log("originY is",originY);
+        const moveX = gestureState.moveX - this.state.absoluteStartX;
+        console.log("moveX is", moveX);
+        const moveY = gestureState.moveY - this.state.absoluteStartY;
+        console.log("moveY is",moveY);
+        console.log("this.state.absoluteStartX, absoluteStartY", this.state.absoluteStartX, this.state.absoluteStartY);
+
+        const closestX = centerX + radius * (moveX - centerX) / Math.pow(
+          Math.pow(moveX-centerX,2) + Math.pow(moveY-centerY,2)
+          ,1/2)
+        const closestY = centerY + radius * (moveY - centerY) / Math.pow(
+          Math.pow(moveX-centerX,2) + Math.pow(moveY-centerY,2)
+        ,1/2)
+        let currentAngle = Math.acos(
+          ( 2*Math.pow(radius, 2) - 
+          (Math.pow(centerX - closestX,2) + Math.pow(centerY-radius-closestY, 2)) ) / (2*Math.pow(radius,2))
+        )
+        currentAngle = currentAngle * 180 / Math.PI;
+        if (moveX < centerX) {
+          console.log("Original current angle is",currentAngle);
+          currentAngle = 360-currentAngle;
+        }
+        console.log("centerX, center Y is",centerX, centerY);
+        console.log("absolue clidked is",gestureState.moveX, gestureState.moveY);
+        console.log("moveX, moveY is",moveX, moveY);
+        console.log("ClosestX, closestY, currentAngle is",closestX, closestY, currentAngle)
+        this.setState({
+          endAngle: currentAngle
+        })
+      },
+      onPanResponderTerminationRequest: (evt, gestureState) => true,
+      onPanResponderReleast: (evt, gestureState) => {
+        // Another component has become the responder. so this gesture
+        // should be cancelled
+      },
+      onShouldBlockNativeResponder: (evt, gestureState) => {
+        // Returns whether this component should block native components from becoming the JS
+        // responder. Returns true by default. Is currently only supported on android
+      }
+    })
+    const degToRad = (degree) => {
+      degree*Math.PI/360
     }
   }
-
 
   render() {
 
@@ -22,48 +100,89 @@ class CircularSlider extends React.Component {
       };
     }
     
-    const describeArc = (x, y, radius, startAngle, endAngle) => {
-        var start = polarToCartesian(x, y, radius, endAngle);
-        var end = polarToCartesian(x, y, radius, startAngle);
-        var arcSweep = endAngle - startAngle <= 180 ? "0" : "1";
+    // const describeArc = (x, y, radius, startAngle, endAngle,btnRadius) => {
+    //     var start = polarToCartesian(x, y, radius, endAngle);
+    //     var end = polarToCartesian(x, y, radius, startAngle);
+    //     var arcSweep = endAngle - startAngle <= 180 ? "0" : "1";
     
-        var d = [
-            "M", start.x, start.y, 
-            "A", radius, radius, 0, arcSweep, 0, end.x, end.y,
-            // "L", x,y,
-            // "L", start.x, start.y
-        ].join(" ");
+    //     var d = [
+    //         "M", start.x, start.y, 
+    //         "A", radius, radius, 0, arcSweep, 0, end.x, end.y,
+    //         // "L", x,y,
+    //         // "L", start.x, start.y
+    //     ].join(" ");
     
-        return d;       
-    }
+    //     return d;       
+    // }
 
     const degToRad = (degree) => {
       degree*Math.PI/360
     }
 
-    const drawArc = (x, y, radius, startAngle, endAngle, lineWidth, circleRadius) => {
+    const drawArc = (radius, startAngle, endAngle, lineWidth, btnRadius) => {
+      const finalWidth = btnRadius > lineWidth/2 ? radius+btnRadius : radius+lineWidth/2;
+      const start = polarToCartesian(finalWidth, finalWidth, radius, endAngle);
+      const end = polarToCartesian(finalWidth, finalWidth, radius, startAngle);
+      const arcSweep = endAngle - startAngle <= 180 ? "0" : "1";
+
+      const pathDirection = [
+        "M", start.x, start.y, 
+        "A", radius, radius, 0, arcSweep, 0, end.x, end.y,
+        // "L", x,y,
+        // "L", start.x, start.y
+    ].join(" ");
+
       return(
         <Svg
-        height="300"
-        width="300"
+        width={(radius+btnRadius)*3}
+        height={(radius+btnRadius)*2}
         >
         <Path
-          d={describeArc(x, y, radius, startAngle, endAngle)}
+          d={pathDirection}
           stroke="black"
           strokeWidth={lineWidth}
-          fill='black'
+          fill={this.props.lineColor}
           fillOpacity='0'
         />
-        <Circle cx={x-radius*Math.cos((endAngle+90)*Math.PI/180)} cy={y-radius*Math.sin((endAngle+90)*Math.PI/180)} r={circleRadius} fill="yellow" />
-        {console.log("Cos is", Math.cos(endAngle*Math.PI/180))}
+        <Circle 
+          cx={finalWidth-radius*Math.cos((endAngle+90)*Math.PI/180)} 
+          cy={finalWidth-radius*Math.sin((endAngle+90)*Math.PI/180)} 
+          r={btnRadius} 
+          fill={this.props.circleColor} 
+          {...this._panResponder.panHandlers}
+        />
+        <Rect 
+          width={(radius+btnRadius)*2}
+          height={(radius+btnRadius)*2}
+          fill='red'
+          fillOpacity='0.2'
+        />
+        <Text
+          x='35%'
+          y='50%'
+          textAnchor='middle'
+          alignmentBaseline='middle'
+          fontSize='20'
+        >{Math.round(this.state.endAngle*100/360)}</Text>
         </Svg>
       )
     }
 
     return(
-      <View>
-        <Text>Circular slider should come here</Text>
-        {drawArc(100, 100, 50, 0, 270, 10, 15)}
+      <View
+        ref="Marker"
+        onLayout={({nativeEvent}) => {
+          this.refs.Marker.measure((x, y, width, height, pageX, pageY) => {
+          console.log(x, y, width, height, pageX, pageY);
+          this.setState({
+            absoluteStartX: pageX,
+            absoluteStartY: pageY
+          })
+          })
+        }}
+      >
+        {this.state.endAngle >= 360 ? this.state.endAngle %= 360 : null}
+        {drawArc(this.props.radius, 0, this.state.endAngle, this.props.lineWidth, this.props.btnRadius)}
       </View>
     )
   }

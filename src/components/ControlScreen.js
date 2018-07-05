@@ -4,7 +4,6 @@ import { Text, View } from 'react-native';
 import EStyleSheet from 'react-native-extended-stylesheet';
 import Slider from "react-native-slider";
 import { Dropdown } from 'react-native-material-dropdown';
-import CircleSlider from './common/CircleSlider';
 import CircularSlider from './common/CircularSlider'
 
 
@@ -13,6 +12,8 @@ const aromMachine = [{
 }, {
   value: 'Arom2'
 }]
+
+let firstCircularPosition = {x: 0, y: 0};
 class ControlScreen extends React.Component {
   constructor(props) {
     super(props);
@@ -62,10 +63,24 @@ class ControlScreen extends React.Component {
           minimumValue = {0}
           maximumValue = {100}
         />
-        <CircularSlider />
-        <CircleSlider
-          value={90}
-          onValueChange={(value)=>{console.log(Math.round(value*100/365))}}
+        {console.log("firstCircularPosition is ",firstCircularPosition)}
+        <CircularSlider 
+          radius={100}
+          lineWidth={10}
+          btnRadius={15}
+          startX={0}
+          startY={185}
+          lineColor='#fff'
+          circleColor='#cbf442'
+        />
+        <CircularSlider 
+          radius={50}
+          lineWidth={10}
+          btnRadius={15}
+          startX={0}
+          startY={185}
+          lineColor='#fff'
+          circleColor='#f0bcff'
         />
       </View>
     )

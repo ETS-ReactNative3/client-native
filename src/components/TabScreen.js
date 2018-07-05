@@ -16,11 +16,11 @@ const TabBarComponent = (props) => (<BottomTabBar {...props} />);
 const TabScreen = createBottomTabNavigator(
   {
     Home: {
-       screen: HomeScreen,
-       navigationOptions: {
-        tabBarIcon: (props) => <Image style = {[styles.icon, props.focused && styles.focusedIcon]} source = {require ( iconPath + 'home.png')} />,
+      screen: HomeScreen,
+      navigationOptions: {
+      tabBarIcon: (props) => <Image style = {[styles.icon, props.focused && styles.focusedIcon]} source = {require ( iconPath + 'home.png')} />,
         }
-      },
+    },
     Alarm: { 
       screen: AlarmScreen,
       navigationOptions: {

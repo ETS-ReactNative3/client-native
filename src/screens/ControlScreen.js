@@ -1,5 +1,7 @@
 import React from 'react';
 import ControlScreen from '../components/ControlScreen'
+import { createStackNavigator } from 'react-navigation';
+import Header from '../components/common/Header'
 
 export class ControlScreenContainer extends React.Component {
 
@@ -7,4 +9,16 @@ export class ControlScreenContainer extends React.Component {
     return <ControlScreen />
   }
 }
-export default ControlScreenContainer;
+
+const stackNav = createStackNavigator({
+  Main: {
+    screen: ControlScreenContainer,
+    navigationOptions:({navigaton}) => ({
+      header:    // Your custom header
+        <Header />
+    })
+  }
+})
+
+export default stackNav;
+

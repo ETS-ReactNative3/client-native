@@ -24,7 +24,7 @@ class HomeScreen extends React.Component {
   render () {
     return (
       <View style = {styles.container}>
-        <TodayScent todayScent = {this.props.todayScent}/>
+        <TodayScent todayScent = {this.props.todayScent[0]}/>
         <DeviceSlide devices = {this.props.devices}/>
       </View>
     )
@@ -41,7 +41,6 @@ const styles = EStyleSheet.create ({
     flex: 1,
     backgroundColor: '#fff',
     // alignItems: 'center',
-    marginTop: 50
   },
   smallContainer: {
     width: '90%',

@@ -1,5 +1,7 @@
 import React from 'react';
 import AlarmScreen from '../components/AlarmScreen'
+import { createStackNavigator } from 'react-navigation';
+import Header from '../components/common/Header'
 
 export class AlarmScreenContainer extends React.Component {
 
@@ -7,4 +9,15 @@ export class AlarmScreenContainer extends React.Component {
     return <AlarmScreen />
   }
 }
-export default AlarmScreenContainer;
+
+const stackNav = createStackNavigator({
+  Main: {
+    screen: AlarmScreenContainer,
+    navigationOptions:({navigaton}) => ({
+      header:    // Your custom header
+        <Header />
+    })
+  }
+})
+
+export default stackNav;
