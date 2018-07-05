@@ -79,7 +79,7 @@ const styles = EStyleSheet.create ({
       },
     title: {
         margin: 20,
-        fontSize: 40,
+        fontSize: 35,
         fontFamily: 'Noto Sans Bold',
         //fontWeight: 'bold',
     },
