@@ -2,7 +2,7 @@ import React from 'react';
 import { Image, Text, View, Dimensions} from 'react-native';
 import EStyleSheet from 'react-native-extended-stylesheet';
 import Icon from 'react-native-vector-icons/FontAwesome'
-import getIconSource from './IconPathFunction'
+import getIconSource from '../../helpers/icon'
 
 const bookmarkIcon = (<Icon name="bookmark" size={20} color="#000" />);
 const shareIcon = (<Icon name="share-alt" size={20} color="#000" />);
