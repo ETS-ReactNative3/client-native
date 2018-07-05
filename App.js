@@ -6,7 +6,7 @@ import { connect } from 'react-redux'
 import { createStackNavigator } from 'react-navigation';
 import { createStore, applyMiddleware, compose } from "redux"
 import { Provider } from "react-redux"
-import { AppLoading } from 'expo';
+import { AppLoading, Font } from 'expo';
 import { loadToken } from './src/actions/user';
 
 //middlewares
@@ -38,7 +38,7 @@ let Nav = createStackNavigator({
     screen: TabScreen
   },
 }, {
-  initialRouteName: "Tab",
+  initialRouteName: "Login",
   headerMode: 'none',
   navigationOptions: {
     gesturesEnabled: false,
@@ -82,5 +82,6 @@ export default class App extends React.Component {
   async initApp() {
     console.log ("App.js initApp()");
     await store.dispatch(loadToken());
+    Font.loadAsync ({"Noto Sans Bold": require ('./assets/fonts/noto-sans-bold.ttf')});
   }
 }
