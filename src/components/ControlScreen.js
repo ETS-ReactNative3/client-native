@@ -65,12 +65,22 @@ class ControlScreen extends React.Component {
         />
         {console.log("firstCircularPosition is ",firstCircularPosition)}
         <CircularSlider 
+          radius={100}
+          lineWidth={10}
+          btnRadius={15}
+          startX={0}
+          startY={185}
+          lineColor='#fff'
+          circleColor='#cbf442'
+        />
+        <CircularSlider 
           radius={50}
           lineWidth={10}
           btnRadius={15}
           startX={0}
           startY={185}
           lineColor='#fff'
+          circleColor='#f0bcff'
         />
       </View>
     )

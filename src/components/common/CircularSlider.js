@@ -1,6 +1,6 @@
 import React from 'react';
-import { View, Text, PanResponder } from 'react-native';
-import Svg,{ Circle, Path, Rect } from 'react-native-svg';
+import { View, PanResponder } from 'react-native';
+import Svg,{ Circle, Path, Rect, Text } from 'react-native-svg';
 
 class CircularSlider extends React.Component {
   constructor(props) {
@@ -148,7 +148,7 @@ class CircularSlider extends React.Component {
           cx={finalWidth-radius*Math.cos((endAngle+90)*Math.PI/180)} 
           cy={finalWidth-radius*Math.sin((endAngle+90)*Math.PI/180)} 
           r={btnRadius} 
-          fill='yellow' 
+          fill={this.props.circleColor} 
           {...this._panResponder.panHandlers}
         />
         <Rect 
@@ -157,6 +157,13 @@ class CircularSlider extends React.Component {
           fill='red'
           fillOpacity='0.2'
         />
+        <Text
+          x='35%'
+          y='50%'
+          textAnchor='middle'
+          alignmentBaseline='middle'
+          fontSize='20'
+        >{Math.round(this.state.endAngle*100/360)}</Text>
         </Svg>
       )
     }
