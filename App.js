@@ -35,8 +35,7 @@ let Nav = createStackNavigator({
     screen: SecondScreen
   },
   Tab: {
-    screen: ({navigation}) => <TabScreen
-    screenProps = {{ rootNavigation: navigation}} />
+    screen: TabScreen
   },
 }, {
   initialRouteName: "Login",

@@ -23,7 +23,8 @@ export class SettingScreenContainer extends React.Component {
 
   onLogoutPress = async () => {
     await this.props.logout();
-    this.props.screenProps.rootNavigation.popToTop();
+    this.props.navigation.dispatch( {type: 'Navigation/BACK' });
+    this.props.navigation.popToTop();
   }
 
   render() {
