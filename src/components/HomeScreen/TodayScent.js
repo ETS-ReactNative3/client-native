@@ -2,7 +2,7 @@ import React from 'react';
 import { Image, Text, View, Dimensions} from 'react-native';
 import EStyleSheet from 'react-native-extended-stylesheet';
 import Icon from 'react-native-vector-icons/FontAwesome'
-import getIconSource from '../../helpers/icon'
+import {getScentIcon} from '../../helpers/icon'
 
 const bookmarkIcon = (<Icon name="bookmark" size={20} color="#000" />);
 const shareIcon = (<Icon name="share-alt" size={20} color="#000" />);
@@ -17,7 +17,7 @@ class TodayScent extends React.Component {
     const returnIcons = (iconArray) => iconArray.map(x =>
       <Image 
         key={x}
-        source= { getIconSource(x) }
+        source= { getScentIcon(x) }
         style={{width: 30, height: 30}}
       />
     );

@@ -9,7 +9,7 @@ export class GoBackHeader extends React.Component {
       <View style={styles.container}>
         <TouchableOpacity 
           onPress={() => {
-            console.log("onPress clicked");
+            this.props.navigation.pop()
           }}>
           <Text style={styles.buttonText}>취소</Text>
         </TouchableOpacity>

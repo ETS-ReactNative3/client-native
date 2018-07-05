@@ -15,9 +15,9 @@ const HomeNav = createStackNavigator({
   },
   AddDevice: {
     screen: AddDeviceScreen,
-    navigationOptions:{
-      header: <GoBackHeader />
-    }
+    navigationOptions:({navigation}) => console.log(navigation) || ({
+      header: <GoBackHeader navigation={navigation} />// Your custom header
+    })
   }
 }, {
   initialRouteName: "AddDevice",
