@@ -18,5 +18,7 @@ export const getScentIcon = (iconName) => {
       return(require("../../assets/imgs/scent_image/sandalwood.png"))
     case "ylangylang":
       return(require("../../assets/imgs/scent_image/ylangylang.png"))
+    default:
+      return (require ("../../assets/imgs/scent_image/lavender.png"))
   }
 }

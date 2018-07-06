@@ -2,6 +2,7 @@ import React from 'react';
 import { Image, View, FlatList, Text, TextInput} from 'react-native';
 import { SearchBar } from 'react-native-elements';
 import EStyleSheet from 'react-native-extended-stylesheet';
+import { getScentIcon } from '../helpers/icon';
 
 
 class CollectionScreen extends React.Component {
@@ -22,12 +23,13 @@ class CollectionScreen extends React.Component {
           <View style = {styles.container}>
               <Text style = {styles.title}> Scent Collection </Text>
               <SearchBar
-                  inputStyle = {{backgroundColor: '#babbbc'}}
+                  inputStyle = {{backgroundColor: '#babbbc', borderRadius: 6.802/360*screenWidth}}
                   containerStyle = {{backgroundColor: 'white', borderBottomColor: 'transparent', borderTopColor: 'transparent',
                     borderLeftColor: 'transparent', borderRightColor: 'transparent'}}
                   placeholder="Search"
                   placeholderTextColor = '#626263'
                   icon = {{type: 'font-awesome', name: "search", color: "#626263"}}
+
                   //searchIcon={false}
                   //onChangeText = {(input) => this.setState({??: input})}
                   //value={this.state.??}
@@ -39,10 +41,15 @@ class CollectionScreen extends React.Component {
                       <View style={styles.collectionContainer} key = {item.recipe_id}>
 
                         <Image source = {{uri: item.img_url}} style = {styles.itemImage}/>
-                        <View style = {{flexDirection: 'column'}}>
+                        <View style = {{flexDirection: 'column', width: 151.437/360*screenWidth, position: 'absolute', left: (68.102-20.6485)/360*screenWidth}}>
                           <Text style = {styles.itemName} > {item.name} </Text>
                           <Text style = {styles.itemDescription} > {item.description} </Text>
                         </View>
+                        <View style = {styles.ingredientContainer}>
+                        {item.ingredients.map((i,index) => (<Image key = {index} source = {getScentIcon(i.scent)} style = {styles.ingredientImage}/>))}
+                        </View>
+                        {//renderItem = { ({item.ingredients}) => <Image source = {{(item.ingredients) => getScentIcon (item.i)}}/>}
+                        }
                         
                       </View>)
                   }
@@ -123,11 +130,22 @@ const styles = EStyleSheet.create ({
 
     },
     itemImage: {
-        width: 37.5,
-        height: 37.5,
-        borderRadius: 18.75,
+        width: 37.5/360*screenWidth,
+        height: 37.5/360*screenWidth,
+        borderRadius: 18.75/360*screenWidth,
     },
+    ingredientImage: {
+        width: 23.75,
+        height: 23.75,
+        borderRadius: 11.875,
 
+    },
+    ingredientContainer: {
+        position: 'absolute',
+        right: 0,
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+    }
 
 
 
