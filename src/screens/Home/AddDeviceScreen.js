@@ -4,9 +4,16 @@ import { createStackNavigator } from 'react-navigation';
 import AddDeviceScreen from '../../components/HomeScreen/AddDeviceScreen';
 
 export class AddDeviceScreenContainer extends React.Component {
+
+  onAddNewDevicePress = async() => {
+    this.props.navigation.push("WifiList");
+  }
+  
   render() {
     return (
-      <AddDeviceScreen />
+      <AddDeviceScreen 
+        onAddNewDevicePress = {this.onAddNewDevicePress}
+      />
     )
   }
 }

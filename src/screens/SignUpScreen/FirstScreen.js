@@ -11,6 +11,7 @@ export class SignUpScreenContainer extends React.Component {
     console.log("onNextSignUpPress Clicked");
     this.props.navigation.push("SignUpSecond")
   }
+  
 
   render() {
     return <SignUpScreen

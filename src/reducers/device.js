@@ -1,6 +1,9 @@
 import { handleActions } from "redux-actions";
 import Immutable from "immutable";
 import {
+  REGISTER_DEVICE,
+  REGISTER_DEVICE_SUCCESS,
+  REGISTER_DEVICE_FAILURE,
   SEND_DEVICE_STATE,
   SEND_DEVICE_STATE_SUCCESS,
   SEND_DEVICE_STATE_FAILURE,

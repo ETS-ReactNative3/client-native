@@ -4,8 +4,15 @@ import HomeScreen from '../../components/HomeScreen/HomeScreen';
 let data = [];
 const logoPath = '../../../assets/imgs/home/logo.png';
 export class HomeScreenContainer extends React.Component {
+
+  onAddDeviceScreenPress = ()=> {
+    console.log("onAddDevicePress pressed");
+    this.props.navigation.push("AddDevice");
+  }
+
   render() {
-    return <HomeScreen 
+    return <HomeScreen
+      onAddDeviceScreenPress = {this.onAddDeviceScreenPress} 
       todayScent = {[
         {name: "HappyOrange", icons: ["lavender", "peppermint","eucalyptus"], saves: 243, shares: 120},
         {name: "Relax Lavender", icons: ["lavendar", "grass"], saves: 250, shares: 108},

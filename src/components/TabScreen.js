@@ -47,7 +47,7 @@ const TabScreen = createBottomTabNavigator(
     },
   },
   {
-    initialRouteName: "Collection",
+    initialRouteName: "Home",
     tabBarOptions: {
       showLabel: false,
       style: { 

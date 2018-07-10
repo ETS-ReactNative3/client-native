@@ -27,12 +27,12 @@ class DeviceSlide extends React.Component {
   }
 
   get pagination () {
-    const { entries, activeSlide } = this.state;
+    const { activeSlide } = this.state;
     return (
         <View style={{borderColor: '#123', borderWidth: 0}}>
           <Pagination
             dotsLength={this.props.devices.length}
-            activeDotIndex={activeSlide}
+            activeDotIndex={activeSlide%3}
             containerStyle={{ backgroundColor: '#fff' }}
             dotStyle={{
                 width: 10,

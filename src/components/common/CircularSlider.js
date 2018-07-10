@@ -22,7 +22,7 @@ class CircularSlider extends React.Component {
         // What is happening!
 
         // gestureState.d{x, y} will be set to zero now
-        console.log("Pan responder clicked, gestureState.d{x, y} values are",gestureState.d);
+        // console.log("Pan responder clicked, gestureState.d{x, y} values are",gestureState.d);
       },
       onPanResponderMove: (evt, gestureState) => {
         // The most recent move distance is gestureState.move{X, Y}
@@ -37,19 +37,19 @@ class CircularSlider extends React.Component {
         const centerY = radius + btnRadius;
 
         const finalWidth = btnRadius > lineWidth/2 ? radius+btnRadius : radius+lineWidth/2;
-        console.log("finalWidth is",finalWidth);
-        console.log("this.state.endAngle is",this.state.endAngle);
+        // console.log("finalWidth is",finalWidth);
+        // console.log("this.state.endAngle is",this.state.endAngle);
         const circleX = radius*2+radius*Math.cos(this.state.endAngle*Math.PI/180)
         const circleY = radius*2+radius*Math.sin(this.state.endAngle*Math.PI/180)
         const originX = gestureState.x0;
-        console.log("originX is",originX);
+        // console.log("originX is",originX);
         const originY = gestureState.y0;
-        console.log("originY is",originY);
+        // console.log("originY is",originY);
         const moveX = gestureState.moveX - this.state.absoluteStartX;
-        console.log("moveX is", moveX);
+        // console.log("moveX is", moveX);
         const moveY = gestureState.moveY - this.state.absoluteStartY;
-        console.log("moveY is",moveY);
-        console.log("this.state.absoluteStartX, absoluteStartY", this.state.absoluteStartX, this.state.absoluteStartY);
+        // console.log("moveY is",moveY);
+        // console.log("this.state.absoluteStartX, absoluteStartY", this.state.absoluteStartX, this.state.absoluteStartY);
 
         const closestX = centerX + radius * (moveX - centerX) / Math.pow(
           Math.pow(moveX-centerX,2) + Math.pow(moveY-centerY,2)
@@ -63,13 +63,13 @@ class CircularSlider extends React.Component {
         )
         currentAngle = currentAngle * 180 / Math.PI;
         if (moveX < centerX) {
-          console.log("Original current angle is",currentAngle);
+          // console.log("Original current angle is",currentAngle);
           currentAngle = 360-currentAngle;
         }
-        console.log("centerX, center Y is",centerX, centerY);
-        console.log("absolue clidked is",gestureState.moveX, gestureState.moveY);
-        console.log("moveX, moveY is",moveX, moveY);
-        console.log("ClosestX, closestY, currentAngle is",closestX, closestY, currentAngle)
+        // console.log("centerX, center Y is",centerX, centerY);
+        // console.log("absolue clidked is",gestureState.moveX, gestureState.moveY);
+        // console.log("moveX, moveY is",moveX, moveY);
+        // console.log("ClosestX, closestY, currentAngle is",closestX, closestY, currentAngle)
         this.setState({
           endAngle: currentAngle
         })
@@ -173,7 +173,7 @@ class CircularSlider extends React.Component {
         ref="Marker"
         onLayout={({nativeEvent}) => {
           this.refs.Marker.measure((x, y, width, height, pageX, pageY) => {
-          console.log(x, y, width, height, pageX, pageY);
+          // console.log(x, y, width, height, pageX, pageY);
           this.setState({
             absoluteStartX: pageX,
             absoluteStartY: pageY

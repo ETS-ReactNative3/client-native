@@ -7,9 +7,7 @@ import TodayScent from './TodayScent';
 import DeviceSlide from './DeviceSlide';
 
 
-
-const bookmarkIcon = (<Icon name="bookmark" size={20} color="#000" />)
-const shareIcon = (<Icon name="share-alt" size={20} color="#000" />)
+const plusIcon = (<Icon name="plus" size={20} color="#000" />)
 
 
 const data = [];
@@ -25,6 +23,11 @@ class HomeScreen extends React.Component {
     return (
       <View style = {styles.container}>
         <TodayScent todayScent = {this.props.todayScent[0]}/>
+        <TouchableOpacity 
+        style={styles.submitBtn} 
+        onPress={() => this.props.onAddDeviceScreenPress()}>
+          <Text style = {styles.submitText}>Submit</Text>
+        </TouchableOpacity>
         <DeviceSlide devices = {this.props.devices}/>
       </View>
     )
