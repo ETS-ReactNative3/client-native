@@ -5,7 +5,7 @@ import { createBottomTabNavigator, BottomTabBar } from 'react-navigation-tabs';
 
 import HomeScreen from '../screens/Home/HomeNav'
 import AlarmScreen from '../screens/AlarmScreen';
-import ControlScreen from '../screens/ControlScreen';
+import ControlScreen from '../screens/ControlScreen/ControlScreen';
 import CollectionScreen from '../screens/CollectionScreen';
 import SettingScreen from '../screens/SettingScreen';
 

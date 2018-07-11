@@ -4,7 +4,7 @@ import { Text, View } from 'react-native';
 import EStyleSheet from 'react-native-extended-stylesheet';
 import Slider from "react-native-slider";
 import { Dropdown } from 'react-native-material-dropdown';
-import CircularSlider from './common/CircularSlider'
+import CircularSliderSet from './CircularSliderSet';
 
 
 const aromMachine = [{
@@ -19,9 +19,6 @@ class ControlScreen extends React.Component {
     super(props);
     this.state = {
       light: 0,
-      scent: 0,
-      startAngle: Math.PI * 10/6,
-      angleLength: Math.PI * 7/6
     }
   }
   render() {
@@ -52,35 +49,15 @@ class ControlScreen extends React.Component {
           minimumValue = {0}
           maximumValue = {100}
         />
-        <Text>Scent</Text>
-        <Slider
-          value={this.state.scent}
-          onValueChange={(value) => {
-            this.setState({
-              scent: Math.round(value)
-            })
-          }}
-          minimumValue = {0}
-          maximumValue = {100}
-        />
-        {console.log("firstCircularPosition is ",firstCircularPosition)}
-        <CircularSlider 
-          radius={50}
-          lineWidth={10}
-          btnRadius={15}
-          startX={0}
-          startY={185}
-          lineColor='#fff'
-          circleColor='#cbf442'
-        />
-        <CircularSlider 
-          radius={50}
-          lineWidth={10}
-          btnRadius={15}
-          startX={0}
-          startY={185}
-          lineColor='#fff'
-          circleColor='#f0bcff'
+        <CircularSliderSet 
+          sliders = {4}
+          radius = {50}
+          lineWidth = {10}
+          btnRadius = {15}
+          defaultAngle1 = {50}
+          defaultAngle2 = {100}
+          defaultAngle3 = {150}
+          defaultAngle4 = {200}
         />
       </View>
     )
@@ -89,8 +66,6 @@ class ControlScreen extends React.Component {
 
 const styles = EStyleSheet.create({
   container: {
-    marginLeft: 10,
-    marginRight: 10,
 
   },
   rowView: {

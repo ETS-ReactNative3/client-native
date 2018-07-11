@@ -12,29 +12,16 @@ export const REGISTER_DEVICE = "DEVICE/REGISTER_DEVICE";
 export const REGISTER_DEVICE_SUCCESS = "DEVICE/REGISTER_DEVICE_SUCCESS";
 export const REGISTER_DEVICE_FAILURE = "DEVICE/REGISTER_DEVICE_FAILURE";
 
-export const registerDevice = (device_id, name, reported, desired) => async (dispatch, getState) => {
-  const apiCall = createApiAction({
+export const registerDevice = (device_id) => async (dispatch, getState) => {
+  console.log("api called")
+  const apiCall = createAuthorizedApiAction({
     types: [REGISTER_DEVICE, REGISTER_DEVICE_SUCCESS, REGISTER_DEVICE_FAILURE],
-    path: 'devices/'+device_id+'/state',
-    params: {"name": name, 
-    "reported": {
-      "light": reported["light"], "power": reported["power"], 
-      "fan1": reported["fan1"], "fan2": reported["fan2"], 
-      "fan3": reported["fan3"], "fan4": reported["fan4"], 
-      "owner_id": reported["owner_id"], "timestamp": reported["timestamp"],
-      "cart1_scent": reported["cart1_scent"], "cart1_serial": reported["cart1_serial"],
-      "cart2_scent": reported["cart2_scent"], "cart2_serial": reported["cart2_serial"],
-      "cart3_scent": reported["cart3_scent"], "cart3_serial": reported["cart3_serial"],
-      "cart4_scent": reported["cart4_scent"], "cart4_serial": reported["cart4_serial"]
-    },
-    "desired": {
-      "light": desired["light"], "power": desired["power"],
-      "fan1": desired["fan1"], "fan2": desired["fan2"],
-      "fan3": desired["fan3"], "fan4": desired["fan4"],
-      "timestamp": desired["timestamp"]
-    }
-  }
+    path: 'devices/'+device_id+'/register',
+    params: {}
   })
+  console.log("Inside action register device")
+  await dispatch (apiCall);
+  console.log("Register device inside actions pressed");
 }
 
 
@@ -54,6 +41,11 @@ export async function requestDeviceId() {
   let data = await rpcCall("Device.Id");
   let deviceId = data['device_id'];
   return deviceId;
+}
+
+export async function requestSetOwner(ownerId) {
+  await rpcCall("Device.Owner", {owner_id: ownerId})
+  console.log("set owner to",ownerId);
 }
 
 export async function requestWifiList() {
@@ -110,7 +102,7 @@ export async function rpcCall(name, params={}) {
     );
     console.log('awaiting response');
     let responseJson = await response.json();
-    // console.log("response JSON is",responseJson);
+    console.log("response JSON is",responseJson);
     return responseJson;
   } catch (error) {
     console.log(error);

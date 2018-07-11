@@ -43,6 +43,13 @@ export class WifiListScreen extends React.Component {
           data={this.state.data}
           renderItem={this._renderItem}
         />
+        <TouchableOpacity 
+          onPress={() => {
+            this.props.onRegisterDevice()
+          }}
+        >
+          <Text>Register Device</Text>
+        </TouchableOpacity>
       </View>
     )
   }

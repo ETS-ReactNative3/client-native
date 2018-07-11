@@ -1,7 +1,7 @@
 import React from 'react';
-import ControlScreen from '../components/ControlScreen'
+import ControlScreen from '../../components/ControlScreen/ControlScreen'
 import { createStackNavigator } from 'react-navigation';
-import Header from '../components/Headers/MainHeader'
+import Header from '../../components/Headers/MainHeader'
 
 export class ControlScreenContainer extends React.Component {
 

@@ -7,7 +7,8 @@ import {
   createAuthorizedApiAction
 } from './api'
 
-export const SET_TOKEN = "USER/SET_TOKEN";
+export const SET_TOKEN = "USER/SET_TOKEN"
+
 
 export const setToken = createAction(SET_TOKEN);
 
