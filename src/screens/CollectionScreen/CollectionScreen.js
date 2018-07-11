@@ -1,8 +1,9 @@
 import React from 'react';
-import CollectionScreen from '../components/CollectionScreen'
+import CollectionScreen from '../../components/CollectionScreen/CollectionScreen'
+import EachCollectionScreen from '../../components/CollectionScreen/EachCollectionScreen'
 
 import { connect } from 'react-redux';
-import { loadCollection } from '../actions/recipe';
+import { loadCollection } from '../../actions/recipe';
 
 
 const mapStateToProps = state => ({
@@ -16,14 +17,26 @@ const mapDispatchToProps = (dispatch, props) => ({
     dispatch(loadCollection({}));
   }
 });
-/*
+
 export class CollectionScreenContainer extends React.Component {
 
+  onCollectionPress = (item) => {
+    console.log ("item at CollectionScreen: ", item);
+    this.props.navigation.replace ("EachCollection",{
+      item: item 
+      });
+    
+  };
+
   render() {
-    return <CollectionScreen />
+    return <CollectionScreen
+    {...this.props}
+    onCollectionPress = {this.onCollectionPress} />
   }
-}*/
+
+};
+
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(CollectionScreen);
+)(CollectionScreenContainer);
