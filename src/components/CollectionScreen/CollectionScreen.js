@@ -1,8 +1,8 @@
 import React from 'react';
-import { Image, View, FlatList, Text, TextInput} from 'react-native';
+import { Image, View, FlatList, Text, TextInput, TouchableOpacity } from 'react-native';
 import { SearchBar } from 'react-native-elements';
 import EStyleSheet from 'react-native-extended-stylesheet';
-import { getScentIcon } from '../helpers/icon';
+import { getScentIcon } from '../../helpers/icon';
 
 
 class CollectionScreen extends React.Component {
@@ -17,6 +17,7 @@ class CollectionScreen extends React.Component {
     render() {
       if (this.props.list) {
         var list = this.props.list.toJS();
+        let _this = this;
         list = list.map(x => ({...x, key: x.recipe_id}));
         //list = list.filter (x => x.name == "우주코스모2");
         return (
@@ -34,27 +35,35 @@ class CollectionScreen extends React.Component {
                   //onChangeText = {(input) => this.setState({??: input})}
                   //value={this.state.??}
                 />
-              <FlatList
-                  data = {list}
-                  renderItem={
-                      ({item}) => (console.log ('The item des is: ', item.description) ||
-                      <View style={styles.collectionContainer} key = {item.recipe_id}>
 
-                        <Image source = {{uri: item.img_url}} style = {styles.itemImage}/>
-                        <View style = {{flexDirection: 'column', width: 151.437/360*screenWidth, position: 'absolute', left: (68.102-20.6485)/360*screenWidth}}>
-                          <Text style = {styles.itemName} > {item.name} </Text>
-                          <Text style = {styles.itemDescription} > {item.description} </Text>
+                <FlatList
+                    data = {list}
+                    renderItem={
+                        ({item}) => (console.log ('The item is: ', item) ||
+                        <TouchableOpacity style = {[]} onPress={() => {
+                            //console.log("_this.props: ", _this.props);
+                            //console.log ("this is : ", _this);
+                            _this.props.onCollectionPress (item);
+                            }}>
+                        <View style={styles.collectionContainer} key = {item.recipe_id}>
+
+                                <Image source = {{uri: item.img_url}} style = {styles.itemImage}/>
+                                <View style = {{flexDirection: 'column', width: 151.437/360*screenWidth, position: 'absolute', left: (68.102-20.6485)/360*screenWidth}}>
+                                <Text style = {styles.itemName} > {item.name} </Text>
+                                <Text style = {styles.itemDescription} > {item.description} </Text>
+                                </View>
+                                <View style = {styles.ingredientContainer}>
+                                {item.ingredients.map((i,index) => (<Image key = {index} source = {getScentIcon(i.scent)} style = {styles.ingredientImage}/>))}
+                                </View>
+                                {//renderItem = { ({item.ingredients}) => <Image source = {{(item.ingredients) => getScentIcon (item.i)}}/>}
+                                }
+                            
                         </View>
-                        <View style = {styles.ingredientContainer}>
-                        {item.ingredients.map((i,index) => (<Image key = {index} source = {getScentIcon(i.scent)} style = {styles.ingredientImage}/>))}
-                        </View>
-                        {//renderItem = { ({item.ingredients}) => <Image source = {{(item.ingredients) => getScentIcon (item.i)}}/>}
-                        }
-                        
-                      </View>)
-                  }
-              >
-              </FlatList>
+                        </TouchableOpacity>)
+                    }
+                >
+                </FlatList>
+              
           </View>
         )
 

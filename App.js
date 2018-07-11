@@ -19,6 +19,7 @@ import LoginScreen from './src/screens/LoginScreen';
 import FirstScreen from './src/screens/SignUpScreen/FirstScreen';
 import SecondScreen from './src/screens/SignUpScreen/SecondScreen';
 import TabScreen from './src/screens/TabScreen';
+import EachCollectionScreen from './src/screens/CollectionScreen/EachCollectionScreen';
 
 // prepare extended stylesheet
 EStyleSheet.build();
@@ -37,6 +38,9 @@ let Nav = createStackNavigator({
   Tab: {
     screen: TabScreen
   },
+  EachCollection: {
+    screen: EachCollectionScreen
+  }
 }, {
   initialRouteName: "Login",
   headerMode: 'none',
