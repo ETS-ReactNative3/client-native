@@ -3,6 +3,7 @@ import { View } from 'react-native';
 import { createStackNavigator } from 'react-navigation';
 import HomeScreen from './HomeScreen';
 import AddDeviceScreen from './AddDeviceScreen';
+import WifiListScreen from './WifiListScreen';
 import Header from '../../components/Headers/MainHeader';
 import GoBackHeader from '../../components/Headers/GoBackHeader'
 
@@ -18,9 +19,12 @@ const HomeNav = createStackNavigator({
     navigationOptions:({navigation}) => console.log(navigation) || ({
       header: <GoBackHeader navigation={navigation} />// Your custom header
     })
+  },
+  WifiList: {
+    screen: WifiListScreen,
   }
 }, {
-  initialRouteName: "AddDevice",
+  initialRouteName: "Home",
 })
 
 export default HomeNav;
