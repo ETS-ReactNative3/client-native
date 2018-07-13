@@ -15,36 +15,37 @@ class CircularSliderSet extends React.Component {
       fixRatio: false,
       stopSlider: false,
       ratio: [1, 1, 1, 1],
-      value: [this.props.defaultAngle1, this.props.defaultAngle2, this.props.defaultAngle3, this.props.defaultAngle4]
+      angle: [this.props.defaultAngle1, this.props.defaultAngle2, this.props.defaultAngle3, this.props.defaultAngle4],
+      maxAngle: [359.99, 359.99, 359.99, 359.99],
+      deviceId: 'arom_jaeyoung'
     }
   }
 
 
   render() {
     updateAngle = (index, angle) => {
-      let newArray = this.state.value.slice(); //creates the clone of the state
+      let newArray = this.state.angle.slice(); //creates the clone of the state
       newArray[index] = angle;
-      this.setState({stopSlider: false, value: newArray});
+      this.setState({stopSlider: false, angle: newArray});
     }
 
 
     updateAngleByRatio = (index, angle) => {
       // console.log("update angle by ratio")
-      let shouldUpdate = true;
-      let newArray = this.state.value.slice();
+      let value = Math.round(angle*100/360);
+      let newArray = this.state.angle.slice();
       const sliderNumbers = this.state.sliders
       // console.log("slider numbers is",sliderNumbers);
       for (let i = 0; i < sliderNumbers; i++) {
-        newArray[i] = this.state.value[i] * angle / this.state.value[index]
-        if (newArray[i]>=359.9) {
-          shouldUpdate = false
+        newArray[i] = this.state.ratio[i] * value / this.state.ratio[index] * 360 / 100
+        if (newArray[i] > this.state.maxAngle[i]) {
+          newArray[i] = this.state.maxAngle[i];
+        }
+        if (newArray[i] >= 360) {
+          newArray[i] = 359.99
         }
       }
-      if (shouldUpdate) {
-        this.setState({value: newArray, stopSlider: false})
-      } else {
-        this.setState({stopSlider: true})
-      }
+      this.setState({angle: newArray})
     }
 
     return (
@@ -56,7 +57,8 @@ class CircularSliderSet extends React.Component {
               radius={this.props.radius}
               lineWidth={this.props.lineWidth}
               btnRadius={this.props.btnRadius}
-              startAngle={this.state.value[0]}
+              startValue={this.state.angle[0]}
+              maxAngle={this.state.maxAngle[0]}
               stopSlider={this.state.stopSlider}
               onChangeAngle={(angle) => {
                 this.state.fixRatio == false ? updateAngle(0, angle) : updateAngleByRatio(0, angle)
@@ -70,7 +72,8 @@ class CircularSliderSet extends React.Component {
               radius={this.props.radius}
               lineWidth={this.props.lineWidth}
               btnRadius={this.props.btnRadius}
-              startAngle={this.state.value[1]}
+              startValue={this.state.angle[1]}
+              maxAngle={this.state.maxAngle[1]}
               stopSlider={this.state.stopSlider}
               onChangeAngle={(angle) => {
                 this.state.fixRatio == false ? updateAngle(1, angle) : updateAngleByRatio(1, angle)
@@ -82,10 +85,19 @@ class CircularSliderSet extends React.Component {
         </View>
         <TouchableOpacity style={{alignItems: 'center'}}
           onPress={() => {
-            let newArray = this.state.value.slice()
+            let {angle, maxAngle, fixRatio} = this.state
+            let maxIndex = angle.indexOf(Math.max(...angle))
+            let newArray = angle.map(x => Math.round(x*100/angle[maxIndex]))
+            let newMaxAngle = [359.99, 359.99, 359.99, 359.99]
+            if (fixRatio == false) {
+              newMaxAngle = newArray.map(x => {
+                return x*360/newArray[maxIndex] == 360 ? 359.99 : x*360/newArray[maxIndex]
+              })
+            }
             this.setState({
-              fixRatio: this.state.fixRatio===false ? true : false,
-              ratio: newArray
+              ratio: newArray,
+              maxAngle: newMaxAngle,
+              fixRatio: this.state.fixRatio===false ? true : false
             })
           }}
         >
@@ -97,7 +109,8 @@ class CircularSliderSet extends React.Component {
               radius={this.props.radius}
               lineWidth={this.props.lineWidth}
               btnRadius={this.props.btnRadius}
-              startAngle={this.state.value[2]}
+              startValue={this.state.angle[2]}
+              maxAngle={this.state.maxAngle[2]}
               stopSlider={this.state.stopSlider}
               onChangeAngle={(angle) => {
                 this.state.fixRatio == false ? updateAngle(2, angle) : updateAngleByRatio(2, angle)
@@ -111,7 +124,8 @@ class CircularSliderSet extends React.Component {
               radius={this.props.radius}
               lineWidth={this.props.lineWidth}
               btnRadius={this.props.btnRadius}
-              startAngle={this.state.value[3]}
+              startValue={this.state.angle[3]}
+              maxAngle={this.state.maxAngle[3]}
               stopSlider={this.state.stopSlider}
               onChangeAngle={(angle) => {
                 this.state.fixRatio == false ? updateAngle(3, angle) : updateAngleByRatio(3, angle)
@@ -121,6 +135,14 @@ class CircularSliderSet extends React.Component {
             />
           </View>
         </View>
+        <TouchableOpacity 
+          style={{alignItems:'center'}}
+          onPress={
+            ()=>this.props.onRegisterScentPress()
+          }
+        >
+          <Text>향기 등록하기</Text>
+        </TouchableOpacity>
       </View> 
     )
   }

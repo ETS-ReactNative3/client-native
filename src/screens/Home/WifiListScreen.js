@@ -1,5 +1,5 @@
 import React from 'react';
-import { requestDeviceId, requestWifiList, requestSetWifi, registerDevice } from '../../actions/device';
+import { requestDeviceId, requestWifiList, requestSetWifi, asyncConnectWifi, registerDevice } from '../../actions/device';
 
 import { connect } from 'react-redux';
 import WifiListScreen from '../../components/HomeScreen/WifiListScreen';
@@ -59,8 +59,9 @@ export class WifiListScreenContainer extends React.Component {
   }
 
   onWifiSelect = (name, password) => {
-    requestSetWifi(name, password);
+    asyncConnectWifi(name, password);
   }
+  
 
   onRegisterDevice = async () => {
     console.log("onRegisterDevice Pressed");

@@ -17,7 +17,8 @@ export const registerDevice = (device_id) => async (dispatch, getState) => {
   const apiCall = createAuthorizedApiAction({
     types: [REGISTER_DEVICE, REGISTER_DEVICE_SUCCESS, REGISTER_DEVICE_FAILURE],
     path: 'devices/'+device_id+'/register',
-    params: {}
+    params: {},
+    options: {deviceId: device_id}
   })
   console.log("Inside action register device")
   await dispatch (apiCall);
@@ -29,7 +30,7 @@ export const SEND_DEVICE_STATE = "USER/SEND_STATE";
 export const SEND_DEVICE_STATE_SUCCESS = "USER/SEND_STATE_SUCCESS";
 export const SEND_DEVICE_STATE_FAILURE = "USER/SEND_STATE_FAILURE";
 
-export const sendDeviceState = (device_id, power, light, name, fan1, fan2, fan3, fan4) => async (dispatch, getState) => {
+export const updateDeviceState = (device_id, power, light, name, fan1, fan2, fan3, fan4) => async (dispatch, getState) => {
   const apiCall = createApiAction({
     types: [SEND_DEVICE_STATE, SEND_DEVICE_STATE_SUCCESS, SEND_DEVICE_STATE_FAILURE],
     path: 'devices/'+device_id+'/state',
@@ -82,13 +83,56 @@ export async function requestSsidList() {
   return filteredSsidList;
 }
 
-export async function requestSetWifi(ssid, password) {
+export async function asyncConnectWifi(ssid, password='') {
+  console.log("ConnectWifi:",ssid);
+  await requestSetWifi(ssid, password);
+  let error = null
+  for (let i = 0; i < 10; i++) {
+    try {
+      let connected = await requestIsWifiConnected();
+      if (connected) {
+        await handleWifiConnected();
+        return;
+      }
+    } catch(err) {
+      error = err;
+      console.log(error);
+    }
+    await timeout(1000)
+  }
+}
+
+export async function requestSetWifi(ssid, password='') {
   console.log("need to connect to wifi ",ssid,"with password",password);
   const params = {
     "ssid": ssid,
     "pw": password
   }
   return await rpcCall("Wifi", params);
+}
+
+export async function requestIsWifiConnected() {
+  let reps = await rpcCall("Sys.GetInfo");
+  console.log(reps);
+  if (reps["wifi"]["sta_ip"].length > 6) {
+    console.log("Wifi is connected")
+    return true;
+  }
+  console.log("Wifi is not connected")
+  return false;
+}
+
+export async function handleWifiConnected() {
+  requestSetSoftAp(false);
+
+}
+
+export async function requestSetSoftAp(enable) {
+  await rpcCall("softApDisable", {});
+}
+
+export async function saveConfig() {
+  await rpcCall("Config.Save", {reboot: true});
 }
 
 export async function rpcCall(name, params={}) {
@@ -107,4 +151,9 @@ export async function rpcCall(name, params={}) {
   } catch (error) {
     console.log(error);
   }
+}
+
+function timeout(ms) {
+  console.log("waiting for",ms,"ms");
+  return new Promise(resolve => setTimeout(resolve, ms));
 }

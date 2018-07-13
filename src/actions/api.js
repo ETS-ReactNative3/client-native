@@ -9,7 +9,7 @@ function createEndpoint(path) {
 }
 
 export function createApiAction({
-  types, path, params, token, method="POST"}) {
+  types, path, params, token, method="POST", options={}}) {
 
   let headers = {
     'Content-Type': 'application/json',
@@ -37,12 +37,13 @@ export function createApiAction({
       method,
       headers,
       body,
+      options
     }
   };
 }
 
 export function createAuthorizedApiAction({
-  types, path, params, method="POST"}) {
+  types, path, params, method="POST", options={}}) {
   return async (dispatch, getState) => {
     const token = getState().getIn(['user', 'auth', 'token', 'auth_token']);
     await dispatch(createApiAction({
@@ -50,7 +51,8 @@ export function createAuthorizedApiAction({
       path,
       params,
       token,
-      method
+      method,
+      options
     }));
   };
 }
