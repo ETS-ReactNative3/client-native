@@ -29,6 +29,11 @@ const initialState = Immutable.fromJS({
     success: null,
     error: null
   },
+  userinfo: {
+    loading: false,
+    error: null,
+    data: null,
+  },
 });
 
 export default handleActions({
@@ -72,6 +77,20 @@ export default handleActions({
     console.log("Signout failure    ",payload);
     let signout = initialState.get('auth').set('error', payload);
     return userState.set('auth', signout);
+  },
+  [USERINFO] (userState) {
+    console.log ("User Info");
+    let userinfo = initialState.get ('userinfo').set ('loading', true);
+    return userState.set ('userinfo', userinfo);
+  },
+  [USERINFO_SUCCESS] (userState, {payload}) {
+    let userinfo = initialState.get ('userinfo').set ('data', Immutable.fromJS (payload.user_info));
+    console.log ("user info success");
+    return userState.set ('userinfo', userinfo);
+  },
+  [USERINFO_FAILURE] (userState, {payload}) {
+    let userinfo = initialState.get ('userinfo').set ('error', payload);
+    return userState.set ('userinfo', userinfo);
   }
 },
 initialState
