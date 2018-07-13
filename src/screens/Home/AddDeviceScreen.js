@@ -2,7 +2,7 @@ import React from 'react';
 import { View, Text, Image, TouchableOpacity } from 'react-native';
 import { createStackNavigator } from 'react-navigation';
 import AddDeviceScreen from '../../components/HomeScreen/AddDeviceScreen';
-import { requestSetOwner } from '../../actions/device';
+import { requestSetOwner } from '../../helpers/device';
 
 export class AddDeviceScreenContainer extends React.Component {
 

@@ -4,11 +4,12 @@ import Svg,{ Circle, Path, Rect, Text } from 'react-native-svg';
 
 class CircularSlider extends React.Component {
   componentWillReceiveProps(nextProps) {
-    if (this.state.endAngle !== nextProps.startValue) {
-      // console.log("Component will receive props activated");
+    if (this.state.endAngle !== nextProps.startValue && nextProps.stopSlider === false) {
+      console.log("Component will receive props activated");
       if (nextProps.startValue >=360) {
         this.setState({
           endAngle: 359.99,
+          enableSlider: nextProps.enableSlider
         })
       }
       else {
