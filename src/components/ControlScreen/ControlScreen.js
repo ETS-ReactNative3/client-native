@@ -1,10 +1,10 @@
 import React from 'react';
-import { Text, View } from 'react-native';
+import { Text, View, TouchableOpacity } from 'react-native';
 
 import EStyleSheet from 'react-native-extended-stylesheet';
 import Slider from "react-native-slider";
 import { Dropdown } from 'react-native-material-dropdown';
-import CircularSliderSet from './CircularSliderSet';
+import CircularSliderSetContainer from '../../containers/ControlScreen/CircularSliderSetContainer';
 
 
 const aromMachine = [{
@@ -49,15 +49,15 @@ class ControlScreen extends React.Component {
           minimumValue = {0}
           maximumValue = {100}
         />
-        <CircularSliderSet 
+        <CircularSliderSetContainer
           sliders = {4}
-          radius = {50}
+          radius = {55}
           lineWidth = {10}
-          btnRadius = {15}
-          defaultAngle1 = {50}
-          defaultAngle2 = {100}
-          defaultAngle3 = {150}
-          defaultAngle4 = {200}
+          btnRadius = {20}
+          defaultAngle1 = {90}
+          defaultAngle2 = {180}
+          defaultAngle3 = {135}
+          defaultAngle4 = {150}
         />
       </View>
     )

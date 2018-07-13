@@ -4,24 +4,32 @@ import Svg,{ Circle, Path, Rect, Text } from 'react-native-svg';
 
 class CircularSlider extends React.Component {
   componentWillReceiveProps(nextProps) {
-    if (this.state.endAngle !== nextProps.startAngle) {
-      if (nextProps.startAngle >=360) {
+    if (this.state.endAngle !== nextProps.startValue && nextProps.stopSlider === false) {
+      console.log("Component will receive props activated");
+      if (nextProps.startValue >=360) {
         this.setState({
-          endAngle: 359.9,
+          endAngle: 359.99,
           enableSlider: nextProps.enableSlider
         })
-      } else {
+      }
+      else {
         this.setState({
-          endAngle: nextProps.startAngle,
+          endAngle: nextProps.startValue,
           enableSlider: nextProps.enableSlider
         });
       }
-    }
+    } 
+    // else if (Math.round(nextProps.startValue*100/360>99)) {
+    //   console.log("Componentwillreceiveprops set in alternate space")
+    //   this.setState({
+    //     endAngle: 359.99
+    //   })
+    // }
    }
   constructor(props) {
     super(props);
     this.state = {
-      endAngle:this.props.startAngle,
+      endAngle: this.props.startValue,
       absoluteStartX:0,
       absoluteStartY:0,
       enableSlider: true
@@ -34,7 +42,7 @@ class CircularSlider extends React.Component {
       onMoveShouldSetPanResponderCapture: (evt, gestureState) => true,
 
       onPanResponderGrant: (evt, gestureState) => {
-        this.props.onChangeAngle(this.state.endAngle);
+        // this.props.onChangeAngle(this.state.endAngle);
         // The gesture has started. Show visual feedback so the user knows
         // What is happening!
 
@@ -42,7 +50,7 @@ class CircularSlider extends React.Component {
         // console.log("Pan responder clicked, gestureState.d{x, y} values are",gestureState.d);
       },
       onPanResponderMove: (evt, gestureState) => {
-        this.props.onChangeAngle(this.state.endAngle);
+        // this.props.onChangeAngle(this.state.endAngle);
         // The most recent move distance is gestureState.move{X, Y}
 
         // The accumulated gesture distance since becoming responder is
@@ -89,18 +97,21 @@ class CircularSlider extends React.Component {
         // console.log("moveX, moveY is",moveX, moveY);
         // console.log("ClosestX, closestY, currentAngle is",closestX, closestY, currentAngle)
         // console.log("currentAngle: ",currentAngle,"this.state.endAngle: ",this.state.endAngle)
-        if (Math.abs(this.state.endAngle - currentAngle) < 30) {
-          this.setState({
-            endAngle: currentAngle
-          })
-        } else if (this.state.endAngle < 10 && currentAngle > 350) {
-          this.setState({
-            endAngle: 0
-          })
-        } else if (this.state.endAngle > 350 && currentAngle < 10) {
-          this.setState({
-            endAngle: 359.9
-          })
+        if (this.props.stopSlider == false || this.state.endAngle > currentAngle) {
+          if (Math.abs(this.state.endAngle - currentAngle) < 90) {
+            this.setState({
+              endAngle: currentAngle < this.props.maxAngle ? currentAngle : this.props.maxAngle
+            })
+          } else if (this.state.endAngle < 10 && currentAngle > 350) {
+            this.setState({
+              endAngle: 0
+            })
+          } else if (this.state.endAngle > 350 && currentAngle < 10) {
+            this.setState({
+              endAngle: 359.99
+            })
+          }
+          this.props.onChangeAngle(this.state.endAngle);
         }
       },
       onPanResponderTerminationRequest: (evt, gestureState) => true,
@@ -149,13 +160,13 @@ class CircularSlider extends React.Component {
     }
 
     const drawArc = (radius, startAngle, endAngle, lineWidth, btnRadius) => {
-      if (endAngle < 0) {
-        this.setState({endAngle: 0})
-        endAngle = 0
-      } else if (endAngle>360) {
-        this.setState({endAngle: 360})
-        endAngle=359.9
-      }
+      // if (endAngle < 0) {
+      //   this.setState({endAngle: 0})
+      //   endAngle = 0
+      // } else if (endAngle>360) {
+      //   this.setState({endAngle: 359.99})
+      //   endAngle=359.9
+      // }
       const finalWidth = btnRadius > lineWidth/2 ? radius+btnRadius : radius+lineWidth/2;
       const start = polarToCartesian(finalWidth, finalWidth, radius, endAngle);
       const end = polarToCartesian(finalWidth, finalWidth, radius, startAngle);
@@ -208,15 +219,15 @@ class CircularSlider extends React.Component {
         ref="Marker"
         onLayout={({nativeEvent}) => {
           this.refs.Marker.measure((x, y, width, height, pageX, pageY) => {
-          // console.log(x, y, width, height, pageX, pageY);
-          this.setState({
-            absoluteStartX: pageX,
-            absoluteStartY: pageY
-          })
+            // console.log(x, y, width, height, pageX, pageY);
+            this.setState({
+              absoluteStartX: pageX,
+              absoluteStartY: pageY
+            })
           })
         }}
       >
-        {console.log("Circular slider changed with angle",this.state.endAngle)}
+        {/* {console.log("Circular slider changed with angle",this.state.endAngle)} */}
         {/* {this.state.endAngle >= 360 ? this.state.endAngle %= 360 : null} */}
         {drawArc(this.props.radius, 0, this.state.endAngle, this.props.lineWidth, this.props.btnRadius)}
       </View>

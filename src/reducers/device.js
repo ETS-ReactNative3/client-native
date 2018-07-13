@@ -18,8 +18,8 @@ const initialState = Immutable.fromJS({
 });
 
 export default handleActions({
-  [REGISTER_DEVICE] (userState) {
-    console.log("Register device in reducers pressed");
+  [REGISTER_DEVICE] (userState, {options}) {
+    console.log("Register device in reducers pressed, options is",options);
     let register_device = initialState.get('devices').set('loading', true);
     return userState.set('devices', register_device);
   },
