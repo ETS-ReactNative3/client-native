@@ -37,7 +37,6 @@ export function createApiAction({
       method,
       headers,
       body,
-      options
     }
   };
 }
