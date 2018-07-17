@@ -50,6 +50,10 @@ class CircularSliderSet extends React.Component {
       this.setState({angle: newArray})
     }
 
+    onSendDeviceState = () => {
+      this.props.onSendDeviceStatePress(this.state.deviceId, true, this.state.light,'dd', this.state.angle[0], this.state.angle[1], this.state.angle[2], this.state.angle[3])
+    }
+
     return (
       <View style={styles.container}>
         {/* {console.log(this.state)} */}
@@ -63,6 +67,7 @@ class CircularSliderSet extends React.Component {
           }}
           minimumValue = {0}
           maximumValue = {100}
+          onSlidingComplete = {()=>onSendDeviceState()}
         />
         <View style={styles.rowView}>
           <View>
@@ -73,6 +78,7 @@ class CircularSliderSet extends React.Component {
               startValue={this.state.angle[0]}
               maxAngle={this.state.maxAngle[0]}
               stopSlider={this.state.stopSlider}
+              onSlidingComplete = {()=>onSendDeviceState()}
               onChangeAngle={(angle) => {
                 this.state.fixRatio == false ? updateAngle(0, angle) : updateAngleByRatio(0, angle)
               }}
@@ -88,6 +94,7 @@ class CircularSliderSet extends React.Component {
               startValue={this.state.angle[1]}
               maxAngle={this.state.maxAngle[1]}
               stopSlider={this.state.stopSlider}
+              onSlidingComplete = {()=>onSendDeviceState()}
               onChangeAngle={(angle) => {
                 this.state.fixRatio == false ? updateAngle(1, angle) : updateAngleByRatio(1, angle)
               }}
@@ -125,6 +132,7 @@ class CircularSliderSet extends React.Component {
               startValue={this.state.angle[2]}
               maxAngle={this.state.maxAngle[2]}
               stopSlider={this.state.stopSlider}
+              onSlidingComplete = {()=>onSendDeviceState()}
               onChangeAngle={(angle) => {
                 this.state.fixRatio == false ? updateAngle(2, angle) : updateAngleByRatio(2, angle)
               }}
@@ -140,6 +148,7 @@ class CircularSliderSet extends React.Component {
               startValue={this.state.angle[3]}
               maxAngle={this.state.maxAngle[3]}
               stopSlider={this.state.stopSlider}
+              onSlidingComplete = {()=>onSendDeviceState()}
               onChangeAngle={(angle) => {
                 this.state.fixRatio == false ? updateAngle(3, angle) : updateAngleByRatio(3, angle)
               }}
@@ -151,7 +160,7 @@ class CircularSliderSet extends React.Component {
         <TouchableOpacity 
           style={{alignItems:'center'}}
           onPress={
-            ()=>this.props.onSendDeviceStatePress(this.state.deviceId, true, this.state.light,'dd', this.state.angle[0], this.state.angle[1], this.state.angle[2], this.state.angle[3])
+            ()=>onSendDeviceStatePress()
           }
         >
           <Text>향기 등록하기</Text>

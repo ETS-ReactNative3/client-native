@@ -115,7 +115,8 @@ class CircularSlider extends React.Component {
         }
       },
       onPanResponderTerminationRequest: (evt, gestureState) => true,
-      onPanResponderReleast: (evt, gestureState) => {
+      onPanResponderRelease: (evt, gestureState) => {
+        this.props.onSlidingComplete();
         // Another component has become the responder. so this gesture
         // should be cancelled
       },
@@ -124,9 +125,7 @@ class CircularSlider extends React.Component {
         // responder. Returns true by default. Is currently only supported on android
       }
     })
-    const degToRad = (degree) => {
-      degree*Math.PI/360
-    }
+
   }
 
   render() {
@@ -155,9 +154,6 @@ class CircularSlider extends React.Component {
     //     return d;       
     // }
 
-    const degToRad = (degree) => {
-      degree*Math.PI/360
-    }
 
     const drawArc = (radius, startAngle, endAngle, lineWidth, btnRadius) => {
       // if (endAngle < 0) {
