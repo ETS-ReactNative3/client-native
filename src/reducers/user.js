@@ -11,7 +11,10 @@ import {
   SIGNUP_FAILURE,
   LOGOUT,
   LOGOUT_SUCCESS,
-  LOGOUT_FAILURE
+  LOGOUT_FAILURE,
+  USERINFO,
+  USERINFO_SUCCESS,
+  USERINFO_FAILURE,
 } from '../actions/user';
 
 const initialState = Immutable.fromJS({
@@ -28,6 +31,11 @@ const initialState = Immutable.fromJS({
     loading: false,
     success: null,
     error: null
+  },
+  userinfo: {
+    loading: false,
+    error: null,
+    data: null,
   },
 });
 
@@ -72,6 +80,20 @@ export default handleActions({
     console.log("Signout failure    ",payload);
     let signout = initialState.get('auth').set('error', payload);
     return userState.set('auth', signout);
+  },
+  [USERINFO] (userState) {
+    console.log ("User Info");
+    let userinfo = initialState.get ('userinfo').set ('loading', true);
+    return userState.set ('userinfo', userinfo);
+  },
+  [USERINFO_SUCCESS] (userState, {payload}) {
+    let userinfo = initialState.get ('userinfo').set ('data', Immutable.fromJS (payload.user_info));
+    console.log ("user info success");
+    return userState.set ('userinfo', userinfo);
+  },
+  [USERINFO_FAILURE] (userState, {payload}) {
+    let userinfo = initialState.get ('userinfo').set ('error', payload);
+    return userState.set ('userinfo', userinfo);
   }
 },
 initialState

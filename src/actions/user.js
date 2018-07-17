@@ -88,3 +88,18 @@ export const logout = () => async (dispatch) => {
   await dispatch(apiCall);
   await AsyncStorage.setItem('token', '');
 }
+
+export const USERINFO = "USER/USERINFO";
+export const USERINFO_SUCCESS = "USER/USERINFO_SUCCESS";
+export const USERINFO_FAILURE = "USER/USERINFO_FAILURE";
+
+export const userinfo = () => async (dispatch) => {
+  console.log ("Get User information");
+
+  const apiCall = createAuthorizedApiAction ({
+    types: [USERINFO, USERINFO_SUCCESS, USERINFO_FAILURE],
+    path: 'auth/user_info',
+    method: 'GET',
+  });
+  await dispatch (apiCall);
+}

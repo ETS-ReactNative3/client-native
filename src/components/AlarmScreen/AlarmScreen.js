@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Text, View, FlatList } from 'react-native';
+import { Text, View, FlatList, TouchableOpacity } from 'react-native';
 class AlarmScreen extends React.Component {
   constructor (props) {
     super (props);
@@ -13,6 +13,11 @@ class AlarmScreen extends React.Component {
   render() {
     return (
       <View>
+        <TouchableOpacity onPress={() => {
+          console.log ("This is components/AlarmScreen.js" );
+          this.props.loadReservation ();}} >
+          <Text> hello </Text>
+        </TouchableOpacity>
         <Text>This is alarmscreen</Text>
         <Text>This is alarmscreen</Text>
         <Text>This is alarmscreen</Text>
