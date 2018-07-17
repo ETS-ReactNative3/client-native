@@ -11,34 +11,45 @@ import {
 
 const initialState = Immutable.fromJS({
   devices: {
-    loading: false,
-    error: null,
-    // Device_id/state이 들어간다
   }
+});
+const deviceTemplate = Immutable.fromJS({
+  loading: false,
+  error: null,
+  state: undefined
 });
 
 export default handleActions({
-  [REGISTER_DEVICE] (userState, {options}) {
-    console.log("Register device in reducers pressed, options is",options);
-    let register_device = initialState.get('devices').set('loading', true);
-    return userState.set('devices', register_device);
+  [REGISTER_DEVICE] (deviceState, {meta}) {
+    console.log("device id is",meta.deviceId);
+    const device = deviceTemplate.set('loading', true);
+    return deviceState.set(meta.deviceId, device);
   },
-  [REGISTER_DEVICE_SUCCESS] (userState, {payload}) {
+  [REGISTER_DEVICE_SUCCESS] (deviceState, {payload, meta}) {
     console.log("Register Device Success and payload is",payload);
-    return userState;
+    const device = deviceTemplate.set('state', payload);
+    return deviceState.set(meta.deviceId, device);
   },
-  [REGISTER_DEVICE_FAILURE] (userState, {payload}) {
+  [REGISTER_DEVICE_FAILURE] (deviceState, {payload, meta}) {
     console.log("Register Device failure and payload is",payload);
-    return userState;
+    const device = deviceTemplate.set('error', payload);
+    return deviceState.set(meta.deviceId, device);
   },
-  [SEND_DEVICE_STATE] (userState) {
-    let send_device = initialState.get('devices').set('loading', true);
-    return userState.set('devices', send_device_state);
+  [SEND_DEVICE_STATE] (deviceState, {meta}) {
+    console.log("Send device state started")
+    const device = deviceTemplate.set('loading', true);
+    return deviceState.set(meta.deviceId, device);
   },
-  [SEND_DEVICE_STATE_SUCCESS] (userState, {payload}) {
-    let send_device_state = initialState.get('devices').set(디바이스아이이, playload);
-    return userState.set('devices', send_device_state);
+  [SEND_DEVICE_STATE_SUCCESS] (deviceState, {payload, meta}) {
+    console.log("Send Device State Success");
+    const device = deviceTemplate.set('state', payload);
+    return deviceState.set(meta.deviceId, device);
   },
+  [SEND_DEVICE_STATE_FAILURE] (deviceState, {payload, meta}) {
+    console.log("Send Device State failure, error is",payload);
+    const device = deviceTemplate.set('error', payload);
+    return deviceState.set(meta.deviceId, device);
+  }
 },
 initialState
 );

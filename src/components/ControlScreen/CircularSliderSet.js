@@ -1,6 +1,7 @@
 import React from 'react';
 import { Text, View, TouchableOpacity } from 'react-native';
 import EStyleSheet from 'react-native-extended-stylesheet';
+import Slider from 'react-native-slider';
 import Icon from 'react-native-vector-icons/FontAwesome'
 
 import CircularSlider from '../common/CircularSlider';
@@ -11,6 +12,7 @@ class CircularSliderSet extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      light: 0,
       sliders: 4,
       fixRatio: false,
       stopSlider: false,
@@ -51,6 +53,17 @@ class CircularSliderSet extends React.Component {
     return (
       <View style={styles.container}>
         {/* {console.log(this.state)} */}
+        <Text>Light</Text>
+        <Slider
+          value={this.state.light}
+          onValueChange={(value) => {
+            this.setState({
+              light: Math.round(value)
+            })
+          }}
+          minimumValue = {0}
+          maximumValue = {100}
+        />
         <View style={styles.rowView}>
           <View>
             <CircularSlider
@@ -138,7 +151,7 @@ class CircularSliderSet extends React.Component {
         <TouchableOpacity 
           style={{alignItems:'center'}}
           onPress={
-            ()=>this.props.onRegisterScentPress()
+            ()=>this.props.onSendDeviceStatePress(this.state.deviceId, true, this.state.light,'dd', this.state.angle[0], this.state.angle[1], this.state.angle[2], this.state.angle[3])
           }
         >
           <Text>향기 등록하기</Text>

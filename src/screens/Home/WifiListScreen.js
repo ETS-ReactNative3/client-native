@@ -1,5 +1,6 @@
 import React from 'react';
-import { requestDeviceId, requestWifiList, requestSetWifi, asyncConnectWifi, registerDevice } from '../../helpers/device';
+import { requestDeviceId, requestWifiList, requestSetWifi, asyncConnectWifi } from '../../helpers/device';
+import { registerDevice } from '../../actions/device';
 
 import { connect } from 'react-redux';
 import WifiListScreen from '../../components/HomeScreen/WifiListScreen';
