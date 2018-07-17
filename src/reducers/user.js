@@ -11,7 +11,10 @@ import {
   SIGNUP_FAILURE,
   LOGOUT,
   LOGOUT_SUCCESS,
-  LOGOUT_FAILURE
+  LOGOUT_FAILURE,
+  USERINFO,
+  USERINFO_SUCCESS,
+  USERINFO_FAILURE,
 } from '../actions/user';
 
 const initialState = Immutable.fromJS({

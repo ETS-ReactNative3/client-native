@@ -99,7 +99,7 @@ export const userinfo = () => async (dispatch) => {
   const apiCall = createAuthorizedApiAction ({
     types: [USERINFO, USERINFO_SUCCESS, USERINFO_FAILURE],
     path: 'auth/user_info',
-    params: { user_id },
+    method: 'GET',
   });
   await dispatch (apiCall);
 }
