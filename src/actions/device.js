@@ -43,6 +43,7 @@ export const SEND_DEVICE_STATE_SUCCESS = "USER/SEND_STATE_SUCCESS";
 export const SEND_DEVICE_STATE_FAILURE = "USER/SEND_STATE_FAILURE";
 
 export const sendDeviceState = (device_id, power, light, name, fan1, fan2, fan3, fan4) => async (dispatch, getState) => {
+  console.log("Device id is",device_id);
   console.log("api called with fans", fan1, fan2, fan3, fan4)
   console.log("power:",power,"light:",light,"name:",name);
   const apiCall = createAuthorizedApiAction({

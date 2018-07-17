@@ -160,7 +160,7 @@ class CircularSliderSet extends React.Component {
         <TouchableOpacity 
           style={{alignItems:'center'}}
           onPress={
-            ()=>onSendDeviceStatePress()
+            ()=>onSendDeviceState()
           }
         >
           <Text>향기 등록하기</Text>

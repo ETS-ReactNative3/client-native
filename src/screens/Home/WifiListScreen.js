@@ -37,7 +37,7 @@ export class WifiListScreenContainer extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      deviceId: 'arom_jaeyoung'
+      deviceId: ''
     }
   }
   
@@ -49,7 +49,7 @@ export class WifiListScreenContainer extends React.Component {
       deviceId: deviceId
     })
     deviceId = this.state.deviceId;
-    console.log("Device id is",this.state.deviceId);
+    console.log("(wifilist screen)Device id is",this.state.deviceId);
     const wifiList = await requestWifiList();
     console.log(wifiList);
     let wifiListLength = wifiList.length;

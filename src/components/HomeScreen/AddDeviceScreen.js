@@ -5,10 +5,13 @@ import EStyleSheet from 'react-native-extended-stylesheet';
 
 export class AddDeviceScreen extends React.Component {
   render() {
-    return (
+    return ( 
       <View>
         <TouchableOpacity 
-          onPress={()=>this.props.onAddNewDevicePress()}
+          onPress={ async() => 
+            {
+              this.props.onAddNewDevicePress()
+            }}
         >
           <Text>새로운 아롬을 추가할래요</Text>
         </TouchableOpacity>
@@ -25,6 +28,14 @@ export class AddDeviceScreen extends React.Component {
           </View>
         </PopupDialog>
           <Text>아롬 공유할래요</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          onPress = {async () => {
+            await this.props.getUserinfo()
+            console.log("userinfo is",this.props.userid)
+          }}
+        >
+          <Text>유저정보 가져오기</Text>
         </TouchableOpacity>
         <Text>This is add device screen</Text>
         <Text>This is add device screen</Text>

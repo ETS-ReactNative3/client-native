@@ -25,8 +25,10 @@ class HomeScreen extends React.Component {
         <TodayScent todayScent = {this.props.todayScent[0]}/>
         <TouchableOpacity 
         style={styles.submitBtn} 
-        onPress={() => this.props.onAddDeviceScreenPress()}>
-          <Text style = {styles.submitText}>Submit</Text>
+        onPress={async() => {
+          this.props.onAddDeviceScreenPress()
+        }}>
+          <Text style = {styles.submitText}>기기추가 페이지로 이동</Text>
         </TouchableOpacity>
         <DeviceSlide devices = {this.props.devices}/>
       </View>

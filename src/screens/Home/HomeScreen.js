@@ -1,17 +1,32 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import { userinfo } from '../../actions/user';
 import HomeScreen from '../../components/HomeScreen/HomeScreen';
 
 let data = [];
 const logoPath = '../../../assets/imgs/home/logo.png';
+
+const mapStateToProps = state => ({
+})
+
+const mapDispatchToProps = (dispatch, props) => ({
+  async getUserinfo() {
+    console.log("get userinfo pressed");
+    await dispatch(userinfo());
+  }
+})
+
 export class HomeScreenContainer extends React.Component {
 
-  onAddDeviceScreenPress = ()=> {
+  onAddDeviceScreenPress = async ()=> {
+    await this.props.getUserinfo();
     console.log("onAddDevicePress pressed");
     this.props.navigation.push("AddDevice");
   }
 
   render() {
     return <HomeScreen
+      {...this.props}
       onAddDeviceScreenPress = {this.onAddDeviceScreenPress} 
       todayScent = {[
         {name: "HappyOrange", icons: ["lavender", "peppermint","eucalyptus"], saves: 243, shares: 120},
@@ -114,4 +129,7 @@ export class HomeScreenContainer extends React.Component {
     />
   }
 }
-export default HomeScreenContainer;
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(HomeScreenContainer);

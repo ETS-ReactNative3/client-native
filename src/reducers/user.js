@@ -82,7 +82,7 @@ export default handleActions({
     return userState.set('auth', signout);
   },
   [USERINFO] (userState) {
-    console.log ("User Info");
+    console.log ("User Info loading");
     let userinfo = initialState.get ('userinfo').set ('loading', true);
     return userState.set ('userinfo', userinfo);
   },
