@@ -38,6 +38,22 @@ export class LoginScreenContainer extends React.Component {
     // this.props.login("react-native@deepscent.io", "deepscent123!@#");
   }
 
+  async onLoginFBPress() {
+    const { type, token } = await Expo.Facebook.logInWithReadPermissionsAsync('187908931794227', {
+        permissions: ['public_profile'],
+      });
+    if (type === 'success') {
+      // Get the user's name using Facebook's Graph API
+      const response = await fetch(
+        `https://graph.facebook.com/me?access_token=${token}`);
+      Alert.alert(
+        'Logged in!',
+        `Hi ${(await response.json()).name}!`,
+      );
+      console.log("response auth token for fb login is:",token)
+    }
+  }
+
   componentDidMount () {
     console.log ("screens/LoginScreen.js token: " + this.props.token)
     if (this.props.token) {
@@ -51,7 +67,8 @@ export class LoginScreenContainer extends React.Component {
     return <LoginScreen
       {...this.props}
       onLoginPress={this.onLoginPress}
-      onSignUpPress={this.onSignUpPress}/>
+      onSignUpPress={this.onSignUpPress}
+      onLoginFBPress={this.onLoginFBPress}/>
   }
 }
 
