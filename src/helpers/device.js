@@ -3,6 +3,7 @@ const host = "192.168.4.1";
 export async function requestDeviceId() {
   let data = await rpcCall("Device.Id");
   let deviceId = data['device_id'];
+  console.log("(helper)Device is is",deviceId);
   return deviceId;
 }
 
@@ -13,7 +14,7 @@ export async function requestSetOwner(ownerId) {
 
 export async function requestWifiList() {
   const data = await rpcCall("Wifi.Scan");
-  const wifiList = data["results"];
+  const wifiList = data;
   const wifiListLength = wifiList.length;
   const filteredWifiList = [];
 
@@ -30,7 +31,7 @@ export async function requestWifiList() {
 
 export async function requestSsidList() {
   const data = await rpcCall("Wifi.Scan");
-  const wifiList = data["results"];
+  const wifiList = data;
   const wifiListLength = wifiList.length;
   const filteredSsidList = [];
 

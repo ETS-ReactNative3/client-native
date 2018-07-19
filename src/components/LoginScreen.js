@@ -1,6 +1,7 @@
 import React from 'react';
 import { Text, View, Button, TextInput, Image, ImageBackground, Keyboard, TouchableOpacity, TouchableWithoutFeedback, StyleSheet } from 'react-native';
 import EStyleSheet from 'react-native-extended-stylesheet';
+
 import LoadingOverlay from '../components/LoadingOverlay';
 
 let background = '../../assets/imgs/login/new_bg_login.jpeg';
@@ -52,7 +53,10 @@ class LoginScreen extends React.Component {
                   <Text style={styles.buttonText}>Forgot Password</Text>
     
                 </TouchableOpacity>
-                <TouchableOpacity style = {[styles.generalBtn, styles.facebookBtn]}>
+                <TouchableOpacity 
+                  style = {[styles.generalBtn, styles.facebookBtn]}
+                  onPress = {this.props.onLoginFBPress}
+                >
                   <Text style={styles.buttonText}>FACKBOOK LOGIN</Text>
                 </TouchableOpacity>
                 <TouchableOpacity style = {[styles.generalBtn, styles.kakaoBtn]}>
