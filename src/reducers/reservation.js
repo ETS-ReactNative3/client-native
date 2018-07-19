@@ -3,8 +3,8 @@ import Immutable from "immutable";
 
 import {
   LOAD_RESERVATION,
-  LOAD_COLLECTION_SUCCESS,
-  LOAD_COLLECTION_FAILURE,
+  LOAD_RESERVATION_SUCCESS,
+  LOAD_RESERVATION_FAILURE,
 } from '../actions/reservation'
 
 const initialState = Immutable.fromJS ({
@@ -72,23 +72,26 @@ export default handleActions ({
   [LOAD_RESERVATION] (reservationState, {payload}) {
     console.log ("LOAD_RESERVATION: ", payload);
 
-    const reservationState = initialState.get ('reservation').set ('loading', true)
+    const reservation = initialState.get ('reservation').set ('loading', true)
 
-    return reservationState.set ('reservation', reservationState)
+    return reservationState.set ('reservation', reservation)
   },
   [LOAD_RESERVATION_SUCCESS] (reservationState, {payload}) {
-    console.log ("LOAD_RESERVATION_SUCCESS: ", payload);
 
-    const reservationState = initialState.get ('reservation').set ('list', Immutable.fronJS (payload.reservation))
+    const reservation_list = Immutable.fromJS (payload).get ("reservations");
     
-    return reservationState.set ('reservation', reservationState)
+    //console.log ("LOAD_RESERVATION_SUCCESS: ", reservation_list);
+    
+    const reservation = initialState.get ('reservation').set ('list', reservation_list);
+    
+    return reservationState.set ('reservation', reservation)
   },
-  [LOAD_COLLECTION_FAILURE] (reservationSatate, {payload}) {
-    console.log ("LOAD_COLLECTION_FAILURE: ", payload.response)
+  [LOAD_RESERVATION_FAILURE] (reservationState, {payload}) {
+    console.log ("LOAD_RESERVATION_FAILURE: ", payload.response)
 
-    const reservationState = initialState.get ('reservation').set ('error', payload)
+    const reservation = initialState.get ('reservation').set ('error', payload)
 
-    return reservationState.set ('reservation', reservationState)
+    return reservationState.set ('reservation', reservation)
   }
 },
 initialState

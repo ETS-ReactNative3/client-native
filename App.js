@@ -20,6 +20,7 @@ import FirstScreen from './src/screens/SignUpScreen/FirstScreen';
 import SecondScreen from './src/screens/SignUpScreen/SecondScreen';
 import TabScreen from './src/screens/TabScreen';
 import EachCollectionScreen from './src/screens/CollectionScreen/EachCollectionScreen';
+import AddAlarm from './src/screens/AlarmScreen/AddAlarmScreen';
 
 // prepare extended stylesheet
 EStyleSheet.build();
@@ -40,7 +41,10 @@ let Nav = createStackNavigator({
   },
   EachCollection: {
     screen: EachCollectionScreen
-  }
+  },
+  AddAlarm: {
+    screen: AddAlarm
+  },
 }, {
   initialRouteName: "Login",
   headerMode: 'none',

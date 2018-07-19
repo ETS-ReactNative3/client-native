@@ -7,11 +7,23 @@ import { loadReservation } from '../../actions/reservation';
 import _ from 'lodash';
 
 
-const mapStateToProps = (state => ({
-  loading: state.getIn(['user', 'userinfo', 'loading']),
-  token: _.toString(state.getIn(['user', 'userinfo', 'token'])),
-  error: _.toString(state.getIn(['user', 'userinfo', 'error'])),
-})) ;
+const mapStateToProps = state => {
+  console.log (state);
+  console.log ("this is qwer");
+  return ({
+  loading: state.getIn(['reservation', 'reservation', 'loading']),
+  list: state.getIn(['reservation', 'reservation', 'list']),
+  error: state.getIn(['reservation', 'reservation', 'error']),
+  device: state.getIn(['user', 'userinfo', 'data', 'devices']),  
+    /* Object {
+          "arom_jaeyoung": "dd",
+         },
+    */
+
+
+  }) 
+  console.log ("this is device", device);
+};
 
 const mapDispatchToProps = (dispatch, props) => ({
   async loadReservation() {
@@ -24,15 +36,22 @@ export class AlarmScreenContainer extends React.Component {
   loadReservation = () => {
     console.log ("hello world");
     this.props.loadReservation ();
+    console.log ("finish");
+  }
+
+  onPressAdd = () => {
+    console.log ("alarm add press");
+    this.props.navigation.replace ("AddAlarm");
 
   }
 
-  render() {
+render() {
     console.log ("hello hello");
     console.log (this.props);
     return <AlarmScreen
       {...this.props}
-      loadReservation = {this.loadReservation}  
+      loadReservation = {this.loadReservation}
+      onPressAdd = {this.onPressAdd}
       />
   }
 }
