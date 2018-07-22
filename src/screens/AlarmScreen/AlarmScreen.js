@@ -41,7 +41,7 @@ export class AlarmScreenContainer extends React.Component {
 
   onPressAdd = () => {
     console.log ("alarm add press");
-    this.props.navigation.replace ("AddAlarm");
+    this.props.navigation.push ("AddAlarm");
 
   }
 

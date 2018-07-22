@@ -91,5 +91,6 @@ export default class App extends React.Component {
     console.log ("App.js initApp()");
     await store.dispatch(loadToken());
     Font.loadAsync ({"Noto Sans Bold": require ('./assets/fonts/noto-sans-bold.ttf')});
+    Font.loadAsync ({"Noto Sans": require ('./assets/fonts/noto-sans-regular.ttf')});
   }
 }

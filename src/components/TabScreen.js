@@ -4,7 +4,7 @@ import EStyleSheet from 'react-native-extended-stylesheet';
 import { createBottomTabNavigator, BottomTabBar } from 'react-navigation-tabs';
 
 import HomeScreen from '../screens/Home/HomeNav'
-import AlarmScreen from '../screens/AlarmScreen/AlarmScreen';
+import AlarmScreen from '../screens/AlarmScreen/AlarmNav';
 import ControlScreen from '../screens/ControlScreen/ControlScreen';
 
 import CollectionScreen from '../screens/CollectionScreen/CollectionScreen';
