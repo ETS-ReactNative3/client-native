@@ -5,13 +5,17 @@ import {
   LOAD_RESERVATION,
   LOAD_RESERVATION_SUCCESS,
   LOAD_RESERVATION_FAILURE,
+  ADD_RESERVATION,
+  ADD_RESERVATION_SUCCESS,
+  ADD_RESERVATION_FAILURE,
 } from '../actions/reservation'
 
 const initialState = Immutable.fromJS ({
   reservation: {
     loading: false,
     error: null,
-    list: null
+    list: null,
+    tmp_alarm: null,
   },
 });
 
@@ -92,6 +96,23 @@ export default handleActions ({
     const reservation = initialState.get ('reservation').set ('error', payload)
 
     return reservationState.set ('reservation', reservation)
+  },
+  [ADD_RESERVATION] (reservationState, {payload, meta}) {
+    console.log ("ADD_RESERVATION");
+    const reservation = initialState.get ('reservation').set ('loading', true);
+    return reservationState.set ('reservation', reservation);
+  },
+  [ADD_RESERVATION_SUCCESS] (reservationState, {payload, meta}) {
+    console.log ("ADD_RESERVATION_SUCCESS");
+
+    const reservation = initialState.get ('reservation').set ('tmp_alarm', payload);
+    return reservationState.set ('reservation', reservation);
+  },
+  [ADD_RESERVATION_FAILURE] (reservationState, {payload, meta}) {
+    console.log ("ADD_RESERVATION_FAILURE payload: ", payload.response);
+
+    const reservation = initialState.get ('reservation').set ('error', payload);
+    return reservationState.set ('reservation', reservation);
   }
 },
 initialState

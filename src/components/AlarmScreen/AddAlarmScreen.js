@@ -1,5 +1,5 @@
 import React from 'react';
-import { Text, View } from 'react-native';
+import { Text, View, TouchableOpacity} from 'react-native';
 import EStyleSheet from 'react-native-extended-stylesheet';
 
 
@@ -7,6 +7,32 @@ import EStyleSheet from 'react-native-extended-stylesheet';
 class AddAlarmScreen extends React.Component {
   constructor (props) {
     super (props);
+    this.state = {
+      device_id: "arom_jaeyoung",
+      reservation_id : "hello world",
+      startTime : "00:00",
+      endTime : "01:00",
+      every : [
+        "tuesday"
+      ],
+      invokeTime : 0,
+      notification : 'true',
+      notificationIds: [
+        0
+      ],
+      light: 0,
+      fanPower: 0,
+      scentInfo: {
+        name: "Happy Orange",
+        img: "",
+        cartridges: [
+          {
+            scent: "lavender",
+            fan: 0
+          }
+        ]
+      }
+    };
   };
 
   render () {
@@ -25,6 +51,10 @@ class AddAlarmScreen extends React.Component {
             <Text style={styles.listRight}> adfdfadf </Text>
           </View>
         </View>
+        <TouchableOpacity onPress={ () => { console.log ("onPress this.state.device_id: ", this.state.device_id);
+          this.props.onAddReservationPress (this.state.device_id, this.state.reservation_id, this.state.startTime, this.state.endTime, this.state.every, this.state.invokeTime, this.state.notification, this.state.notificationIds, this.state.light, this.state.fanPower, this.state.scentInfo)}}>
+          <Text> test </Text>
+        </TouchableOpacity>
       </View>
     
     )

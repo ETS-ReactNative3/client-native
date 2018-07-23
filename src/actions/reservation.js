@@ -36,3 +36,44 @@ export const loadReservation = () => async  (dispatch, getState ) => {
 
   await dispatch (apiCall)
 }
+
+export const ADD_RESERVATION = "RESERVATION/ADD_RESERVATION";
+export const ADD_RESERVATION_SUCCESS = "RESERVATION/ADD_RESERVATION_SUCCESS";
+export const ADD_RESERVATION_FAILURE = "RESERVATION/ADD_RESERVATION_FAILURE";
+
+export const addReservation = (device_id, reservation_id, startTime, endTime, every, invokeTime, notification, notificationIds, light, fanPower, scentInfo) => async (dispatch) => {
+  console.log ("hello");
+
+  const apiCall = createAuthorizedApiAction ({
+    types: [{
+      type: ADD_RESERVATION,
+      meta: {
+        deviceId: device_id
+      }
+    }, {
+      type: ADD_RESERVATION_SUCCESS,
+      meta: {
+        deviceId: device_id
+      }
+    }, {
+      type: ADD_RESERVATION_FAILURE,
+      meta: {
+        deviceId: device_id
+      }
+    }],
+    path: "reservations/" + device_id,
+    params: {
+      "reservation_id" : reservation_id,
+      "startTime" : startTime,
+      "endTime" : endTime,
+      "every" : every,
+      "invokeTime" : invokeTime,
+      "notification" : notification,
+      "notificationIds" : notificationIds,
+      "light" : light,
+      "fanPower" : fanPower,
+      "scentInfo" : scentInfo,
+    }
+  })
+  await dispatch (apiCall)
+}
