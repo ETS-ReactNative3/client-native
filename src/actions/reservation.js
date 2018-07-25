@@ -41,7 +41,7 @@ export const ADD_RESERVATION = "RESERVATION/ADD_RESERVATION";
 export const ADD_RESERVATION_SUCCESS = "RESERVATION/ADD_RESERVATION_SUCCESS";
 export const ADD_RESERVATION_FAILURE = "RESERVATION/ADD_RESERVATION_FAILURE";
 
-export const addReservation = (device_id, reservation_id, startTime, endTime, every, invokeTime, notification, notificationIds, light, fanPower, scentInfo) => async (dispatch) => {
+export const addReservation = (device_id, reservation_id, startTime, endTime, every, invokeTime, notification, notificationIds, light, fanPower, scentInfo, label) => async (dispatch) => {
   console.log ("hello");
 
   const apiCall = createAuthorizedApiAction ({
@@ -73,6 +73,49 @@ export const addReservation = (device_id, reservation_id, startTime, endTime, ev
       "light" : light,
       "fanPower" : fanPower,
       "scentInfo" : scentInfo,
+      "label" : label,
+    }
+  })
+  await dispatch (apiCall)
+}
+
+export const MOD_RESERVATION = "RESERVATION/MOD_RESERVATION";
+export const MOD_RESERVATION_SUCCESS = "RESERVATION/MOD_RESERVATION_SUCCESS";
+export const MOD_RESERVATION_FAILURE = "RESERVATION/MOD_RESERVATION_FAILURE";
+
+export const modReservation = (device_id, reservation_id, startTime, endTime, every, invokeTime, notification, notificationIds, light, fanPower, scentInfo, label) => async (dispatch) => {
+  console.log ("hello");
+
+  const apiCall = createAuthorizedApiAction ({
+    types: [{
+      type: MOD_RESERVATION,
+      meta: {
+        deviceId: device_id
+      }
+    }, {
+      type: MOD_RESERVATION_SUCCESS,
+      meta: {
+        deviceId: device_id
+      }
+    }, {
+      type: MOD_RESERVATION_FAILURE,
+      meta: {
+        deviceId: device_id
+      }
+    }],
+    path: "reservations/" + device_id + "/" + reservation_id,
+    params: {
+      //"reservation_id" : reservation_id,
+      "startTime" : startTime,
+      "endTime" : endTime,
+      "every" : every,
+      "invokeTime" : invokeTime,
+      "notification" : notification,
+      "notificationIds" : notificationIds,
+      "light" : light,
+      "fanPower" : fanPower,
+      "scentInfo" : scentInfo,
+      "label" : label,
     }
   })
   await dispatch (apiCall)

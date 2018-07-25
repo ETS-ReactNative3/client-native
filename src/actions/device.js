@@ -72,3 +72,32 @@ export const sendDeviceState = (device_id, power, light, name, fan1, fan2, fan3,
   })
   await dispatch (apiCall)
 }
+
+export const GET_DEVICE_STATE = "DEVICE/GET_DEVICE_STATE";
+export const GET_DEVICE_STATE_SUCCESS = "DEVICE/GET_DEVICE_STATE_SUCCESS";
+export const GET_DEVICE_STATE_FAILURE = "DEVICE/GET_DEVICE_STATE_FAILURE";
+
+export const getDeviceState = (device_id) => async (dispatch, getState) => {
+  const apiCall = createAuthorizedApiAction ({
+    types: [{
+      type: GET_DEVICE_STATE,
+      meta: {
+        deviceId: device_id
+      }
+    }, {
+      type: GET_DEVICE_STATE_SUCCESS,
+      meta: {
+        deviceId: device_id
+      }
+    }, {
+      type: GET_DEVICE_STATE_FAILURE,
+      meta: {
+        deviceId: device_id
+      }
+    }],
+    path: 'devices/' + device_id + '/state',
+    method: 'GET',
+    //params: {}
+  })
+  await dispatch (apiCall)
+}

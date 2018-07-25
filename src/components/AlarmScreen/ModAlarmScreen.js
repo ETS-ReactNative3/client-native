@@ -1,46 +1,17 @@
 import React from 'react';
 import { TextInput, ScrollView, Text, View, TouchableOpacity, Slider } from 'react-native';
-import { SelectPicker } from 'react-native-select-picker';
+//import { SelectPicker } from 'react-native-select-picker';
 import { MaterialDialog, SinglePickerMaterialDialog, MultiPickerMaterialDialog } from 'react-native-material-dialog';
 console.log ("hello");
 import DatePicker from 'react-native-datepicker';
 import EStyleSheet from 'react-native-extended-stylesheet';
 import _ from 'lodash';
-import Immutable from 'immutable';
-//const { fromJS } = require('immutable')
 
 
 class AddAlarmScreen extends React.Component {
   constructor (props) {
     super (props);
     this.state = {
-      device_id: undefined,
-      reservation_id : this.device_id + '_reservation_' + this.makeRandomString(8),
-
-      startTime : "00:00",
-      endTime : "01:00",
-      every : [],
-      invokeTime : 0,
-      notification : 'true',
-      notificationIds: [
-        0
-      ],
-      light: 0,
-      fanPower: 0,
-      scentInfo: {
-        name: "Happy Orange",
-        img: "",
-        cartridges: [
-          {
-            scent: "lavender",
-            fan: 0
-          }
-        ]
-      },
-      label: undefined,
-      //date: "00:00",
-      device_name: undefined,
-
       showDevice: false,
       singleDeviceSelectedItem: undefined,
 
@@ -52,33 +23,28 @@ class AddAlarmScreen extends React.Component {
   };
 
 
-
-  makeRandomString = (number) => {
-    let text = "";
-    let possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-    for (let i = 0; i < number; i++) {
-      text += possible.charAt(Math.floor(Math.random() * possible.length));
-    }
-    console.log ("this is makeRandomString(8): ", text);
-    return text;
-  };
-
-  showSelectPicker = () => {
-    this.setState ({show: !this.state.show});
-  };
-
   render () {
     let _this = this;
 
     let { navigation } = this.props;
-    let cur_device_name; 
-    let cur_device_id;
+    let item = navigation.getParam ("item", "no such item");
+    let cur_device_name = item[device_id];
+    let cur_device_id = item[device_name];
+    let cur_startTime = item[start_Time];
+    let cur_endTime = item[end_Time];
+    let cur_every = item[every];
+    let cur_invokeTime = item[invokeTime];
+    let cur_notification = item[notification];
+    let cur_notificationId = item[notificatonIds];
+    let cur_light = item[light];
+    let cur_fanPower = item[fanPower];
+    let cur_scentInfo = item[scentInfo];
+    let cur_label = item[label];
 
     var device = this.props.device.toJS ();
-    //var fromJS = Immutable.fromJS;
-    var device_state = Immutable.Map (this.props.device_state);
+    var device_state = this.props.device_state.toJS ();
 
-    console.log ("device_State " ,device_state);
+    console.log ("_.values (Device): " , _.values (device));
     
 
     return (
@@ -105,13 +71,15 @@ class AddAlarmScreen extends React.Component {
             onOk={result => {
               this.setState({ showDevice: false });
               this.setState({ singleDeviceSelectedItem: result.selectedItem });
-              this.setState({ device_name: result.selectedItem.label});
-              this.setState({ device_id: _.keys(device)[result.selectedItem.value]});
+              cur_device_name = result.selectedItem.label;
+              cur_device_id = _.keys (device)[result.selectedItem.value];
+              //this.setState({ device_name: result.selectedItem.label});
+              //this.setState({ device_id: _.keys(device)[result.selectedItem.value]});
               console.log (result);
               console.log (_.keys(device)[result.selectedItem.value]);
             }}
           />
-          <Text> {this.state.device_name} </Text>
+          <Text> {cur_device_name} </Text>
         </View>
 
         <View>
@@ -131,20 +99,23 @@ class AddAlarmScreen extends React.Component {
             onOk={result => {
               this.setState ({ showDay: false});
               this.setState ({ multipleDaySelectedItem: result.selectedItems });
-              {result.selectedItems.forEach (x => {(this.state.every).push (x.label)})};
+              {result.selectedItems.forEach (x => {(cur_every).push (x.label)})};
               console.log (result);
               console.log ( result.selectedItems);
               console.log ( _.filter (result.selectedItems, {'selected': true}));
               console.log ( this.state.every);
             }}
           />
-          <Text> {JSON.stringify(this.state.every)} </Text>
+          <Text> {JSON.stringify(cur_every)} </Text>
         </View>
 
         <View>
           <TouchableOpacity onPress={() => {this.setState ({ showLabel: true })}}>
             <Text> 레이블 </Text>
           </TouchableOpacity>
+          {cur_label &&
+            <Text> {cur_label} </Text>
+          }
         </View>
         <View>
           <MaterialDialog
@@ -155,7 +126,7 @@ class AddAlarmScreen extends React.Component {
           >
             <TextInput
               onChangeText={(text) => this.setState({label: text})}
-              value={this.state.label}
+              value={cur_label}
             />
           </MaterialDialog>
         </View>
@@ -166,30 +137,24 @@ class AddAlarmScreen extends React.Component {
 
         <View>
           <Text> 시작시간 </Text>
-          <DatePicker date={this.state.startTime} mode="time" confirmBtnText="Confirm" cancelBtnText="Cancel" onDateChange={(time) => {
-            this.setState ({startTime: time});
-            console.log ("startTime set to : " , this.state.startTime);
+          <DatePicker date={cur_startTime} mode="time" confirmBtnText="Confirm" cancelBtnText="Cancel" onDateChange={(time) => {
+            cur_startTime = time;
+            console.log ("startTime set to : " , cur_startTime);
           }} showIcon={false} />
         </View>
 
         <View>
           <Text> 종료시간 </Text>
-          <DatePicker date={this.state.endTime} mode="time" confirmBtnText="Confirm" cancelBtnText="Cancel" onDateChange={(time) => {
-            this.setState ({endTime: time});
-            console.log ("endTime set to : " , this.state.endTime);
+          <DatePicker date={cur_endTime} mode="time" confirmBtnText="Confirm" cancelBtnText="Cancel" onDateChange={(time) => {
+            cur_endTime = time;
+            console.log ("endTime set to : " , cur_endTime);
           }} showIcon={false} />
         </View>
         
         <View>
-          <TouchableOpacity onPress={() => {this.props.onGetDeviceStatePress (this.state.device_id)}}>
+          <TouchableOpacity onPress={() => {this.props.onGetDeviceStatePress (cur_device_id)}}>
             <Text> aldjf;afjea </Text>
           </TouchableOpacity>
-        </View>
-        <View>
-          {this.state.device_id &&
-            <Text> {JSON.stringify (device_state.toJS ())} </Text> ||
-            <Text> {device_state.getIn ([this.state.device_id, "state", "reported"])} </Text>
-          }
         </View>
 
 
@@ -200,14 +165,14 @@ class AddAlarmScreen extends React.Component {
         <View>
           <Text> 조명 밝기 </Text>
           <Slider
-            onValueChange={(value) => this.setState ({light: value})}
+            onValueChange={(value) => {cur_lgiht = value}}
           />
         </View>
 
         <View>
-          <TouchableOpacity onPress={ () => { console.log ("onPress this.state.label: ", this.state.label);
-            this.props.onAddReservationPress (this.state.device_id, this.state.reservation_id, this.state.startTime, this.state.endTime, this.state.every, this.state.invokeTime, this.state.notification, this.state.notificationIds, this.state.light, this.state.fanPower, this.state.scentInfo, this.state.label)}}>
-            <Text> 알람 추가 </Text>
+          <TouchableOpacity onPress={ () => { console.log ("onPress label: ", cur_label);
+            this.props.onModReservationPress (cur_device_id, cur_reservation_id, cur_startTime, cur_endTime, cur_every, cur_invokeTime, cur_notification, cur_notificationIds, cur_light, cur_fanPower, cur_scentInfo, cur_label)}}>
+            <Text> 알람 수정 </Text>
           </TouchableOpacity>
         </View>
       </ScrollView>

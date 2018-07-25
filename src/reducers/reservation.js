@@ -8,6 +8,9 @@ import {
   ADD_RESERVATION,
   ADD_RESERVATION_SUCCESS,
   ADD_RESERVATION_FAILURE,
+  MOD_RESERVATION,
+  MOD_RESERVATION_SUCCESS,
+  MOD_RESERVATION_FAILURE,
 } from '../actions/reservation'
 
 const initialState = Immutable.fromJS ({
@@ -103,13 +106,30 @@ export default handleActions ({
     return reservationState.set ('reservation', reservation);
   },
   [ADD_RESERVATION_SUCCESS] (reservationState, {payload, meta}) {
-    console.log ("ADD_RESERVATION_SUCCESS");
+    console.log ("ADD_RESERVATION_SUCCESS: payload: ", payload);
 
     const reservation = initialState.get ('reservation').set ('tmp_alarm', payload);
     return reservationState.set ('reservation', reservation);
   },
   [ADD_RESERVATION_FAILURE] (reservationState, {payload, meta}) {
     console.log ("ADD_RESERVATION_FAILURE payload: ", payload.response);
+
+    const reservation = initialState.get ('reservation').set ('error', payload);
+    return reservationState.set ('reservation', reservation);
+  },
+  [MOD_RESERVATION] (reservationState, {payload, meta}) {
+    console.log ("MOD_RESERVATION");
+    const reservation = initialState.get ('reservation').set ('loading', true);
+    return reservationState.set ('reservation', reservation);
+  },
+  [MOD_RESERVATION_SUCCESS] (reservationState, {payload, meta}) {
+    console.log ("MOD_RESERVATION_SUCCESS: payload: ", payload);
+
+    const reservation = initialState.get ('reservation').set ('tmp_alarm', payload);
+    return reservationState.set ('reservation', reservation);
+  },
+  [MOD_RESERVATION_FAILURE] (reservationState, {payload, meta}) {
+    console.log ("MOD_RESERVATION_FAILURE payload: ", payload.response);
 
     const reservation = initialState.get ('reservation').set ('error', payload);
     return reservationState.set ('reservation', reservation);

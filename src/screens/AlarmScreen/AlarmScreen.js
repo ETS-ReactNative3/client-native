@@ -34,15 +34,22 @@ const mapDispatchToProps = (dispatch, props) => ({
 export class AlarmScreenContainer extends React.Component {
   
   loadReservation = () => {
-    console.log ("hello world");
-    this.props.loadReservation ();
-    console.log ("finish");
-  }
+     console.log ("hello world");
+     this.props.loadReservation ();
+     console.log ("finish");
+   }
+  
+   onPressAdd = () => {
+     console.log ("alarm add press");
+     this.props.navigation.push ("AddAlarm");
+  
+   }
 
-  onPressAdd = () => {
-    console.log ("alarm add press");
-    this.props.navigation.push ("AddAlarm");
-
+  onPressMod = (item) => {
+    console.log ("alarm modifiy press");
+    this.props.navigation.push ("ModAlarm", {
+      item: item
+    });
   }
 
 render() {
@@ -52,6 +59,7 @@ render() {
       {...this.props}
       loadReservation = {this.loadReservation}
       onPressAdd = {this.onPressAdd}
+      onPressMod = {this.onPressMod}
       />
   }
 }

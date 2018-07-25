@@ -7,6 +7,9 @@ import {
   SEND_DEVICE_STATE,
   SEND_DEVICE_STATE_SUCCESS,
   SEND_DEVICE_STATE_FAILURE,
+  GET_DEVICE_STATE,
+  GET_DEVICE_STATE_SUCCESS,
+  GET_DEVICE_STATE_FAILURE,
 } from '../actions/device';
 
 const initialState = Immutable.fromJS({
@@ -49,6 +52,21 @@ export default handleActions({
     console.log("Send Device State failure, error is",payload);
     const device = deviceTemplate.set('error', payload);
     return deviceState.set(meta.deviceId, device);
+  },
+  [GET_DEVICE_STATE] (deviceState, {payload, meta}) {
+    console.log ("Get device state started")
+    const device = deviceTemplate.set ('loading', true);
+    return deviceState.set (meta.deviceId, device);
+  },
+  [GET_DEVICE_STATE_SUCCESS] (deviceState, {payload, meta}) {
+    console.log ("Get device state Success payload: ", payload);
+    const device = deviceTemplate.set ('state', payload);
+    return deviceState.set (meta.deviceId, device);
+  },
+  [GET_DEVICE_STATE_FAILURE] (deviceState, {payload, meta}) {
+    console.log ("Get device state failure");
+    const device = deviceTemplate.set ('error', payload.response);
+    return deviceState.set (meta.deviceId, device);
   }
 },
 initialState

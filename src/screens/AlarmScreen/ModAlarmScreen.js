@@ -1,7 +1,7 @@
 import React from 'react';
 import AddAlarmScreen from '../../components/AlarmScreen/AddAlarmScreen';
 import { connect } from 'react-redux';
-import { addReservation } from '../../actions/reservation';
+import { modReservation } from '../../actions/reservation';
 import { getDeviceState } from '../../actions/device';
 
 const mapStateToProps = state => {
@@ -17,9 +17,9 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = (dispatch, props) => ({
 
-  async addReservation (device_id, reservation_id, startTime, endTime, every, invokeTime, notification, notificationIds, light, fanPower, scentInfo, label) {
-    console.log ("modReservation dispatchtoprops");
-    await dispatch (addReservation (device_id, reservation_id, startTime, endTime, every, invokeTime, notification, notificationIds, light, fanPower, scentInfo, label));
+  async modReservation (device_id, reservation_id, startTime, endTime, every, invokeTime, notification, notificationIds, light, fanPower, scentInfo, label) {
+    console.log ("addReservation dispatchtoprops");
+    await dispatch (modReservation (device_id, reservation_id, startTime, endTime, every, invokeTime, notification, notificationIds, light, fanPower, scentInfo, label));
 
   },
 
@@ -36,9 +36,9 @@ export class AddAlarmScreenContainer extends React.Component {
     super (props);
   }
 
-  onAddReservationPress = async (device_id, reservation_id, startTime, endTime, every, invokeTime, notification, notificationIds, light, fanPower, scentInfo, label) => {
+  onModReservationPress = async (device_id, reservation_id, startTime, endTime, every, invokeTime, notification, notificationIds, light, fanPower, scentInfo, label) => {
     console.log ("onReservationPress function");
-    await this.props.addReservation (device_id, reservation_id, startTime, endTime, every, invokeTime, notification, notificationIds, light, fanPower, scentInfo, label);
+    await this.props.modReservation (device_id, reservation_id, startTime, endTime, every, invokeTime, notification, notificationIds, light, fanPower, scentInfo, label);
   }
 
   onGetDeviceStatePress = async (device_id) => {
@@ -50,7 +50,7 @@ export class AddAlarmScreenContainer extends React.Component {
   render () {
     return <AddAlarmScreen
       {...this.props}
-      onAddReservationPress = {this.onAddReservationPress}
+      onModReservationPress = {this.onModReservationPress}
       onGetDeviceStatePress = {this.onGetDeviceStatePress}
       />
   }

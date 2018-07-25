@@ -89,6 +89,11 @@ const styles = EStyleSheet.create({
     backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
+    height: 2000,
+  },
+  scrollViewContainer: {
+    flex: 1,
+    //height: 2000,
   },
   generalStyle: {
     alignItems: 'center'
