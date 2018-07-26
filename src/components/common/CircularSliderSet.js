@@ -3,6 +3,7 @@ import { Text, View, TouchableOpacity } from 'react-native';
 import EStyleSheet from 'react-native-extended-stylesheet';
 import Slider from 'react-native-slider';
 import Icon from 'react-native-vector-icons/FontAwesome'
+import { getScentIcon } from '../../helpers/icon'
 
 import CircularSlider from './CircularSlider';
 
@@ -94,6 +95,7 @@ class CircularSliderSet extends React.Component {
               }}
               lineColor='#fff'
               circleColor='#cbf442'
+              backgroundSource={this.props.background1}
             />
           </View>
           <View>
@@ -115,6 +117,7 @@ class CircularSliderSet extends React.Component {
               }}
               lineColor='#fff'
               circleColor='#f0bcff'
+              backgroundSource={this.props.background2}
             />
           </View>
         </View>
@@ -158,6 +161,7 @@ class CircularSliderSet extends React.Component {
               }}
               lineColor='#fff'
               circleColor='#f0bcff'
+              backgroundSource={this.props.background3}
             />
           </View>
           <View>
@@ -179,6 +183,7 @@ class CircularSliderSet extends React.Component {
               }}
               lineColor='#fff'
               circleColor='#f0bcff'
+              backgroundSource={this.props.background4}
             />
           </View>
         </View>
@@ -195,8 +200,12 @@ class CircularSliderSet extends React.Component {
   }
 }
 
-CircularSlider.defaultProps = {
-  actionOnRelease: false
+CircularSliderSet.defaultProps = {
+  actionOnRelease: false,
+  background1: getScentIcon('bergamot'),
+  background2: getScentIcon('bergamot'),
+  background3: getScentIcon('bergamot'),
+  background4: getScentIcon('bergamot'),
 }
 
 export default CircularSliderSet;

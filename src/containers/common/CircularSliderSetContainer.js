@@ -3,6 +3,8 @@ import CircularSliderSet from '../../components/common/CircularSliderSet'
 
 import { connect } from 'react-redux';
 import { sendDeviceState } from '../../actions/device'
+import {getScentIcon} from '../../helpers/icon'
+
 
 const mapStateToProps = state => ({
 
@@ -38,11 +40,22 @@ export class CircularSliderSetContainer extends React.Component {
         defaultAngle2 = {this.props.defaultAngle2}
         defaultAngle3 = {this.props.defaultAngle3}
         defaultAngle4 = {this.props.defaultAngle4}
+        background1 = {this.props.background1}
+        background2 = {this.props.background2}
+        background3 = {this.props.background3}
+        background4 = {this.props.background4}
         onSendDeviceStatePress = {this.onSendDeviceStatePress}
         actionOnRelease = {true}
       />
     )
   }
+}
+
+CircularSliderSetContainer.defaultProps = {
+  background1: getScentIcon('bergamot'),
+  background2: getScentIcon('bergamot'),
+  background3: getScentIcon('bergamot'),
+  background4: getScentIcon('bergamot'),
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(CircularSliderSetContainer);
