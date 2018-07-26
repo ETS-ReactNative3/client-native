@@ -39,15 +39,13 @@ class SecondScreen extends React.Component {
       email: '',
       pwd: '',
       pwdConfirm: '',
-      name: '',
-      date:"2016-05-15",
+      name: this.props.name,
+      birthday:"2016-05-15",
       gender: 'female',
       place: 'house',
       space: '',
       purpose: '',
       prefer_scents: ['','',''],
-      startAngle: 0,
-      angleLength: 10
     }
   }
 
@@ -69,7 +67,7 @@ class SecondScreen extends React.Component {
         "\npwd:",this.state.pwd,
         "\npwdConfirm:", this.state.pwdConfirm,
         "\nname:", this.state.name,
-        "\ndate:", this.state.date,
+        "\birthday:", this.state.birthday,
         "\ngender:",this.state.gender,
         "\nplace:",this.state.place,
         "\nspace:",this.state.space,
@@ -95,24 +93,29 @@ class SecondScreen extends React.Component {
               style = {styles.logo} />
           </View>
           <ScrollView style={styles.scrollviewContainer} >
-          <UnderlinedTextInput 
-            placeholder="이메일"
-            bottomMargin={30}
-            state="email"
-            changeState={this.changeState}
-            getState={this.getState} />
-          <UnderlinedTextInput 
-            placeholder="비밀번호"
-            bottomMargin={5}
-            state="pwd"
-            changeState={this.changeState}
-            getState={this.getState} />
-          <UnderlinedTextInput 
-            placeholder="비밀번호 확인"
-            bottomMargin={30}
-            state="pwdConfirm"
-            changeState={this.changeState}
-            getState={this.getState} />
+            <UnderlinedTextInput 
+              placeholder="이메일"
+              bottomMargin={30}
+              state="email"
+              changeState={this.changeState}
+              getState={this.getState} />
+          {
+            this.props.isFB == false &&
+            <View>
+              <UnderlinedTextInput 
+                placeholder="비밀번호"
+                bottomMargin={5}
+                state="pwd"
+                changeState={this.changeState}
+                getState={this.getState} />
+              <UnderlinedTextInput 
+                placeholder="비밀번호 확인"
+                bottomMargin={30}
+                state="pwdConfirm"
+                changeState={this.changeState}
+                getState={this.getState} />
+            </View>
+          }
           <UnderlinedTextInput 
             placeholder="이름"
             bottomMargin={30}
@@ -123,7 +126,7 @@ class SecondScreen extends React.Component {
               <Text style={[styles.textNormal,{marginTop: 8}]}>생일</Text>
               <DatePicker
                 style={styles.datePicker}
-                date={this.state.date}
+                date={this.state.birthday}
                 mode="date"
                 placeholder="select date"
                 format="YYYY-MM-DD"
@@ -148,7 +151,7 @@ class SecondScreen extends React.Component {
                   }
                   // ... You can check the source to find the other keys.
                 }}
-                onDateChange={(date) => {this.setState({date: date})}}
+                onDateChange={(date) => {this.setState({birthday: date})}}
               />
             </View>
             <View style={styles.rowView}>
@@ -266,7 +269,7 @@ class SecondScreen extends React.Component {
                 />
               </View>
             </View>
-            <TouchableOpacity style={styles.submitBtn} onPress={() => this.props.onSubmitPress(this.state)
+            <TouchableOpacity style={styles.submitBtn} onPress={() => this.props.onSubmitPress(this.state, isFB=this.props.isFB, isKakao=this.props.isKakao)
               }>
               <Text style = {styles.submitText}>Submit</Text>
             </TouchableOpacity>

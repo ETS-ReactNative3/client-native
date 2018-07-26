@@ -15,6 +15,11 @@ import {
   USERINFO,
   USERINFO_SUCCESS,
   USERINFO_FAILURE,
+  LOGINFB,
+  LOGINFB_FAILURE,
+  SIGNUPFB,
+  SIGNUPFB_SUCCESS,
+  SIGNUPFB_FAILURE
 } from '../actions/user';
 
 const initialState = Immutable.fromJS({
@@ -25,7 +30,8 @@ const initialState = Immutable.fromJS({
       auth_token: null,
       refresh_token: null,
       exp_time: null
-    }
+    },
+    fb_exist_account: true
   },
   signup: {
     loading: false,
@@ -52,7 +58,6 @@ export default handleActions({
   },
   [LOGIN_FAILURE] (userState, {payload}) {
     let auth = initialState.get('auth').set('error', payload);
-    console.log("Login failure due to",payload.response)
     return userState.set('auth', auth);
   },
   [SIGNUP] (userState) {
@@ -95,8 +100,30 @@ export default handleActions({
   [USERINFO_FAILURE] (userState, {payload}) {
     let userinfo = initialState.get ('userinfo').set ('error', payload);
     return userState.set ('userinfo', userinfo);
+  },
+  [LOGINFB] (userState) {
+    let auth = initialState.get('auth').set('loading', true);
+    console.log("(reducers) LoginFB called");
+    return userState.set('auth', auth);
+  },
+  [LOGINFB_FAILURE] (userState, { payload }) {
+    console.log("Facebook login failed, need to go to signup, payload is",payload.response);
+    let auth = initialState.get('auth').set('fb_exist_account', false);
+    return userState.set('auth',auth);
+  },
+  [SIGNUPFB] (userState) {
+    let signup = initialState.get('signup').set('loading', true);
+    return userState.set('aignup', signup);
+  },
+  [SIGNUPFB_SUCCESS] (userState) {
+    let signup = initialState.get('signup').set('success', true);
+    return userState.set('signup', signup);
+  },
+  [SIGNUPFB_FAILURE] (userState, {payload}) {
+    let signup = initialState.get('signup').set('error', payload);
+    console.log("FB signup failed, payload is",payload.response)
+    return userState.set('signup', signup);
   }
 },
 initialState
-);
-
+)

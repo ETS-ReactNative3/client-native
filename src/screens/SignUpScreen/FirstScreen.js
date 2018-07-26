@@ -9,7 +9,11 @@ export class SignUpScreenContainer extends React.Component {
 
   onNextSignUpPress = () => {
     console.log("onNextSignUpPress Clicked");
-    this.props.navigation.push("SignUpSecond")
+    this.props.navigation.push("SignUpSecond", {
+      'name': this.props.navigation.state.params['name'], 
+      'isFB': this.props.navigation.state.params['isFB'], 
+      'isKakao': this.props.navigation.state.params['isKakao'],
+      'token': this.props.navigation.state.params['token']})
   }
   
 
