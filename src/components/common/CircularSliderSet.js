@@ -93,7 +93,7 @@ class CircularSliderSet extends React.Component {
               onChangeAngle={(angle) => {
                 this.state.fixRatio == false ? updateAngle(0, angle) : updateAngleByRatio(0, angle)
               }}
-              lineColor='#fff'
+              lineColor='red'
               circleColor='#cbf442'
               backgroundSource={this.props.background1}
             />
@@ -115,7 +115,7 @@ class CircularSliderSet extends React.Component {
               onChangeAngle={(angle) => {
                 this.state.fixRatio == false ? updateAngle(1, angle) : updateAngleByRatio(1, angle)
               }}
-              lineColor='#fff'
+              lineColor='blue'
               circleColor='#f0bcff'
               backgroundSource={this.props.background2}
             />
@@ -159,7 +159,7 @@ class CircularSliderSet extends React.Component {
               onChangeAngle={(angle) => {
                 this.state.fixRatio == false ? updateAngle(2, angle) : updateAngleByRatio(2, angle)
               }}
-              lineColor='#fff'
+              lineColor='black'
               circleColor='#f0bcff'
               backgroundSource={this.props.background3}
             />
@@ -181,7 +181,7 @@ class CircularSliderSet extends React.Component {
               onChangeAngle={(angle) => {
                 this.state.fixRatio == false ? updateAngle(3, angle) : updateAngleByRatio(3, angle)
               }}
-              lineColor='#fff'
+              lineColor='purple'
               circleColor='#f0bcff'
               backgroundSource={this.props.background4}
             />

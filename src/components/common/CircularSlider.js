@@ -89,7 +89,7 @@ class CircularSlider extends React.Component {
           ( 2*Math.pow(radius, 2) - 
           (Math.pow(centerX - closestX,2) + Math.pow(centerY-radius-closestY, 2)) ) / (2*Math.pow(radius,2))
         )
-        currentAngle = currentAngle * 180 / Math.PI;
+        currentAngle = currentAngle * 180 / Math.PI + 180;
         if (moveX < centerX) {
           // console.log("Original current angle is",currentAngle);
           currentAngle = 360-currentAngle;
@@ -191,9 +191,9 @@ class CircularSlider extends React.Component {
         >
         <Path
           d={pathDirection_background}
-          stroke="blue"
+          stroke={this.props.backgroundLineColor}
           strokeWidth={lineWidth}
-          strokeOpacity='0.5'
+          strokeOpacity={this.props.backgroundLineOpacity}
           fillOpacity='0'
         />
         <Path
@@ -254,7 +254,7 @@ class CircularSlider extends React.Component {
             }}
             opacity={this.props.backgroundOpacity}
           >
-        {drawArc(this.props.radius, 0, this.state.endAngle, this.props.lineWidth, this.props.btnRadius)}
+        {drawArc(this.props.radius, 180, this.state.endAngle+180, this.props.lineWidth, this.props.btnRadius)}
         </ImageBackground>
       </View>
     )
@@ -262,6 +262,11 @@ class CircularSlider extends React.Component {
 }
 CircularSlider.defaultProps = {
   backgroundSource: getScentIcon('cottonblossom'),
-  backgroundOpacity: 0.5
+  backgroundOpacity: 0.5,
+  lineColor: 'blue',
+  backgroundLineColor: 'white',
+  circleColor: 'white',
+  backgroundLineOpacity: '0.5'
+  
 }
 export default CircularSlider;
