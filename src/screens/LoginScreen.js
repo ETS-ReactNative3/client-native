@@ -31,9 +31,11 @@ export class LoginScreenContainer extends React.Component {
     if (this.props.error) {
       console.log ("error!");
     }
-    else {
+    else if (this.props.token) {
       console.log ("screens/LoginScreen.js onLoginPress: " + this.props.token)
       this.props.navigation.push ("Tab");
+    } else {
+      console.log("Not connected to server");
     }
     // this.props.login("react-native@deepscent.io", "deepscent123!@#");
   }

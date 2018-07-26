@@ -24,9 +24,9 @@ class LoginScreen extends React.Component {
             style = {styles.imgBackground}
             source = {require(background)}
           >
-            <LoadingOverlay visible={this.props.loading}/>
-            { this.props.error && <Text> login error: {this.props.error} </Text> }
-            { this.props.token && <Text> login succeed: </Text> }
+            {/* <LoadingOverlay visible={this.props.loading}/> */}
+            { this.props.error != '' ? <Text> login error: {this.props.error} </Text> : <View></View>}
+            { this.props.token != '' ? <Text> login succeed: </Text> : <View></View> }
             <View style = {styles.generalStyle}>
               <Image source={require(logo)} style={[styles.imgLogo,{marginTop: 60, marginBottom: 20}]} />
               <View style = {styles.generalStyle}>
@@ -48,7 +48,7 @@ class LoginScreen extends React.Component {
                   this.props.onLoginPress(this.state.email, this.state.pwd)}}>
                   <Text style={styles.buttonText}>Login</Text>
                 </TouchableOpacity>
-                { this.props.error && <Text style = {styles.wrongText}> Wrong input! </Text> }
+                {/* { this.props.error != 'null' ? <Text style = {styles.wrongText}> Wrong input! </Text> : <View></View>} */}
                 <TouchableOpacity style = {[styles.forgotpwdBtn, {marginBottom: 100}]}>
                   <Text style={styles.buttonText}>Forgot Password</Text>
     

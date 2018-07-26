@@ -52,6 +52,7 @@ export default handleActions({
   },
   [LOGIN_FAILURE] (userState, {payload}) {
     let auth = initialState.get('auth').set('error', payload);
+    console.log("Login failure due to",payload.response)
     return userState.set('auth', auth);
   },
   [SIGNUP] (userState) {
