@@ -39,6 +39,7 @@ export class CircularSliderSetContainer extends React.Component {
         defaultAngle3 = {this.props.defaultAngle3}
         defaultAngle4 = {this.props.defaultAngle4}
         onSendDeviceStatePress = {this.onSendDeviceStatePress}
+        actionOnRelease = {true}
       />
     )
   }
