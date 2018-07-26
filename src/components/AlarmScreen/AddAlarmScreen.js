@@ -7,18 +7,31 @@ import DatePicker from 'react-native-datepicker';
 import EStyleSheet from 'react-native-extended-stylesheet';
 import _ from 'lodash';
 import Immutable from 'immutable';
+import CircularSliderSet from '../common/CircularSliderSet';
+import PopupDialog, {
+  DialogTitle,
+  DialogButton,
+  SlideAnimation,
+  ScaleAnimation,
+  FadeAnimation,
+} from 'react-native-popup-dialog';
 //const { fromJS } = require('immutable')
 
+
+
+const slideAnimation = new SlideAnimation({ slideFrom: 'bottom' });
+const scaleAnimation = new ScaleAnimation();
+const fadeAnimation = new FadeAnimation({ animationDuration: 150 });
 
 class AddAlarmScreen extends React.Component {
   constructor (props) {
     super (props);
     this.state = {
-      device_id: undefined,
+      device_id: "arom_jaeyoung",
       reservation_id : this.device_id + '_reservation_' + this.makeRandomString(8),
 
-      startTime : "00:00",
-      endTime : "01:00",
+      startTime : null,
+      endTime : null,
       every : [],
       invokeTime : 0,
       notification : 'true',
@@ -37,19 +50,37 @@ class AddAlarmScreen extends React.Component {
           }
         ]
       },
-      label: undefined,
+      label: null,
       //date: "00:00",
-      device_name: undefined,
+      device_name: "dd",
 
       showDevice: false,
-      singleDeviceSelectedItem: undefined,
+      singleDeviceSelectedItem: null,
 
       showDay: false,
       multipleDaySelectedItem: [],
 
       showLabel: false,
+
     };
   };
+
+
+  showScaleAnimationDialog = () => {
+    this.scaleAnimationDialog.show();
+  }
+
+  showSlideAnimationDialog = () => {
+    this.slideAnimationDialog.show();
+  }
+
+  showFadeAnimationDialog = () => {
+    this.fadeAnimationDialog.show();
+  }
+
+  componentDidMount () {
+    this.props.onGetDeviceStatePress (this.state.device_id);
+  }
 
 
 
@@ -63,22 +94,22 @@ class AddAlarmScreen extends React.Component {
     return text;
   };
 
-  showSelectPicker = () => {
-    this.setState ({show: !this.state.show});
-  };
-
   render () {
     let _this = this;
 
-    let { navigation } = this.props;
-    let cur_device_name; 
-    let cur_device_id;
+    let cur_fan = [0,0,0,0];
+    let cur_scent = [null, null, null, null];
+    for (var i=0; i<Array.from (Immutable.fromJS (this.state.scentInfo).get ("cartridges")).length; i++) {
+      cur_scent[i] = Array.from (Immutable.fromJS (this.state.scentInfo).get ("cartridges"))[i].get ("scent");
+      cur_fan[i] = Array.from  (Immutable.fromJS (this.state.scentInfo).get ("cartridges"))[i].get ("fan");
+    }
 
     var device = this.props.device.toJS ();
     //var fromJS = Immutable.fromJS;
     var device_state = Immutable.Map (this.props.device_state);
-
     console.log ("device_State " ,device_state);
+
+    let cur_power = true;
     
 
     return (
@@ -93,8 +124,40 @@ class AddAlarmScreen extends React.Component {
           }} >
             <Text> arom 기기 선택 </Text>
           </TouchableOpacity>
-
         </View>
+        
+        
+        <View>
+          <DialogButton
+            text="Show Dialog - Slide Animation"
+            onPress={this.showSlideAnimationDialog}
+          />
+        <PopupDialog
+          ref={(popupDialog) => {
+            this.scaleAnimationDialog = popupDialog;
+          }}
+          dialogAnimation={scaleAnimation}
+          dialogTitle={<DialogTitle title="Popup Dialog - Scale Animation" />}
+          actions={[
+            <DialogButton
+              text="DISMISS"
+              onPress={() => {
+                this.scaleAnimationDialog.dismiss();
+              }}
+              key="button-1"
+            />,
+          ]}
+        >
+          <View style={styles.dialogContentView}>
+            <DialogButton
+              text="Show Dialog - Default Animation"
+              onPress={this.showFadeAnimationDialog}
+            />
+          </View>
+        </PopupDialog>
+          </View>
+        
+
         <View>
           <SinglePickerMaterialDialog
             title={'arom 기기 선택'}
@@ -109,6 +172,7 @@ class AddAlarmScreen extends React.Component {
               this.setState({ device_id: _.keys(device)[result.selectedItem.value]});
               console.log (result);
               console.log (_.keys(device)[result.selectedItem.value]);
+              this.props.onGetDeviceStatePress (this.state.device_id);
             }}
           />
           <Text> {this.state.device_name} </Text>
@@ -180,17 +244,10 @@ class AddAlarmScreen extends React.Component {
           }} showIcon={false} />
         </View>
         
-        <View>
-          <TouchableOpacity onPress={() => {this.props.onGetDeviceStatePress (this.state.device_id)}}>
-            <Text> aldjf;afjea </Text>
-          </TouchableOpacity>
-        </View>
-        <View>
           {this.state.device_id &&
             <Text> {JSON.stringify (device_state.toJS ())} </Text> ||
             <Text> {device_state.getIn ([this.state.device_id, "state", "reported"])} </Text>
           }
-        </View>
 
 
         <View> 
@@ -203,6 +260,19 @@ class AddAlarmScreen extends React.Component {
             onValueChange={(value) => this.setState ({light: value})}
           />
         </View>
+
+
+        <CircularSliderSet 
+        sliders = {0}
+        radius = {35}
+        lineWidth = {5}
+        btnRadius = {7}
+        defaultAngle1 = {cur_fan[0]/100*360}
+        defaultAngle2 = {cur_fan[1]/100*360}
+        defaultAngle3 = {cur_fan[2]/100*360}
+        defaultAngle4 = {cur_fan[3]/100*360}
+        onSendDeviceStatePress = {console.log ("hellohello")}
+        />
 
         <View>
           <TouchableOpacity onPress={ () => { console.log ("onPress this.state.label: ", this.state.label);

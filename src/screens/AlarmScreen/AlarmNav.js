@@ -1,7 +1,8 @@
 import React from 'react';
 import AlarmScreen from './AlarmScreen';
 import AddAlarmScreen from './AddAlarmScreen';
-import Header from '../../components/Headers/MainHeader';
+import ModAlarmScreen from './ModAlarmScreen';
+import AddAlarmHeader from '../../components/Headers/AddAlarmHeader';
 import GoBackHeader from '../../components/Headers/GoBackHeader';
 import { createStackNavigator } from 'react-navigation';
 
@@ -10,7 +11,7 @@ const AlarmNav = createStackNavigator ({
   Alarm: {
     screen: AlarmScreen,
     navigationOptions: ({navigation}) => ({
-      header: <Header />
+      header: <AddAlarmHeader navigation={navigation}/>
     })
   },
   AddAlarm: {
@@ -18,7 +19,13 @@ const AlarmNav = createStackNavigator ({
     navigationOptions: ({navigation}) => ({
       header: <GoBackHeader navigation={navigation} />
     })
-  }
+  },
+  ModAlarm: {
+    screen: ModAlarmScreen,
+    navigationOptions: ({navigation}) => ({
+      header: <GoBackHeader navigation={navigation} />
+    })
+  },
   },
   {
     initialRouteName: "Alarm",

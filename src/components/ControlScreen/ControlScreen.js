@@ -3,7 +3,7 @@ import { Text, View, TouchableOpacity } from 'react-native';
 
 import EStyleSheet from 'react-native-extended-stylesheet';
 import { Dropdown } from 'react-native-material-dropdown';
-import CircularSliderSetContainer from '../../containers/ControlScreen/CircularSliderSetContainer';
+import CircularSliderSetContainer from '../../containers/common/CircularSliderSetContainer';
 import { sendDeviceState } from '../../actions/device';
 
 

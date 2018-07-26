@@ -16,9 +16,11 @@ export const loadReservation = () => async  (dispatch, getState ) => {
   await dispatch (userinfo ());
   console.log (getState ());
   const devices = getState ().getIn (["user", "userinfo", "data", "devices"]);
+  console.log ("abcd");
+  console.log (devices);
   var map = Immutable.fromJS (devices);
   const [...keys] = map.keys ();
-  console.log (keys[0]);
+  console.log (map);
   console.log ("reservation reducer");
   //console.log (getState ());
   //console.log (getState ().getIn (["user", "userinfo", "error"]).message);

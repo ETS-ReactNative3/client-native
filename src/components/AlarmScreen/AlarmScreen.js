@@ -46,26 +46,36 @@ class AlarmScreen extends React.Component {
       let _this = this;
       list = list.map (x => ({...x, key: x.reservation_id}));
       var deviceSet = listToSet (list);
+
+      list.forEach (function (item) {
+        item["device_name"] = device.get (item["device_id"]);
+        console.log ("device.get~:", item);
+      });
+
       var newList = [];
       deviceSet.forEach (function (item) {
         const map = {device_id: item, data: reservationSection (list, item)};
+        /* 
+        map = { device_id: "arom_jaeyoung", data: {...}} 
+         */
         newList.push (map);
       });
 
+
       return (
         <View style={styles.container}>
-          <TouchableOpacity onPress={() => _this.props.onPressAdd ()}>
-            <View style={styles.alarmTextContainer}>
-              <Text style={styles.alarmText}> 알람 </Text>
-            </View>
-          </TouchableOpacity>
+          <View style={styles.alarmTextContainer}>
+            <Text style={styles.alarmText}> 알람 </Text>
+          </View>
           <SectionList
             sections = {newList}
             renderItem = {
               ({item}) =>
-                <View style={styles.alarmItemContainer} key = {item.reservation_id}>
-                  <Text style={styles.alarmItem}> {item.endTime} </Text>
-                </View>
+                <TouchableOpacity onPress={() => this.props.onPressMod (item)}>
+                  <View style={styles.alarmItemContainer} key = {item.reservation_id}>
+                    <Text style={styles.alarmItem}> {item.endTime} </Text>
+                  </View>
+                </TouchableOpacity>
             }
             renderSectionHeader = {
               ({section}) =>

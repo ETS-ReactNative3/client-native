@@ -1,5 +1,5 @@
 import React from 'react';
-import AddAlarmScreen from '../../components/AlarmScreen/AddAlarmScreen';
+import ModAlarmScreen from '../../components/AlarmScreen/ModAlarmScreen';
 import { connect } from 'react-redux';
 import { modReservation } from '../../actions/reservation';
 import { getDeviceState } from '../../actions/device';
@@ -31,7 +31,7 @@ const mapDispatchToProps = (dispatch, props) => ({
 });
 
 
-export class AddAlarmScreenContainer extends React.Component {
+export class ModAlarmScreenContainer extends React.Component {
   constructor (props) {
     super (props);
   }
@@ -48,7 +48,7 @@ export class AddAlarmScreenContainer extends React.Component {
 
 
   render () {
-    return <AddAlarmScreen
+    return <ModAlarmScreen
       {...this.props}
       onModReservationPress = {this.onModReservationPress}
       onGetDeviceStatePress = {this.onGetDeviceStatePress}
@@ -59,4 +59,4 @@ export class AddAlarmScreenContainer extends React.Component {
 export default connect (
   mapStateToProps,
   mapDispatchToProps
-)(AddAlarmScreenContainer);
+)(ModAlarmScreenContainer);

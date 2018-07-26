@@ -60,7 +60,7 @@ export default handleActions({
   },
   [GET_DEVICE_STATE_SUCCESS] (deviceState, {payload, meta}) {
     console.log ("Get device state Success payload: ", payload);
-    const device = deviceTemplate.set ('state', payload);
+    const device = deviceTemplate.set ('state', Immutable.fromJS (payload));
     return deviceState.set (meta.deviceId, device);
   },
   [GET_DEVICE_STATE_FAILURE] (deviceState, {payload, meta}) {

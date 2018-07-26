@@ -1,5 +1,5 @@
 import React from 'react';
-import CircularSliderSet from '../../components/ControlScreen/CircularSliderSet'
+import CircularSliderSet from '../../components/common/CircularSliderSet'
 
 import { connect } from 'react-redux';
 import { sendDeviceState } from '../../actions/device'

@@ -46,7 +46,7 @@ export class AlarmScreenContainer extends React.Component {
    }
 
   onPressMod = (item) => {
-    console.log ("alarm modifiy press");
+    console.log ("alarm modifiy press: ", item);
     this.props.navigation.push ("ModAlarm", {
       item: item
     });

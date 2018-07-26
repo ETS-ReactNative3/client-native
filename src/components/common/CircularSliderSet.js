@@ -4,7 +4,7 @@ import EStyleSheet from 'react-native-extended-stylesheet';
 import Slider from 'react-native-slider';
 import Icon from 'react-native-vector-icons/FontAwesome'
 
-import CircularSlider from '../common/CircularSlider';
+import CircularSlider from './CircularSlider';
 
 let circularSliderMargin = 0;
 const linkIcon = (<Icon name="link" size={20} color="#000" />)
