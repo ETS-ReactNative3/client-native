@@ -2,26 +2,13 @@ import React from 'react';
 import { TextInput, ScrollView, Text, View, TouchableOpacity, Slider } from 'react-native';
 import { SelectPicker } from 'react-native-select-picker';
 import { MaterialDialog, SinglePickerMaterialDialog, MultiPickerMaterialDialog } from 'react-native-material-dialog';
-console.log ("hello");
 import DatePicker from 'react-native-datepicker';
 import EStyleSheet from 'react-native-extended-stylesheet';
 import _ from 'lodash';
 import Immutable from 'immutable';
 import CircularSliderSet from '../common/CircularSliderSet';
-import PopupDialog, {
-  DialogTitle,
-  DialogButton,
-  SlideAnimation,
-  ScaleAnimation,
-  FadeAnimation,
-} from 'react-native-popup-dialog';
-//const { fromJS } = require('immutable')
 
 
-
-const slideAnimation = new SlideAnimation({ slideFrom: 'bottom' });
-const scaleAnimation = new ScaleAnimation();
-const fadeAnimation = new FadeAnimation({ animationDuration: 150 });
 
 class AddAlarmScreen extends React.Component {
   constructor (props) {
@@ -30,8 +17,8 @@ class AddAlarmScreen extends React.Component {
       device_id: "arom_jaeyoung",
       reservation_id : this.device_id + '_reservation_' + this.makeRandomString(8),
 
-      startTime : null,
-      endTime : null,
+      startTime : "00:00",
+      endTime : "00:00",
       every : [],
       invokeTime : 0,
       notification : 'true',
@@ -62,21 +49,12 @@ class AddAlarmScreen extends React.Component {
 
       showLabel: false,
 
+      visible: true,
     };
   };
 
 
-  showScaleAnimationDialog = () => {
-    this.scaleAnimationDialog.show();
-  }
 
-  showSlideAnimationDialog = () => {
-    this.slideAnimationDialog.show();
-  }
-
-  showFadeAnimationDialog = () => {
-    this.fadeAnimationDialog.show();
-  }
 
   componentDidMount () {
     this.props.onGetDeviceStatePress (this.state.device_id);
@@ -109,7 +87,9 @@ class AddAlarmScreen extends React.Component {
     var device_state = Immutable.Map (this.props.device_state);
     console.log ("device_State " ,device_state);
 
-    let cur_power = true;
+
+
+    let cur_power = device_state.getIn (this.state.device_id, "state", "reported", "power");
     
 
     return (
@@ -128,33 +108,18 @@ class AddAlarmScreen extends React.Component {
         
         
         <View>
-          <DialogButton
-            text="Show Dialog - Slide Animation"
-            onPress={this.showSlideAnimationDialog}
-          />
-        <PopupDialog
-          ref={(popupDialog) => {
-            this.scaleAnimationDialog = popupDialog;
-          }}
-          dialogAnimation={scaleAnimation}
-          dialogTitle={<DialogTitle title="Popup Dialog - Scale Animation" />}
-          actions={[
-            <DialogButton
-              text="DISMISS"
-              onPress={() => {
-                this.scaleAnimationDialog.dismiss();
-              }}
-              key="button-1"
-            />,
-          ]}
+
+        <MaterialDialog
+          title=""
+          visible={!cur_power && this.state.visible}
+          onOk={() => this.setState ({visible: false})}
+          onCancel={() => {}}
+          cancelLabel=""
         >
-          <View style={styles.dialogContentView}>
-            <DialogButton
-              text="Show Dialog - Default Animation"
-              onPress={this.showFadeAnimationDialog}
-            />
-          </View>
-        </PopupDialog>
+          <Text style={styles.dialogText}>
+            arom 기기가 꺼져있습니다.
+          </Text>
+        </MaterialDialog>
           </View>
         
 

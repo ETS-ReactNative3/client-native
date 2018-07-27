@@ -30,6 +30,29 @@ const listToSet = (list) => {
 class AlarmScreen extends React.Component {
   constructor (props) {
     super (props);
+    /*
+    var device = this.props.device;
+    if (this.props.list) {
+      var list = this.props.list.toJS ();
+      list = list.map (x => ({...x, key: x.reservation_id}));
+      var deviceSet = listToSet (list);
+
+      list.forEach (function (item) {
+        item["device_name"] = device.get (item["device_id"]);
+        console.log ("device.get~:", item);
+      });
+
+      var newList = [];
+      deviceSet.forEach (function (item) {
+        const map = {device_id: item, data: reservationSection (list, item)};
+        newList.push (map);
+      })
+      
+    }*/
+    /*
+    this.state = {
+      newList: null,
+    }*/
   };
 
   componentDidMount () {
@@ -38,12 +61,9 @@ class AlarmScreen extends React.Component {
 
 
   render() {
-    //console.log (this.props.loadReservation ());
     var device = this.props.device;
-    if (this.props.list)
-    {
+    if (this.props.list) {
       var list = this.props.list.toJS ();
-      let _this = this;
       list = list.map (x => ({...x, key: x.reservation_id}));
       var deviceSet = listToSet (list);
 
@@ -59,9 +79,14 @@ class AlarmScreen extends React.Component {
         map = { device_id: "arom_jaeyoung", data: {...}} 
          */
         newList.push (map);
-      });
+      })
 
+    }
 
+    //this.state.newList = newList;
+    //console.log (this.props.loadReservation ());
+    if (newList)
+    {
       return (
         <View style={styles.container}>
           <View style={styles.alarmTextContainer}>

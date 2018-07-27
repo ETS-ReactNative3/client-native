@@ -8,24 +8,30 @@ import DatePicker from 'react-native-datepicker';
 import EStyleSheet from 'react-native-extended-stylesheet';
 import _ from 'lodash';
 import Immutable from 'immutable';
-import PopupDialog, {
-  DialogTitle,
-  DialogButton,
-  SlideAnimation,
-  ScaleAnimation,
-  FadeAnimation,
-} from 'react-native-popup-dialog';
-
-
-const slideAnimation = new SlideAnimation({ slideFrom: 'bottom' });
-const scaleAnimation = new ScaleAnimation();
-const fadeAnimation = new FadeAnimation({ animationDuration: 150 });
-
 
 class AddAlarmScreen extends React.Component {
   constructor (props) {
     super (props);
+    
+    let { navigation } = this.props;
+    let item = navigation.getParam ("item", "no such item");
+    console.log ("selected Item is: ", item);
+
     this.state = {
+      device_id: item.device_id,
+      reservation_id : item.reservation_id,
+      startTime : item.startTime,
+      endTime : item.endTime,
+      every : item.every,
+      invokeTime : item.invokeTime,
+      notification : item.notification,
+      notificationIds: item.notificationIds,
+      light: item.light,
+      fanPower: item.fanPower,
+      scentInfo: item.scentInfo,
+      label: item.label,
+      device_name: item.device_name,
+
       showDevice: false,
       singleDeviceSelectedItem: undefined,
 
@@ -37,38 +43,19 @@ class AddAlarmScreen extends React.Component {
   };
 
   componentDidMount () {
-    let { navigation } = this.props;
-    let item = navigation.getParam ("item", "no such item");
-    let cur_device_id = item.device_id;
-    this.props.onGetDeviceStatePress (cur_device_id);
+    this.props.onGetDeviceStatePress (this.state.device_id);
   }
 
 
   render () {
     let _this = this;
-
-    let { navigation } = this.props;
-    let item = navigation.getParam ("item", "no such item");
-    let cur_device_name = item.device_name;
-    let cur_device_id = item.device_id;
-    let cur_startTime = item.startTime;
-    let cur_endTime = item.endTime;
-    let cur_every = item.every;
-    let cur_invokeTime = item.invokeTime;
-    let cur_notification = item.notification;
-    let cur_notificationId = item.notificatonIds;
-    let cur_light = item.light;
-    let cur_fanPower = item.fanPower;
-    let cur_scentInfo = item.scentInfo;
-    let cur_label = item.label;
-
     
     let cur_fan = [0,0,0,0];
     let cur_scent = [null, null, null, null];
 
-    for (var i=0; i<Array.from (Immutable.fromJS (cur_scentInfo).get ("cartridges")).length; i++) {
-      cur_scent[i] = Array.from (Immutable.fromJS (cur_scentInfo).get ("cartridges"))[i].get ("scent");
-      cur_fan[i] = Array.from  (Immutable.fromJS (cur_scentInfo).get ("cartridges"))[i].get ("fan");
+    for (var i=0; i<Array.from (Immutable.fromJS (this.state.scentInfo).get ("cartridges")).length; i++) {
+      cur_scent[i] = Array.from (Immutable.fromJS (this.state.scentInfo).get ("cartridges"))[i].get ("scent");
+      cur_fan[i] = Array.from  (Immutable.fromJS (this.state.scentInfo).get ("cartridges"))[i].get ("fan");
     }
 
     //let cur_power = true;
@@ -79,7 +66,7 @@ class AddAlarmScreen extends React.Component {
     //console.log ("device_state: ", device_state);
 
     //console.log ("_.values (Device): " , _.values (device));
-    console.log ("selected reservation item is:" , item);
+    //console.log ("selected reservation item is:" , item);
     //console.log ("cur_startTime: ", cur_startTime)a
 
     //console.log ("device_state.getIn ():", device_state.getIn([cur_device_id, "state", "reported"]));
@@ -111,16 +98,16 @@ class AddAlarmScreen extends React.Component {
             onOk={result => {
               this.setState({ showDevice: false });
               this.setState({ singleDeviceSelectedItem: result.selectedItem });
-              cur_device_name = result.selectedItem.label;
-              cur_device_id = _.keys (device)[result.selectedItem.value];
-              this.props.onGetDeviceStatePress (cur_device_id);
+              this.setState ({ device_name: result.selectedItem.label });
+              this.setState ({ device_id: _.keys (device)[result.selectedItem.value ]});
+              this.props.onGetDeviceStatePress (this.state.device_id);
               //this.setState({ device_name: result.selectedItem.label});
               //this.setState({ device_id: _.keys(device)[result.selectedItem.value]});
               //console.log (result);
               //console.log (_.keys(device)[result.selectedItem.value]);
             }}
           />
-          <Text> {cur_device_name} </Text>
+          <Text> {this.state.device_name} </Text>
         </View>
 
         <View>
@@ -140,22 +127,22 @@ class AddAlarmScreen extends React.Component {
             onOk={result => {
               this.setState ({ showDay: false});
               this.setState ({ multipleDaySelectedItem: result.selectedItems });
-              {result.selectedItems.forEach (x => {(cur_every).push (x.label)})};
+              {result.selectedItems.forEach (x => {(this.state.every).push (x.label)})};
               //console.log (result);
               //console.log ( result.selectedItems);
               //console.log ( _.filter (result.selectedItems, {'selected': true}));
               //console.log ( this.state.every);
             }}
           />
-          <Text> {JSON.stringify(cur_every)} </Text>
+          <Text> {JSON.stringify(this.state.every)} </Text>
         </View>
 
         <View>
           <TouchableOpacity onPress={() => {this.setState ({ showLabel: true })}}>
             <Text> 레이블 </Text>
           </TouchableOpacity>
-          {cur_label &&
-            <Text> {cur_label} </Text>
+          {this.state.label &&
+            <Text> {this.state.label} </Text>
           }
         </View>
         <View>
@@ -167,7 +154,7 @@ class AddAlarmScreen extends React.Component {
           >
             <TextInput
               onChangeText={(text) => this.setState({label: text})}
-              value={cur_label}
+              value={this.state.label}
             />
           </MaterialDialog>
         </View>
@@ -176,27 +163,20 @@ class AddAlarmScreen extends React.Component {
 
         <View>
           <Text> 시작시간 </Text>
-          <DatePicker date={cur_startTime} mode="time" confirmBtnText="Confirm" cancelBtnText="Cancel" onDateChange={(time) => {
-            cur_startTime = time;
-            console.log ("startTime set to : " , cur_startTime);
+          <DatePicker date={this.state.startTime} mode="time" confirmBtnText="Confirm" cancelBtnText="Cancel" onDateChange={(time) => {
+            this.setState ({ startTime: time});
+            console.log ("startTime set to : " , this.state.startTime);
           }} showIcon={false} />
         </View>
 
         <View>
           <Text> 종료시간 </Text>
-          <DatePicker date={cur_endTime} mode="time" confirmBtnText="Confirm" cancelBtnText="Cancel" onDateChange={(time) => {
-            cur_endTime = time;
-            console.log ("endTime set to : " , cur_endTime);
+          <DatePicker date={this.state.endTime} mode="time" confirmBtnText="Confirm" cancelBtnText="Cancel" onDateChange={(time) => {
+            this.setState ({ endTime: time});
+            console.log ("endTime set to : " , this.state.endTime);
           }} showIcon={false} />
         </View>
         
-        <View>
-          <TouchableOpacity onPress={() => {this.props.onGetDeviceStatePress (cur_device_id)}}>
-            <Text> aldjf;afjea </Text>
-          </TouchableOpacity>
-        </View>
-
-
         <View> 
           <Text> 세부 설정 </Text>
         </View>
@@ -205,26 +185,25 @@ class AddAlarmScreen extends React.Component {
           <Text> 조명 밝기 </Text>
           <Slider
             maximumValue={100}
-            value={cur_light}
-            onValueChange={(value) => {cur_lgiht = value}}
+            value={this.state.light}
+            onValueChange={(value) => this.setState ({light: value})}
           />
         </View>
-
-        <CircularSliderSet 
-        sliders = {0}
-        radius = {35}
-        lineWidth = {5}
-        btnRadius = {7}
-        defaultAngle1 = {cur_fan[0]/100*360}
-        defaultAngle2 = {cur_fan[1]/100*360}
-        defaultAngle3 = {cur_fan[2]/100*360}
-        defaultAngle4 = {cur_fan[3]/100*360}
-        onSendDeviceStatePress = {console.log ("hellohello")}
-        />
-
+        {
+          //<CircularSliderSet 
+        //sliders = {0}
+        //radius = {35}
+        //lineWidth = {5}
+        //btnRadius = {7}
+        //defaultAngle1 = {cur_fan[0]/100*360}
+        //defaultAngle2 = {cur_fan[1]/100*360}
+        //defaultAngle3 = {cur_fan[2]/100*360}
+        //defaultAngle4 = {cur_fan[3]/100*360}
+          ///>
+        }
         <View>
-          <TouchableOpacity onPress={ () => { console.log ("onPress label: ", cur_label);
-            this.props.onModReservationPress (cur_device_id, cur_reservation_id, cur_startTime, cur_endTime, cur_every, cur_invokeTime, cur_notification, cur_notificationIds, cur_light, cur_fanPower, cur_scentInfo, cur_label)}}>
+          <TouchableOpacity onPress={ () => { console.log ("onPress label: ", this.state.label);
+            this.props.onModReservationPress (this.state.device_id, this.state.reservation_id, this.state.startTime, this.state.endTime, this.state.every, this.state.invokeTime, JSON.stringify (this.state.notification), this.state.notificationIds, this.state.light, this.state.fanPower, this.state.scentInfo, this.state.label)}}>
             <Text> 알람 수정 </Text>
           </TouchableOpacity>
         </View>

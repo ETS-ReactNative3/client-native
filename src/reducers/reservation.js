@@ -18,7 +18,7 @@ const initialState = Immutable.fromJS ({
     loading: false,
     error: null,
     list: null,
-    tmp_alarm: null,
+    //tmp_alarm: null,
   },
 });
 
@@ -102,36 +102,47 @@ export default handleActions ({
   },
   [ADD_RESERVATION] (reservationState, {payload, meta}) {
     console.log ("ADD_RESERVATION");
-    const reservation = initialState.get ('reservation').set ('loading', true);
+    const reservation = reservationState.get ('reservation').set ('loading', true);
     return reservationState.set ('reservation', reservation);
   },
   [ADD_RESERVATION_SUCCESS] (reservationState, {payload, meta}) {
     console.log ("ADD_RESERVATION_SUCCESS: payload: ", payload);
 
-    const reservation = initialState.get ('reservation').set ('tmp_alarm', payload);
-    return reservationState.set ('reservation', reservation);
+    const reservationList = reservationState.getIn (['reservation', 'list']).push (payload);
+    return reservationState.setIn (['reservation', 'list'], reservationList);
   },
   [ADD_RESERVATION_FAILURE] (reservationState, {payload, meta}) {
     console.log ("ADD_RESERVATION_FAILURE payload: ", payload.response);
 
-    const reservation = initialState.get ('reservation').set ('error', payload);
+    const reservation = reservationState.get ('reservation').set ('error', payload);
     return reservationState.set ('reservation', reservation);
   },
   [MOD_RESERVATION] (reservationState, {payload, meta}) {
     console.log ("MOD_RESERVATION");
-    const reservation = initialState.get ('reservation').set ('loading', true);
+    const reservation = reservationState.get ('reservation').set ('loading', true);
     return reservationState.set ('reservation', reservation);
   },
   [MOD_RESERVATION_SUCCESS] (reservationState, {payload, meta}) {
     console.log ("MOD_RESERVATION_SUCCESS: payload: ", payload);
 
-    const reservation = initialState.get ('reservation').set ('tmp_alarm', payload);
-    return reservationState.set ('reservation', reservation);
+    let reservationList = reservationState.getIn (['reservation', 'list'])
+    let reservationId = payload.reservation_id;
+    reservationList = reservationList.map ((item) => {
+      if (item.get ("reservation_id") == reservationId) {
+        return Immutable.fromJS (payload);
+      }
+      else {
+        return item
+      }
+    });
+
+    console.log ("reservationList: ", reservationList);
+    return reservationState.setIn (['reservation', 'list'], reservationList);
   },
   [MOD_RESERVATION_FAILURE] (reservationState, {payload, meta}) {
     console.log ("MOD_RESERVATION_FAILURE payload: ", payload.response);
 
-    const reservation = initialState.get ('reservation').set ('error', payload);
+    const reservation = reservationState.get ('reservation').set ('error', payload);
     return reservationState.set ('reservation', reservation);
   }
 },
