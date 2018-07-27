@@ -5,6 +5,7 @@ import EStyleSheet from 'react-native-extended-stylesheet';
 import { Dropdown } from 'react-native-material-dropdown';
 import CircularSliderSetContainer from '../../containers/common/CircularSliderSetContainer';
 import { sendDeviceState } from '../../actions/device';
+import { getScentIcon } from '../../helpers/icon'
 
 
 const aromMachine = [{
@@ -47,6 +48,11 @@ class ControlScreen extends React.Component {
           defaultAngle2 = {180}
           defaultAngle3 = {135}
           defaultAngle4 = {150}
+          background1 = {getScentIcon('latulip')}
+          background2 = {getScentIcon('lavender')}
+          background3 = {getScentIcon('lemon')}
+          background4 = {getScentIcon('sandalwood')}
+          actionOnRelease = {true}
         />
       </View>
     )

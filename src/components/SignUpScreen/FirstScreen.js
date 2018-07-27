@@ -65,7 +65,7 @@ class FirstScreen extends React.Component {
               <TouchableOpacity style = {styles.generalBtn} onPress={this.props.onCancelPress}>
                 <Text style={styles.buttonText}>비동의</Text>
               </TouchableOpacity>
-              <TouchableOpacity style = {styles.generalBtn} onPress={this.props.onNextSignUpPress}>
+              <TouchableOpacity style = {styles.generalBtn} onPress={()=>this.props.onNextSignUpPress()}>
                 <Text style={styles.buttonText}>동의</Text>
               </TouchableOpacity>
             </View>

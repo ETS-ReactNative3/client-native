@@ -3,6 +3,7 @@ import { Text, View, TouchableOpacity } from 'react-native';
 import EStyleSheet from 'react-native-extended-stylesheet';
 import Slider from 'react-native-slider';
 import Icon from 'react-native-vector-icons/FontAwesome'
+import { getScentIcon } from '../../helpers/icon'
 
 import CircularSlider from './CircularSlider';
 
@@ -67,7 +68,12 @@ class CircularSliderSet extends React.Component {
           }}
           minimumValue = {0}
           maximumValue = {100}
-          onSlidingComplete = {()=>onSendDeviceState()}
+          onSlidingComplete = {
+            ()=> {
+              this.props.actionOnRelease ? 
+              onSendDeviceState() : 
+              console.log("Do not do anything")
+            }}
         />
         <View style={styles.rowView}>
           <View>
@@ -78,12 +84,18 @@ class CircularSliderSet extends React.Component {
               startValue={this.state.angle[0]}
               maxAngle={this.state.maxAngle[0]}
               stopSlider={this.state.stopSlider}
-              onSlidingComplete = {()=>onSendDeviceState()}
+              onSlidingComplete = {
+                ()=> {
+                  this.props.actionOnRelease ? 
+                  onSendDeviceState() : 
+                  console.log("Do not do anything")
+                }}
               onChangeAngle={(angle) => {
                 this.state.fixRatio == false ? updateAngle(0, angle) : updateAngleByRatio(0, angle)
               }}
-              lineColor='#fff'
+              lineColor='red'
               circleColor='#cbf442'
+              backgroundSource={this.props.background1}
             />
           </View>
           <View>
@@ -94,12 +106,18 @@ class CircularSliderSet extends React.Component {
               startValue={this.state.angle[1]}
               maxAngle={this.state.maxAngle[1]}
               stopSlider={this.state.stopSlider}
-              onSlidingComplete = {()=>onSendDeviceState()}
+              onSlidingComplete = {
+                ()=> {
+                  this.props.actionOnRelease ? 
+                  onSendDeviceState() : 
+                  console.log("Do not do anything")
+                }}
               onChangeAngle={(angle) => {
                 this.state.fixRatio == false ? updateAngle(1, angle) : updateAngleByRatio(1, angle)
               }}
-              lineColor='#fff'
+              lineColor='blue'
               circleColor='#f0bcff'
+              backgroundSource={this.props.background2}
             />
           </View>
         </View>
@@ -132,12 +150,18 @@ class CircularSliderSet extends React.Component {
               startValue={this.state.angle[2]}
               maxAngle={this.state.maxAngle[2]}
               stopSlider={this.state.stopSlider}
-              onSlidingComplete = {()=>onSendDeviceState()}
+              onSlidingComplete = {
+                ()=> {
+                  this.props.actionOnRelease ? 
+                  onSendDeviceState() : 
+                  console.log("Do not do anything")
+                }}
               onChangeAngle={(angle) => {
                 this.state.fixRatio == false ? updateAngle(2, angle) : updateAngleByRatio(2, angle)
               }}
-              lineColor='#fff'
+              lineColor='black'
               circleColor='#f0bcff'
+              backgroundSource={this.props.background3}
             />
           </View>
           <View>
@@ -148,12 +172,18 @@ class CircularSliderSet extends React.Component {
               startValue={this.state.angle[3]}
               maxAngle={this.state.maxAngle[3]}
               stopSlider={this.state.stopSlider}
-              onSlidingComplete = {()=>onSendDeviceState()}
+              onSlidingComplete = {
+                ()=> {
+                  this.props.actionOnRelease ? 
+                  onSendDeviceState() : 
+                  console.log("Do not do anything")
+                }}
               onChangeAngle={(angle) => {
                 this.state.fixRatio == false ? updateAngle(3, angle) : updateAngleByRatio(3, angle)
               }}
-              lineColor='#fff'
+              lineColor='purple'
               circleColor='#f0bcff'
+              backgroundSource={this.props.background4}
             />
           </View>
         </View>
@@ -168,6 +198,14 @@ class CircularSliderSet extends React.Component {
       </View> 
     )
   }
+}
+
+CircularSliderSet.defaultProps = {
+  actionOnRelease: false,
+  background1: getScentIcon('bergamot'),
+  background2: getScentIcon('bergamot'),
+  background3: getScentIcon('bergamot'),
+  background4: getScentIcon('bergamot'),
 }
 
 export default CircularSliderSet;

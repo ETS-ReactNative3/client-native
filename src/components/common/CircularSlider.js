@@ -1,6 +1,8 @@
 import React from 'react';
-import { View, PanResponder } from 'react-native';
+import { View, Image, ImageBackground, PanResponder } from 'react-native';
 import Svg,{ Circle, Path, Rect, Text } from 'react-native-svg';
+
+import { getScentIcon } from '../../helpers/icon'
 
 class CircularSlider extends React.Component {
   componentWillReceiveProps(nextProps) {
@@ -87,7 +89,7 @@ class CircularSlider extends React.Component {
           ( 2*Math.pow(radius, 2) - 
           (Math.pow(centerX - closestX,2) + Math.pow(centerY-radius-closestY, 2)) ) / (2*Math.pow(radius,2))
         )
-        currentAngle = currentAngle * 180 / Math.PI;
+        currentAngle = currentAngle * 180 / Math.PI + 180;
         if (moveX < centerX) {
           // console.log("Original current angle is",currentAngle);
           currentAngle = 360-currentAngle;
@@ -173,17 +175,31 @@ class CircularSlider extends React.Component {
         "A", radius, radius, 0, arcSweep, 0, end.x, end.y,
         // "L", x,y,
         // "L", start.x, start.y
-    ].join(" ");
+      ].join(" ");
+
+      const start_background = polarToCartesian(finalWidth, finalWidth, radius, 359.99);
+      const end_background = polarToCartesian(finalWidth, finalWidth, radius, 0);
+      const arcSweep_background = 1;
+      pathDirection_background = [
+        "M", start_background.x, start_background.y, 
+        "A", radius, radius, 0, arcSweep_background, 0, end_background.x, end_background.y,
+      ].join(" ")
       return(
         <Svg
         width={(radius+btnRadius)*3}
         height={(radius+btnRadius)*2}
         >
         <Path
-          d={pathDirection}
-          stroke="black"
+          d={pathDirection_background}
+          stroke={this.props.backgroundLineColor}
           strokeWidth={lineWidth}
-          fill={this.props.lineColor}
+          strokeOpacity={this.props.backgroundLineOpacity}
+          fillOpacity='0'
+        />
+        <Path
+          d={pathDirection}
+          stroke={this.props.lineColor}
+          strokeWidth={lineWidth}
           fillOpacity='0'
         />
         <Circle 
@@ -193,12 +209,12 @@ class CircularSlider extends React.Component {
           fill={this.props.circleColor} 
           {...this._panResponder.panHandlers}
         />
-        <Rect 
+        {/* <Rect 
           width={(radius+btnRadius)*2}
           height={(radius+btnRadius)*2}
           fill='red'
-          fillOpacity='0.2'
-        />
+          fillOpacity='0.1'
+        /> */}
         <Text
           x='35%'
           y='50%'
@@ -223,12 +239,34 @@ class CircularSlider extends React.Component {
           })
         }}
       >
-        {/* {console.log("Circular slider changed with angle",this.state.endAngle)} */}
-        {/* {this.state.endAngle >= 360 ? this.state.endAngle %= 360 : null} */}
-        {drawArc(this.props.radius, 0, this.state.endAngle, this.props.lineWidth, this.props.btnRadius)}
+        {/* <Image source={getScentIcon ("bergamot")} 
+          style={{
+            width: (this.props.btnRadius+this.props.radius)*2,
+            height: (this.props.btnRadius+this.props.radius)*2,
+            flex:1
+          }}/> */}
+          <ImageBackground
+            resizeMode='cover'
+            source={this.props.backgroundSource} 
+            style={{
+              width: (this.props.btnRadius+this.props.radius)*2,
+              height: (this.props.btnRadius+this.props.radius)*2,
+            }}
+            opacity={this.props.backgroundOpacity}
+          >
+        {drawArc(this.props.radius, 180, this.state.endAngle+180, this.props.lineWidth, this.props.btnRadius)}
+        </ImageBackground>
       </View>
     )
   }
 }
-
+CircularSlider.defaultProps = {
+  backgroundSource: getScentIcon('cottonblossom'),
+  backgroundOpacity: 0.5,
+  lineColor: 'blue',
+  backgroundLineColor: 'white',
+  circleColor: 'white',
+  backgroundLineOpacity: '0.5'
+  
+}
 export default CircularSlider;

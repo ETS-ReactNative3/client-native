@@ -25,8 +25,8 @@ class LoginScreen extends React.Component {
             source = {require(background)}
           >
             <LoadingOverlay visible={this.props.loading}/>
-            { this.props.error && <Text> login error: {this.props.error} </Text> }
-            { this.props.token && <Text> login succeed: </Text> }
+            { this.props.error != '' ? <Text> login error: {this.props.error} </Text> : <View></View> }
+            { this.props.token != '' ? <Text> login succeed: </Text> : <View></View>}
             <View style = {styles.generalStyle}>
               <Image source={require(logo)} style={[styles.imgLogo,{marginTop: 60, marginBottom: 20}]} />
               <View style = {styles.generalStyle}>
@@ -48,7 +48,7 @@ class LoginScreen extends React.Component {
                   this.props.onLoginPress(this.state.email, this.state.pwd)}}>
                   <Text style={styles.buttonText}>Login</Text>
                 </TouchableOpacity>
-                { this.props.error && <Text style = {styles.wrongText}> Wrong input! </Text> }
+                { this.props.error != '' ? <Text style = {styles.wrongText}> Wrong input! </Text> : <View></View>}
                 <TouchableOpacity style = {[styles.forgotpwdBtn, {marginBottom: 100}]}>
                   <Text style={styles.buttonText}>Forgot Password</Text>
     
@@ -63,7 +63,7 @@ class LoginScreen extends React.Component {
                   <Text style={styles.buttonText}>KAKAO LOGIN</Text>
                 </TouchableOpacity>
     
-                <TouchableOpacity style = {styles.forgotpwdBtn} onPress={this.props.onSignUpPress}>
+                <TouchableOpacity style = {styles.forgotpwdBtn} onPress={()=>this.props.onSignUpPress()}>
                   <Text style={styles.buttonText}>Sign up</Text>
                 </TouchableOpacity>
               </View>
@@ -89,11 +89,6 @@ const styles = EStyleSheet.create({
     backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
-    height: 2000,
-  },
-  scrollViewContainer: {
-    flex: 1,
-    //height: 2000,
   },
   generalStyle: {
     alignItems: 'center'

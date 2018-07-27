@@ -6,6 +6,7 @@ import {
   createApiAction,
   createAuthorizedApiAction
 } from './api'
+import { actionWith } from "../../node_modules/redux-api-middleware/lib/util";
 
 export const SET_TOKEN = "USER/SET_TOKEN"
 
@@ -102,4 +103,29 @@ export const userinfo = () => async (dispatch) => {
     method: 'GET',
   });
   await dispatch (apiCall);
+}
+
+export const LOGINFB = "USER/LOGINFB";
+export const LOGINFB_FAILURE = "USER/LOGINFB_FAILURE";
+
+export const loginFB = (token) => async (dispatch) => {
+  console.log("(action) loginFB")
+  const apiCall = createApiAction({
+    types: [LOGINFB, SET_TOKEN, LOGINFB_FAILURE],
+    path: 'facebook/login',
+    params: {"facebook_auth_token":token}
+  });
+  await dispatch (apiCall);
+}
+
+export const SIGNUPFB = "USER/SIGNUP_FB"
+export const SIGNUPFB_SUCCESS = "USER/SIGNUP_FB_SUCCESS"
+export const SIGNUPFB_FAILURE = "USER/SIGNUP_FB_FAILURE"
+export const signupFB = (FBtoken, email, name, birthday, gender, place, space, purpose, prefer_scents) => async (dispatch, getState) => {
+  const apiCall = createApiAction({
+    types: [SIGNUPFB, SIGNUPFB_SUCCESS,SIGNUPFB_FAILURE],
+    path: 'facebook/signup',
+    params: {"facebook_auth_token": FBtoken, email, name, birthday, gender, place, space, purpose, prefer_scents}
+  })
+  await dispatch(apiCall);
 }
