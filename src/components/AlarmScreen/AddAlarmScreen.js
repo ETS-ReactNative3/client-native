@@ -236,7 +236,7 @@ class AddAlarmScreen extends React.Component {
         defaultAngle2 = {cur_fan[1]/100*360}
         defaultAngle3 = {cur_fan[2]/100*360}
         defaultAngle4 = {cur_fan[3]/100*360}
-        onSendDeviceStatePress = {console.log ("hellohello")}
+        onSendDeviceStatePress = {() => console.log ("hello hello hello")}
         />
 
         <View>

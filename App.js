@@ -22,6 +22,7 @@ import TabScreen from './src/screens/TabScreen';
 import EachCollectionScreen from './src/screens/CollectionScreen/EachCollectionScreen';
 import AddAlarm from './src/screens/AlarmScreen/AddAlarmScreen';
 import ModAlarm from './src/screens/AlarmScreen/ModAlarmScreen';
+import Register from './src/screens/ControlScreen/RegisterScreen';
 
 // prepare extended stylesheet
 EStyleSheet.build();
@@ -48,6 +49,9 @@ let Nav = createStackNavigator({
   },
   ModAlarm: {
     screen: ModAlarm
+  },
+  Register: {
+    screen: Register
   },
 }, {
   initialRouteName: "Login",

@@ -22,7 +22,7 @@ export class CollectionScreenContainer extends React.Component {
 
   onCollectionPress = (item) => {
     console.log ("item at CollectionScreen: ", item);
-    this.props.navigation.replace ("EachCollection",{
+    this.props.navigation.push ("EachCollection",{
       item: item 
       });
     

@@ -24,10 +24,34 @@ export const loadCollection = ({
       order,
       scents,
       mine,
-      liked: false,
+      liked: 'false',
     },
     types: [LOAD_COLLECTION, LOAD_COLLECTION_SUCCESS, LOAD_COLLECTION_FAILURE]
   });
 
   await dispatch(apiCall)
+}
+
+  
+export const ADD_RECIPE = "RECIPE/ADD_RECIPE";
+export const ADD_RECIPE_SUCCESS = "RECIPE/ADD_RECIPE_SUCCES";
+export const ADD_RECIPE_FAILURE = "RECIPE/ADD_RECIPE_FAILURE";
+
+export const addRecipe = (ingredients, name, description, img_url, recipe_log_id) => async (dispatch, getState) => {
+
+  console.log ("ADD_RECIPE actions :", ingredients, name, description, img_url, recipe_log_id);
+  
+  const apiCall = createAuthorizedApiAction ({
+    path: 'recipes',
+    params: {
+      ingredients,
+      name,
+      description,
+      img_url,
+      //recipe_log_id,
+    },
+    types: [ADD_RECIPE, ADD_RECIPE_SUCCESS, ADD_RECIPE_FAILURE]
+  });
+
+  await dispatch (apiCall)
 }

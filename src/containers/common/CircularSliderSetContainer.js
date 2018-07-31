@@ -1,5 +1,6 @@
 import React from 'react';
 import CircularSliderSet from '../../components/common/CircularSliderSet'
+import { withNavigation } from 'react-navigation'
 
 import { connect } from 'react-redux';
 import { sendDeviceState } from '../../actions/device'
@@ -29,6 +30,12 @@ export class CircularSliderSetContainer extends React.Component {
     console.log("OnSendDeviceStatePress clicked with fans",fan1, fan2, fan3, fan4);
     await this.props.sendDeviceState(device_id, power, light, name, fan1, fan2, fan3, fan4)
   }
+
+  onRegisterRecipeStatePress = async (device_id) => {
+    this.props.navigation.push ("Register", {
+      device_id: device_id
+    });
+  }
   render() {
     return (
       <CircularSliderSet 
@@ -45,6 +52,7 @@ export class CircularSliderSetContainer extends React.Component {
         background3 = {this.props.background3}
         background4 = {this.props.background4}
         onSendDeviceStatePress = {this.onSendDeviceStatePress}
+        onRegisterRecipeStatePress = {this.onRegisterRecipeStatePress}
         actionOnRelease = {true}
       />
     )
@@ -58,4 +66,5 @@ CircularSliderSetContainer.defaultProps = {
   background4: getScentIcon('bergamot'),
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(CircularSliderSetContainer);
+export const withNavCircularSliderSetContainer = withNavigation (CircularSliderSetContainer);
+export default connect(mapStateToProps, mapDispatchToProps)(withNavCircularSliderSetContainer);

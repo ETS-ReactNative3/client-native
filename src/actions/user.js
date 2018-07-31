@@ -105,6 +105,23 @@ export const userinfo = () => async (dispatch) => {
   await dispatch (apiCall);
 }
 
+
+export const USERINFO_OTHERS = "USER/USERINFO_OTHERS";
+export const USERINFO_OTHERS_SUCCESS = "USER/USERINFO_OTHERS_SUCCESS";
+export const USERINFO_OTHERS_FAILURE = "USER/USERINFO_OTHERS_FAILURE";
+
+export const userinfoOthers = (user_id) => async (dispatch) => {
+  console.log ("Get Other User information");
+
+  const apiCall = createAuthorizedApiAction ({
+    types: [USERINFO_OTHERS, USERINFO_OTHERS_SUCCESS, USERINFO_OTHERS_FAILURE],
+    path: 'auth/user_info',
+    method: 'GET',
+    query: {user_id},
+  });
+  await dispatch (apiCall);
+}
+
 export const LOGINFB = "USER/LOGINFB";
 export const LOGINFB_FAILURE = "USER/LOGINFB_FAILURE";
 

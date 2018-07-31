@@ -20,7 +20,10 @@ class CircularSliderSet extends React.Component {
       ratio: [1, 1, 1, 1],
       angle: [this.props.defaultAngle1, this.props.defaultAngle2, this.props.defaultAngle3, this.props.defaultAngle4],
       maxAngle: [359.99, 359.99, 359.99, 359.99],
-      deviceId: 'arom_jaeyoung'
+      deviceId: 'arom_jaeyoung',
+
+      //deviceName: 'dd',
+
     }
   }
 
@@ -53,6 +56,10 @@ class CircularSliderSet extends React.Component {
 
     onSendDeviceState = () => {
       this.props.onSendDeviceStatePress(this.state.deviceId, true, this.state.light,'dd', this.state.angle[0], this.state.angle[1], this.state.angle[2], this.state.angle[3])
+    }
+
+    onRegisterRecipeState = () => {
+      this.props.onRegisterRecipeStatePress (this.state.deviceId)
     }
 
     return (
@@ -190,7 +197,10 @@ class CircularSliderSet extends React.Component {
         <TouchableOpacity 
           style={{alignItems:'center'}}
           onPress={
-            ()=>onSendDeviceState()
+            ()=>{ 
+              onSendDeviceState();
+              onRegisterRecipeState();
+            }
           }
         >
           <Text>향기 등록하기</Text>

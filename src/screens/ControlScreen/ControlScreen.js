@@ -1,15 +1,18 @@
 import React from 'react';
 import ControlScreen from '../../components/ControlScreen/ControlScreen'
-import { createStackNavigator } from 'react-navigation';
-import Header from '../../components/Headers/MainHeader'
+//import { createStackNavigator } from 'react-navigation';
+//import Header from '../../components/Headers/MainHeader'
 
-export class ControlScreenContainer extends React.Component {
+export default class ControlScreenContainer extends React.Component {
+  constructor (props) {
+    super(props);
+  }
 
   render() {
     return <ControlScreen />
   }
 }
-
+  /*
 const stackNav = createStackNavigator({
   Main: {
     screen: ControlScreenContainer,
@@ -21,4 +24,4 @@ const stackNav = createStackNavigator({
 })
 
 export default stackNav;
-
+*/

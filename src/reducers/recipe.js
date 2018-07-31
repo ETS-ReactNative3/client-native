@@ -4,7 +4,10 @@ import Immutable from "immutable";
 import {
   LOAD_COLLECTION,
   LOAD_COLLECTION_SUCCESS,
-  LOAD_COLLECTION_FAILURE
+  LOAD_COLLECTION_FAILURE,
+  ADD_RECIPE,
+  ADD_RECIPE_SUCCESS,
+  ADD_RECIPE_FAILURE,
 } from '../actions/recipe'
 
 const initialState = Immutable.fromJS({
@@ -75,7 +78,26 @@ export default handleActions({
       .set('error', payload)
       
     return recipeState.set('collection', collectionState)
+  },
+  [ADD_RECIPE] (recipeState, {payload}) {
+    const collectionState = recipeState.get ('collection').set ('loading', true);
+
+    return recipeState.set ('collection', collectionState);
+  },
+  [ADD_RECIPE_SUCCESS] (recipeState, {payload}) {
+    console.log ("ADD_RECIPE_SUCCESS payload: ", payload);
+    const collectionList = recipeState.getIn (['collection', 'list']);
+    collectionList.push (payload);
+
+    return recipeState.setIn (['collection', 'list'], collectionList);
+  },
+  [ADD_RECIPE_FAILURE] (recipeState, {payload}) {
+    console.log ("ADD_RECIPE_FAILURE payload: ", payload.response);
+    const collectionState = recipeState.get ('collection').set ('error', payload);
+
+    return recipeState.set ('collection', collectionState);
   }
 },
 initialState
 );
+

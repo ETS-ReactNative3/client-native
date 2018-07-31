@@ -15,6 +15,9 @@ import {
   USERINFO,
   USERINFO_SUCCESS,
   USERINFO_FAILURE,
+  USERINFO_OTHERS,
+  USERINFO_OTHERS_SUCCESS,
+  USERINFO_OTHERS_FAILURE,
   LOGINFB,
   LOGINFB_FAILURE,
   SIGNUPFB,
@@ -99,6 +102,20 @@ export default handleActions({
   },
   [USERINFO_FAILURE] (userState, {payload}) {
     let userinfo = initialState.get ('userinfo').set ('error', payload);
+    return userState.set ('userinfo', userinfo);
+  },
+  [USERINFO_OTHERS] (userState) {
+    console.log ("User Others Info loading");
+    let userinfo = userState.get ('userinfo').set ('loading', true);
+    return userState.set ('userinfo', userinfo);
+  },
+  [USERINFO_OTHERS_SUCCESS] (userState, {payload}) {
+    let userinfo = userState.get ('userinfo').set ('data', Immutable.fromJS (payload.user_info));
+    console.log ("user info others success");
+    return userState.set ('userinfo', userinfo);
+  },
+  [USERINFO_OTHERS_FAILURE] (userState, {payload}) {
+    let userinfo = userState.get ('userinfo').set ('error', payload);
     return userState.set ('userinfo', userinfo);
   },
   [LOGINFB] (userState) {

@@ -4,24 +4,52 @@ import { SearchBar } from 'react-native-elements';
 import { LinearGradient } from 'expo';
 import EStyleSheet from 'react-native-extended-stylesheet';
 import { getScentIcon } from '../../helpers/icon';
+import Immutable from 'immutable';
 
-let storebutton = '../../../assets/icon/setting-01.png';
-let sharebutton = '../../../assets/icon/setting-01.png';
+let likeYesBtn = '../../../assets/icon/CollectionScreen/Saved.png';
+let likeNoBtn = '../../../assets/icon/CollectionScreen/Notsaved.png';
+let shareBtn = '../../../assets/icon/CollectionScreen/Share.png';
+
+
+
 
 class EachCollectionScreen extends React.Component {
     constructor (props) {
         super (props);
     };
 
+  componentDidMount () {
+    const {navigation} = this.props;
+    const item = navigation.getParam ("item", "no such item");
+    const user_id = item.user_id;
+    this.props.onGetUserId (user_id);
+  }
+
+
+
   
     render() {
       let _this = this;
       const { navigation } = this.props
       const item = navigation.getParam ("item", "no such item");
+      console.log ("item is : ", item);
       const img = item.img_url;
       const ingre = item.ingredients;
       const name = item.name;
       const descr = item.description;
+      const user_id = item.user_id;
+      const like_num = item.like;
+      const like_list = Immutable.fromJS (item.like_user);
+
+      if (like_list.includes (user_id))
+      {
+        console.log ("yes!");
+      }
+      else
+      {
+        console.log ("no!");
+      }
+
       return (
         <View style = {styles.container}>
           <Image 
@@ -31,18 +59,25 @@ class EachCollectionScreen extends React.Component {
           <View>
             <Text style = {styles.collectionName}> {name} </Text>
             <View style={styles.collectionStoreandShare}>
+              {like_list.includes (user_id)&&
               <TouchableOpacity>
-                <Image source={require(storebutton)} style={styles.storeBtn}/>
+                <Image source={require(likeYesBtn)} style={styles.likeYesBtn}/>
               </TouchableOpacity>
+              }
+              {!like_list.includes (user_id)&&
               <TouchableOpacity>
-                <Image source={require(sharebutton)} style={styles.shareBtn}/>
+                <Image source={require(likeNoBtn)} style={styles.likeNoBtn}/>
+              </TouchableOpacity>
+              }
+              <TouchableOpacity>
+                <Image source={require(shareBtn)} style={styles.shareBtn}/>
               </TouchableOpacity>
             </View>
             <View style={styles.collectionUserContainer}>
               <Image
                 style={styles.collectionUserImage}
               />
-              <Text> user id </Text>
+              <Text> {this.props.user_name} </Text>
             </View>
             <LinearGradient start={{x: 0, y: 0.5}} end={{x: 1, y: 0.5}} colors={['#ff9900', '#afc74b', '#99d8e9']} locations={[0.4, 0.7, 1.0]} style={styles.collectionIngredientBar}>
               <Text>   </Text>
@@ -51,21 +86,14 @@ class EachCollectionScreen extends React.Component {
               {item.ingredients.map ((i, index) => (
                 <View key={index} style={styles.collectionEachIngredientContainer}>
                   <Image source={getScentIcon (i.scent)} style={styles.collectionIngredients}/>
-                  <Text style={styles.collectionEachIngredient}> IngreName </Text>
-                  <Text style={styles.collectionEachIngredient}> ??% </Text>
+                  <Text style={styles.collectionEachIngredient}> {Immutable.fromJS (ingre[index]).get("scent")} </Text>
+                  <Text style={styles.collectionEachIngredient}> {Immutable.fromJS (ingre[index]).get("ratio") * 100} </Text>
                 </View>
               ))}
             </View>
             <Text style={styles.collectionDescription}> {descr} </Text>
             <TouchableOpacity  style={styles.collectionConnectBtn}>
               <Text style={styles.collectionConnectText}> Connect </Text>
-            </TouchableOpacity>
-            <TouchableOpacity onPress = { () => {
-              console.log ("eachscreen this : ", img);
-              _this.props.navigation.pop ();
-              }
-            }>
-              <Text> Go Back </Text>
             </TouchableOpacity>
           </View>
         </View>
@@ -104,15 +132,20 @@ const styles = EStyleSheet.create ({
     position: "absolute",
     right: 0,
   },
-  storeBtn: {
+  likeYesBtn: {
     height: 30,
     width: 30,
-    tintColor: '#366501',
+    tintColor: 'grey',
+  },
+  likeNoBtn: {
+    height: 30,
+    width: 30,
+    tintColor: "grey",
   },
   shareBtn: {
     height: 30,
     width: 30,
-    tintColor: '#366501',
+    tintColor: 'grey',
   },
   collectionUserContainer: {
     flexDirection: 'row',
