@@ -15,14 +15,39 @@ let shareBtn = '../../../assets/icon/CollectionScreen/Share.png';
 
 class EachCollectionScreen extends React.Component {
     constructor (props) {
-        super (props);
+      super (props);
+
+      const {navigation} = this.props;
+      const item = navigation.getParam ("item", "no such item");
+      const user_id = item.user_id;
+      const device_id = navigation.getParam ("device_id", null );
+      console.log ("device_id is ", device_id);
+
+      this.state={
+        device_id: device_id,
+        user_id: user_id,
+      }
+
     };
 
   componentDidMount () {
-    const {navigation} = this.props;
-    const item = navigation.getParam ("item", "no such item");
-    const user_id = item.user_id;
-    this.props.onGetUserId (user_id);
+    this.props.onGetUserId (this.state.user_id);
+    this.props.onGetDeviceStatePress (this.state.device_id);
+
+
+    /*if (this.state.device_id != null) {
+      this.props.onGetDeviceStatePress (this.state.device_id);
+      console.log ("hello?");
+      const device_state = this.props.device_state;
+      console.log ("device_State is: ", device_state);
+        //const light;
+        //const angle=[];
+        //const power;
+    }
+
+    else {
+      console.log ("device_id is null");
+    }*/
   }
 
 
@@ -40,6 +65,33 @@ class EachCollectionScreen extends React.Component {
       const user_id = item.user_id;
       const like_num = item.like;
       const like_list = Immutable.fromJS (item.like_user);
+    
+
+      //console.log (this.props.device_state);
+      var device_state = Immutable.Map (this.props.device_state);
+      if (this.state.device_id != null)
+      {
+        console.log (device_state);
+        const cur_light = device_state.getIn ([this.state.device_id, 'state', 'reported', 'light']);
+        let cur_power = device_state.getIn ([this.state.device_id, 'state', 'reported', 'power']);
+        let angle = [0,0,0,0];
+        const device_name = device_state.getIn ([this.state.device_id, 'state', 'name']);
+
+        angle[0] = Math.round (device_state.getIn ([this.state.device_id, 'state', 'reported', 'fan1'])/100*360);
+        angle[1] = Math.round (device_state.getIn ([this.state.device_id, 'state', 'reported', 'fan2'])/100*360);
+        angle[2] = Math.round (device_state.getIn ([this.state.device_id, 'state', 'reported', 'fan3'])/100*360);
+        angle[3] = Math.round (device_state.getIn ([this.state.device_id, 'state', 'reported', 'fan4'])/100*360);
+
+        console.log ("cur device state: ", cur_light);
+        console.log (cur_power);
+        console.log (angle);
+      }
+
+
+
+
+
+      
 
       if (like_list.includes (user_id))
       {
@@ -92,9 +144,15 @@ class EachCollectionScreen extends React.Component {
               ))}
             </View>
             <Text style={styles.collectionDescription}> {descr} </Text>
-            <TouchableOpacity  style={styles.collectionConnectBtn}>
+
+            {(this.state.device_id) &&
+            <TouchableOpacity onPress={() => this.props.onSendDeviceStatePress (this.state.device_id, cur_power , cur_light, device_name, angle[0], angle[1], angle[2], angle[3])} style={styles.collectionConnectBtn}>
               <Text style={styles.collectionConnectText}> Connect </Text>
             </TouchableOpacity>
+            }
+            {(!this.state.device_id) &&
+            <Text> no connected device </Text>
+            }
           </View>
         </View>
       )

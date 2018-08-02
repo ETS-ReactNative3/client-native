@@ -89,7 +89,7 @@ class AddAlarmScreen extends React.Component {
 
 
 
-    let cur_power = device_state.getIn (this.state.device_id, "state", "reported", "power");
+    let cur_power = device_state.getIn ([this.state.device_id, "state", "reported", "power"]);
     
 
     return (

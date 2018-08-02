@@ -20,10 +20,11 @@ const mapDispatchToProps = (dispatch, props) => ({
 
 export class CollectionScreenContainer extends React.Component {
 
-  onCollectionPress = (item) => {
+  onCollectionPress = (item, device_id) => {
     console.log ("item at CollectionScreen: ", item);
     this.props.navigation.push ("EachCollection",{
-      item: item 
+      item: item,
+      device_id: device_id,
       });
     
   };

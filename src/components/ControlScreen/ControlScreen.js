@@ -1,11 +1,12 @@
 import React from 'react';
-import { Text, View, TouchableOpacity } from 'react-native';
+import { Text, Image, View, TouchableOpacity } from 'react-native';
 
 import EStyleSheet from 'react-native-extended-stylesheet';
 import { Dropdown } from 'react-native-material-dropdown';
 import CircularSliderSetContainer from '../../containers/common/CircularSliderSetContainer';
 import { sendDeviceState } from '../../actions/device';
 import { getScentIcon } from '../../helpers/icon'
+
 
 
 const aromMachine = [{

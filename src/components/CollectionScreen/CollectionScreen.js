@@ -7,7 +7,11 @@ import { getScentIcon } from '../../helpers/icon';
 
 class CollectionScreen extends React.Component {
     constructor (props) {
-        super (props);
+      super (props);
+
+      this.state={
+        device_id: "arom_jaeyoung",
+      }
     };
 
   componentDidMount() {
@@ -39,11 +43,11 @@ class CollectionScreen extends React.Component {
                 <FlatList
                     data = {list}
                     renderItem={
-                        ({item}) => (console.log ('The item is: ', item) ||
+                      ({item}) => (
                         <TouchableOpacity style = {[]} onPress={() => {
                             //console.log("_this.props: ", _this.props);
                             //console.log ("this is : ", _this);
-                            _this.props.onCollectionPress (item);
+                            _this.props.onCollectionPress (item, this.state.device_id);
                             }}>
                         <View style={styles.collectionContainer} key = {item.recipe_id}>
 
