@@ -57,6 +57,7 @@ class AlarmScreen extends React.Component {
 
   componentDidMount () {
     this.props.loadReservation ();
+    this.props.onGetUserInfo ();
   };
 
 

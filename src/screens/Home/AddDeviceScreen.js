@@ -8,7 +8,7 @@ import { userinfo } from '../../actions/user'
 import { requestSetOwner } from '../../helpers/device';
 
 const mapStateToProps = state => ({
-  userid: state.getIn(['user','userinfo','data','user_id'])
+  userid: state.getIn(['user','userinfo','user','data','user_id'])
 })
 
 const mapDispatchToProps = (dispatch, props) => ({

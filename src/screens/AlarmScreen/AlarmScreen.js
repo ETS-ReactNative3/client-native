@@ -4,6 +4,7 @@ import AlarmScreen from '../../components/AlarmScreen/AlarmScreen'
 import { createStackNavigator } from 'react-navigation';
 import Header from '../../components/Headers/MainHeader';
 import { loadReservation } from '../../actions/reservation';
+import { userinfo } from '../../actions/user';
 import _ from 'lodash';
 
 
@@ -14,7 +15,7 @@ const mapStateToProps = state => {
   loading: state.getIn(['reservation', 'reservation', 'loading']),
   list: state.getIn(['reservation', 'reservation', 'list']),
   error: state.getIn(['reservation', 'reservation', 'error']),
-  device: state.getIn(['user', 'userinfo', 'data', 'devices']),  
+  device: state.getIn(['user', 'userinfo', 'user', 'data', 'devices']),  
     /* Object {
           "arom_jaeyoung": "dd",
          },
@@ -28,6 +29,10 @@ const mapStateToProps = state => {
 const mapDispatchToProps = (dispatch, props) => ({
   async loadReservation() {
     await dispatch(loadReservation());
+  },
+
+  async onGetUserInfo () {
+    await dispatch (userinfo ());
   }
 });
 
@@ -37,7 +42,11 @@ export class AlarmScreenContainer extends React.Component {
      console.log ("hello world");
      this.props.loadReservation ();
      console.log ("finish");
-   }
+  }
+
+  onGetUserInfo = () => {
+    this.props.onGetUserInfo ();
+  }
   
    onPressAdd = () => {
      console.log ("alarm add press");
@@ -58,6 +67,7 @@ render() {
     return <AlarmScreen
       {...this.props}
       loadReservation = {this.loadReservation}
+      onGetUserInfo = {this.onGetUserInfo}
       onPressAdd = {this.onPressAdd}
       onPressMod = {this.onPressMod}
       />

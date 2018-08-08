@@ -1,10 +1,12 @@
 import React from 'react';
 import { Image, View, FlatList, Text, TextInput, TouchableOpacity } from 'react-native';
+import { SinglePickerMaterialDialog } from 'react-native-material-dialog';
 import { SearchBar } from 'react-native-elements';
 import { LinearGradient } from 'expo';
 import EStyleSheet from 'react-native-extended-stylesheet';
 import { getScentIcon } from '../../helpers/icon';
 import Immutable from 'immutable';
+import _ from 'lodash';
 
 let likeYesBtn = '../../../assets/icon/CollectionScreen/Saved.png';
 let likeNoBtn = '../../../assets/icon/CollectionScreen/Notsaved.png';
@@ -19,88 +21,92 @@ class EachCollectionScreen extends React.Component {
 
       const {navigation} = this.props;
       const item = navigation.getParam ("item", "no such item");
-      const user_id = item.user_id;
+      const uploader_id = item.user_id;
       const device_id = navigation.getParam ("device_id", null );
       console.log ("device_id is ", device_id);
+      //this.props.onGetUploaderId (uploader);
+      //const uploader_id = this.props.uploader;
+      //console.log ("uploader is ", uploader_id);
 
       this.state={
         device_id: device_id,
-        user_id: user_id,
+        device_name: "dd",
+
+        showDevice: false,
+        singleDeviceSelectedItem: null,
+
+        uploader_id : uploader_id,
       }
+
+      //const uploader_id = this.props.onGetUploaderId (uploader);
 
     };
 
   componentDidMount () {
-    this.props.onGetUserId (this.state.user_id);
+    //this.props.onGetUploaderId (uploader);
     this.props.onGetDeviceStatePress (this.state.device_id);
+    this.props.onGetUploaderId (this.state.uploader_id);
+    this.props.onGetUserInfo ();
 
-
-    /*if (this.state.device_id != null) {
-      this.props.onGetDeviceStatePress (this.state.device_id);
-      console.log ("hello?");
-      const device_state = this.props.device_state;
-      console.log ("device_State is: ", device_state);
-        //const light;
-        //const angle=[];
-        //const power;
-    }
-
-    else {
-      console.log ("device_id is null");
-    }*/
   }
 
 
 
   
-    render() {
-      let _this = this;
-      const { navigation } = this.props
-      const item = navigation.getParam ("item", "no such item");
-      console.log ("item is : ", item);
-      const img = item.img_url;
-      const ingre = item.ingredients;
-      const name = item.name;
-      const descr = item.description;
-      const user_id = item.user_id;
-      const like_num = item.like;
-      const like_list = Immutable.fromJS (item.like_user);
+  render() {
+
+    let user_device = (Immutable.Map (this.props.user)).getIn (["user", "data", "devices"]);
+
+    console.log ("this.props.user get device", user_device);
+    //user_device = user_device.toJS ();
+    const uploader_name = (Immutable.Map (this.props.user)).getIn ([this.state.uploader_id, "data", "name"]);
+
+    //this.props.onGetUserInfo ();
+    let _this = this;
+    const { navigation } = this.props
+    const item = navigation.getParam ("item", "no such item");
+    console.log ("item is : ", item);
+    const img = item.img_url;
+    const ingre = item.ingredients;
+    const name = item.name;
+    const descr = item.description;
+    const like_num = item.like;
+    const like_list = Immutable.fromJS (item.like_user);
     
+    var device_state = Immutable.Map (this.props.device_state);
 
-      //console.log (this.props.device_state);
-      var device_state = Immutable.Map (this.props.device_state);
-      if (this.state.device_id != null)
-      {
-        console.log (device_state);
-        const cur_light = device_state.getIn ([this.state.device_id, 'state', 'reported', 'light']);
-        let cur_power = device_state.getIn ([this.state.device_id, 'state', 'reported', 'power']);
-        let angle = [0,0,0,0];
-        const device_name = device_state.getIn ([this.state.device_id, 'state', 'name']);
+    const cur_light = device_state.getIn ([this.state.device_id, 'state', 'reported', 'light']);
+    let cur_power = device_state.getIn ([this.state.device_id, 'state', 'reported', 'power']);
 
-        angle[0] = Math.round (device_state.getIn ([this.state.device_id, 'state', 'reported', 'fan1'])/100*360);
-        angle[1] = Math.round (device_state.getIn ([this.state.device_id, 'state', 'reported', 'fan2'])/100*360);
-        angle[2] = Math.round (device_state.getIn ([this.state.device_id, 'state', 'reported', 'fan3'])/100*360);
-        angle[3] = Math.round (device_state.getIn ([this.state.device_id, 'state', 'reported', 'fan4'])/100*360);
+    let cur_scent = [null, null, null, null];
+    cur_scent[0] = device_state.getIn ([this.state.device_id, "state", "reported", "cart1_scent"]);
+    cur_scent[1] = device_state.getIn ([this.state.device_id, "state", "reported", "cart2_scent"]);
+    cur_scent[2] = device_state.getIn ([this.state.device_id, "state", "reported", "cart3_scent"]);
+    cur_scent[3] = device_state.getIn ([this.state.device_id, "state", "reported", "cart4_scent"]);
 
-        console.log ("cur device state: ", cur_light);
-        console.log (cur_power);
-        console.log (angle);
+
+    let angle = [0,0,0,0];
+    angle[0] = Immutable.fromJS (ingre[0]).get ("ratio") * 100;
+    angle[1] = Immutable.fromJS (ingre[1]).get ("ratio") * 100;
+    angle[2] = Immutable.fromJS (ingre[2]).get ("ratio") * 100;
+    angle[3] = Immutable.fromJS (ingre[3]).get ("ratio") * 100;
+
+
+    let ingre_ready = true;
+    for (let i=0; i<ingre.length; i++){
+      if (!cur_scent.includes (ingre[i])) {
+        ingre_ready = false;
       }
+    }
 
-
-
-
-
-      
-
-      if (like_list.includes (user_id))
-      {
-        console.log ("yes!");
-      }
-      else
-      {
-        console.log ("no!");
-      }
+    if (like_list.includes (this.state.uploader_id))
+    {
+      console.log ("yes!");
+    }
+    else
+    {
+      console.log ("no!");
+    }
 
       return (
         <View style = {styles.container}>
@@ -111,12 +117,12 @@ class EachCollectionScreen extends React.Component {
           <View>
             <Text style = {styles.collectionName}> {name} </Text>
             <View style={styles.collectionStoreandShare}>
-              {like_list.includes (user_id)&&
+              {like_list.includes (this.state.uploader_id)&&
               <TouchableOpacity>
                 <Image source={require(likeYesBtn)} style={styles.likeYesBtn}/>
               </TouchableOpacity>
               }
-              {!like_list.includes (user_id)&&
+              {!like_list.includes (this.state.uploader_id)&&
               <TouchableOpacity>
                 <Image source={require(likeNoBtn)} style={styles.likeNoBtn}/>
               </TouchableOpacity>
@@ -129,7 +135,7 @@ class EachCollectionScreen extends React.Component {
               <Image
                 style={styles.collectionUserImage}
               />
-              <Text> {this.props.user_name} </Text>
+              <Text> {uploader_name} </Text>
             </View>
             <LinearGradient start={{x: 0, y: 0.5}} end={{x: 1, y: 0.5}} colors={['#ff9900', '#afc74b', '#99d8e9']} locations={[0.4, 0.7, 1.0]} style={styles.collectionIngredientBar}>
               <Text>   </Text>
@@ -146,12 +152,34 @@ class EachCollectionScreen extends React.Component {
             <Text style={styles.collectionDescription}> {descr} </Text>
 
             {(this.state.device_id) &&
-            <TouchableOpacity onPress={() => this.props.onSendDeviceStatePress (this.state.device_id, cur_power , cur_light, device_name, angle[0], angle[1], angle[2], angle[3])} style={styles.collectionConnectBtn}>
+            <TouchableOpacity onPress={() => {this.setState ({showDevice: true})}} style={styles.collectionConnectBtn}>
               <Text style={styles.collectionConnectText}> Connect </Text>
             </TouchableOpacity>
             }
+
+            <SinglePickerMaterialDialog
+              title={'arom 기기 선택'}
+              items={ _.values(user_device).map ((row, index) => ({value: index, label: row}))}
+              visible={this.state.showDevice}
+              selectedItem={this.state.singleDeviceSelectedItem}
+              onCancel={() => this.setState ({showDevice: false})}
+              onOk={result => {
+                this.setState ({showDevice: false});
+                this.setState({singleDeviceSelectedItem: result.selectedItem});
+                this.setState({device_id: _.keys (device)[result.selectedItem.value]});
+                this.setState ({device_name: result.selectedItem.label});
+                this.props.onGetDeviceStatePress (this.state.device_id);
+                console.log ( result);
+
+                this.props.onSendDeviceStatePress (this.state.device_id, cur_power , cur_light, this.state.device_name, angle[0], angle[1], angle[2], angle[3]);
+              }}
+            />
+
             {(!this.state.device_id) &&
             <Text> no connected device </Text>
+            }
+            {(this.state.device_id && !ingre_ready) &&
+            <Text> 향기 캡슐이 필요합니다 </Text>
             }
           </View>
         </View>

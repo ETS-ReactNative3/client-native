@@ -10,7 +10,6 @@ const mapStateToProps = state => {
     //loading: state.getIn (['reservation', 'reservation', 'loading']),
     //list: state.getIn (['reservation', 'reservation', 'list']),
     //error: state.getIn (['reservation', 'reservation', 'error']),
-    //device: state.getIn (['user', 'userinfo', 'data', 'devices']),
     device_state: state.getIn (['device']),
   })
 };
