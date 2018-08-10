@@ -4,6 +4,13 @@ import { SearchBar } from 'react-native-elements';
 import EStyleSheet from 'react-native-extended-stylesheet';
 import { getScentIcon } from '../../helpers/icon';
 
+const filter = (input, list) => {
+  //console.log ("initial list : ", list);
+  console.log ("input ", input);
+  const filteredList = list.filter (x => x.name == input);
+  console.log ("filtered list : ", filteredList);
+}
+
 
 class CollectionScreen extends React.Component {
     constructor (props) {
@@ -11,13 +18,14 @@ class CollectionScreen extends React.Component {
 
       this.state={
         device_id: "arom_jaeyoung",
+        search: undefined,
       }
     };
 
   componentDidMount() {
     this.props.loadCollection();
   }
-  
+
     render() {
       if (this.props.list) {
         var list = this.props.list.toJS();
@@ -35,9 +43,8 @@ class CollectionScreen extends React.Component {
                   placeholderTextColor = '#626263'
                   icon = {{type: 'font-awesome', name: "search", color: "#626263"}}
 
-                  //searchIcon={false}
-                  //onChangeText = {(input) => this.setState({??: input})}
-                  //value={this.state.??}
+                  searchIcon={false}
+                  value={this.state.search}
                 />
 
                 <FlatList

@@ -30,6 +30,15 @@ class HomeScreen extends React.Component {
         }}>
           <Text style = {styles.submitText}>기기추가 페이지로 이동</Text>
         </TouchableOpacity>
+
+        <TouchableOpacity 
+        style={styles.submitBtn} 
+        onPress={async() => {
+          this.props.onShareDeviceScreenPress()
+        }}>
+          <Text style = {styles.submitText}>기기share 페이지로 이동</Text>
+        </TouchableOpacity>
+
         <DeviceSlide devices = {this.props.devices}/>
       </View>
     )

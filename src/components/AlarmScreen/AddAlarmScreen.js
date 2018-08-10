@@ -139,6 +139,7 @@ class AddAlarmScreen extends React.Component {
               console.log (result);
               console.log (_.keys(device)[result.selectedItem.value]);
               this.props.onGetDeviceStatePress (this.state.device_id);
+              console.log ("new device? ", this.state.device_name);
             }}
           />
           <Text> {this.state.device_name} </Text>

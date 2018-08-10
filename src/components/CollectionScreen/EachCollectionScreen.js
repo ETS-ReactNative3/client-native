@@ -47,6 +47,7 @@ class EachCollectionScreen extends React.Component {
     this.props.onGetDeviceStatePress (this.state.device_id);
     this.props.onGetUploaderId (this.state.uploader_id);
     this.props.onGetUserInfo ();
+    console.log ("successa");
 
   }
 
@@ -55,10 +56,13 @@ class EachCollectionScreen extends React.Component {
   
   render() {
 
-    let user_device = (Immutable.Map (this.props.user)).getIn (["user", "data", "devices"]);
+    //console.log ("this.props.user_Device", this.props.user_device);
+    //let test = (this.props.user_device);
+    let user_device_value = Immutable.Map (this.props.user_device).valueSeq ().toArray ();
+    let user_device_key = Immutable.Map (this.props.user_device).keySeq ().toArray ();
+    console.log (user_device_value, user_device_key);
 
-    console.log ("this.props.user get device", user_device);
-    //user_device = user_device.toJS ();
+
     const uploader_name = (Immutable.Map (this.props.user)).getIn ([this.state.uploader_id, "data", "name"]);
 
     //this.props.onGetUserInfo ();
@@ -151,7 +155,7 @@ class EachCollectionScreen extends React.Component {
             </View>
             <Text style={styles.collectionDescription}> {descr} </Text>
 
-            {(this.state.device_id) &&
+            {(this.state.device_id && ingre_ready) &&
             <TouchableOpacity onPress={() => {this.setState ({showDevice: true})}} style={styles.collectionConnectBtn}>
               <Text style={styles.collectionConnectText}> Connect </Text>
             </TouchableOpacity>
@@ -159,17 +163,16 @@ class EachCollectionScreen extends React.Component {
 
             <SinglePickerMaterialDialog
               title={'arom 기기 선택'}
-              items={ _.values(user_device).map ((row, index) => ({value: index, label: row}))}
+              items={ user_device_value.map ((row, index) => ({value: index, label: row})) }
               visible={this.state.showDevice}
               selectedItem={this.state.singleDeviceSelectedItem}
               onCancel={() => this.setState ({showDevice: false})}
               onOk={result => {
                 this.setState ({showDevice: false});
                 this.setState({singleDeviceSelectedItem: result.selectedItem});
-                this.setState({device_id: _.keys (device)[result.selectedItem.value]});
+                this.setState({device_id: user_device_key[result.selectedItem.value]});
                 this.setState ({device_name: result.selectedItem.label});
                 this.props.onGetDeviceStatePress (this.state.device_id);
-                console.log ( result);
 
                 this.props.onSendDeviceStatePress (this.state.device_id, cur_power , cur_light, this.state.device_name, angle[0], angle[1], angle[2], angle[3]);
               }}

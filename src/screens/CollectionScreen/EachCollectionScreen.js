@@ -16,6 +16,7 @@ const mapStateToProps = state => {
     //error: state.getIn(['recipe', 'collection', 'error']),
     //list: state.getIn(['recipe', 'collection', 'list']),
     user: state.getIn (['user', 'userinfo']),
+    user_device: state.getIn (['user', 'userinfo', 'user' , 'data', 'devices']),
     device_state: state.getIn (['device']),
   })
 };

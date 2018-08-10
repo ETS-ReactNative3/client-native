@@ -101,3 +101,46 @@ export const getDeviceState = (device_id) => async (dispatch, getState) => {
   })
   await dispatch (apiCall)
 }
+
+export const SHARE_DEVICE = "DEVICE/SHARE_DEVICE";
+export const SHARE_DEVICE_SUCCESS = "DEVICE/SHARE_DEVICE_SUCCESS";
+export const SHARE_DEVICE_FAILURE = "DEVICE/SHARE_DEVICE_FAILURE";
+
+export const shareDevice = (device_id) => async (dispatch, getState) => {
+  const apiCall = createAuthorizedApiAction ({
+    types: [{
+      type: SHARE_DEVICE,
+      meta: {
+        deviceId: device_id
+      }
+    }, {
+      type: SHARE_DEVICE_SUCCESS,
+      meta: {
+        deviceId: device_id
+      }
+    },{
+      type: SHARE_DEVICE_FAILURE,
+      meta: {
+        deviceId: device_id
+      }
+    }],
+    path: 'devices/' + device_id + '/share',
+  })
+  await dispatch (apiCall)
+}
+
+export const REGISTER_SHARE_DEVICE = "DEVICE/REGISTER_SHARE_DEVICE";
+export const REGISTER_SHARE_DEVICE_SUCCESS = "DEVICE/REGISTER_SHARE_DEVICE_SUCCESS";
+export const REGISTER_SHARE_DEVICE_FAILURE = "DEVICE/REGISTER_SHARE_DEVICE_FAILURE";
+
+export const registerShareDevice = (share_code) => async (dispatch, getState) => {
+  console.log ("actions ", share_code);
+  const apiCall = createAuthorizedApiAction ({
+    types: [REGISTER_SHARE_DEVICE, REGISTER_SHARE_DEVICE_SUCCESS, REGISTER_SHARE_DEVICE_FAILURE],
+    path: 'devices/register_by_sharing_code',
+    params: {
+      "sharing_code" : share_code,
+    }
+  })
+  await dispatch (apiCall)
+}
