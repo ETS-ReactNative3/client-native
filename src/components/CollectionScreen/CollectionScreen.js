@@ -4,11 +4,12 @@ import { SearchBar } from 'react-native-elements';
 import EStyleSheet from 'react-native-extended-stylesheet';
 import { getScentIcon } from '../../helpers/icon';
 
-const filter = (input, list) => {
+let filter = (input, list) => {
   //console.log ("initial list : ", list);
   console.log ("input ", input);
-  const filteredList = list.filter (x => x.name == input);
+  let filteredList = list.filter (x => x.name == input);
   console.log ("filtered list : ", filteredList);
+  return filteredList;
 }
 
 
@@ -19,18 +20,26 @@ class CollectionScreen extends React.Component {
       this.state={
         device_id: "arom_jaeyoung",
         search: undefined,
+        list: null,
       }
     };
 
-  componentDidMount() {
+  componentWillMount() {
     this.props.loadCollection();
+    //this.setState ({list: this.props.list.toJS ()});
   }
 
     render() {
       if (this.props.list) {
-        var list = this.props.list.toJS();
-        let _this = this;
-        list = list.map(x => ({...x, key: x.recipe_id}));
+        if (this.state.list == null)  {
+          this.state.list = this.props.list.toJS ();
+          this.state.list = this.state.list.map (x => ({...x, key: x.recipe_id}));
+        }
+        console.log ("this.state.list  is", this.state.list);
+        //var list = this.props.list.toJS();
+        //let _this = this;
+        //let filteredList = null;
+        //this.state.list = this.state.list.map(x => ({...x, key: x.recipe_id}));
         //list = list.filter (x => x.name == "우주코스모2");
         return (
           <View style = {styles.container}>
@@ -42,18 +51,37 @@ class CollectionScreen extends React.Component {
                   placeholder="Search"
                   placeholderTextColor = '#626263'
                   icon = {{type: 'font-awesome', name: "search", color: "#626263"}}
+                  onChangeText={input => {
+                    console.log ("inputis: ", input);
+                    this.setState (function (prevState, props) {
+                      if (input.length == 0 ) {
+                        return {list: this.props.list.toJS ()}
+                      }
+                      else {
+                        if (prevState.list.filter (x => x.name.includes (input)).length == 0) {
+                          return {list: prevState.list}
+                        }
+                        else {
+                          return {list: prevState.list.filter (x => x.name.includes (input))}
+                        }
+                      }
+                    }
+                    );
+                    this.setState ({search: input})
+                    //console.log ("this.state.list is: ", this.state.list);
+                  }}
 
                   searchIcon={false}
                   value={this.state.search}
                 />
 
                 <FlatList
-                    data = {list}
+                  data = {this.state.list}
                     renderItem={
                       ({item}) => (
                         <TouchableOpacity style = {[]} onPress={() => {
                             //console.log("_this.props: ", _this.props);
-                            //console.log ("this is : ", _this);
+                          //console.log ("this is : ", _this);
                             _this.props.onCollectionPress (item, this.state.device_id);
                             }}>
                         <View style={styles.collectionContainer} key = {item.recipe_id}>
