@@ -98,10 +98,13 @@ export default handleActions({
   [USERINFO_SUCCESS] (userState, {payload}) {
     let userinfo = initialState.get ('userinfo').set ('data', Immutable.fromJS (payload.user_info));
     console.log ("user info success");
+    // console.log("Payload is",payload.user_info);
     return userState.set ('userinfo', userinfo);
   },
   [USERINFO_FAILURE] (userState, {payload}) {
     let userinfo = initialState.get ('userinfo').set ('error', payload);
+    console.log("Userinfo load fail")
+    console.log("Payload is", payload.user_info);
     return userState.set ('userinfo', userinfo);
   },
   [USERINFO_OTHERS] (userState) {

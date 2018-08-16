@@ -1,6 +1,7 @@
 import React from 'react';
 import { Text, Image, View, TouchableOpacity } from 'react-native';
 
+import ReactInterval from 'react-interval';
 import EStyleSheet from 'react-native-extended-stylesheet';
 import { Dropdown } from 'react-native-material-dropdown';
 import CircularSliderSetContainer from '../../containers/common/CircularSliderSetContainer';
@@ -26,6 +27,8 @@ class ControlScreen extends React.Component {
   render() {
     return (
       <View style={styles.container}>
+        <ReactInterval timeout={5000} enabled={true}
+          callback={()=>this.props.getUserInfo()} />
         <View style={styles.rowView}>
           <View style={styles.machineDropdownView}>
             <Dropdown
@@ -41,7 +44,7 @@ class ControlScreen extends React.Component {
           </View>
         </View>
         <CircularSliderSetContainer
-          sliders = {4}
+          sliders = {3}
           radius = {55}
           lineWidth = {10}
           btnRadius = {20}
