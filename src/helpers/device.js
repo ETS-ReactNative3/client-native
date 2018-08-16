@@ -1,3 +1,5 @@
+import { userinfo } from '../actions/user';
+
 const host = "192.168.4.1";
 
 export async function requestDeviceId() {
@@ -121,4 +123,9 @@ export async function rpcCall(name, params={}) {
 function timeout(ms) {
   console.log("waiting for",ms,"ms");
   return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+export async function userInfo() {
+  console.log("(device helper) mapDispatchToProps userinfo()");
+  await dispatch(userinfo());
 }

@@ -14,7 +14,7 @@ class CircularSliderSet extends React.Component {
     super(props);
     this.state = {
       light: 0,
-      sliders: 4,
+      sliders: this.props.sliders,
       fixRatio: false,
       stopSlider: false,
       ratio: [1, 1, 1, 1],
@@ -84,48 +84,55 @@ class CircularSliderSet extends React.Component {
         />
         <View style={styles.rowView}>
           <View>
-            <CircularSlider
-              radius={this.props.radius}
-              lineWidth={this.props.lineWidth}
-              btnRadius={this.props.btnRadius}
-              startValue={this.state.angle[0]}
-              maxAngle={this.state.maxAngle[0]}
-              stopSlider={this.state.stopSlider}
-              onSlidingComplete = {
-                ()=> {
-                  this.props.actionOnRelease ? 
-                  onSendDeviceState() : 
-                  console.log("Do not do anything")
+            {this.state.sliders > 0 ? 
+              <CircularSlider
+                radius={this.props.radius}
+                lineWidth={this.props.lineWidth}
+                btnRadius={this.props.btnRadius}
+                startValue={this.state.angle[0]}
+                maxAngle={this.state.maxAngle[0]}
+                stopSlider={this.state.stopSlider}
+                onSlidingComplete = {
+                  ()=> {
+                    this.props.actionOnRelease ? 
+                    onSendDeviceState() : 
+                    console.log("Do not do anything")
+                  }}
+                onChangeAngle={(angle) => {
+                  this.state.fixRatio == false ? updateAngle(0, angle) : updateAngleByRatio(0, angle)
                 }}
-              onChangeAngle={(angle) => {
-                this.state.fixRatio == false ? updateAngle(0, angle) : updateAngleByRatio(0, angle)
-              }}
-              lineColor='red'
-              circleColor='#cbf442'
-              backgroundSource={this.props.background1}
-            />
+                lineColor='red'
+                circleColor='#cbf442'
+                backgroundSource={this.props.background1}
+              /> :
+              <View></View>
+            }
           </View>
           <View>
-            <CircularSlider 
-              radius={this.props.radius}
-              lineWidth={this.props.lineWidth}
-              btnRadius={this.props.btnRadius}
-              startValue={this.state.angle[1]}
-              maxAngle={this.state.maxAngle[1]}
-              stopSlider={this.state.stopSlider}
-              onSlidingComplete = {
-                ()=> {
-                  this.props.actionOnRelease ? 
-                  onSendDeviceState() : 
-                  console.log("Do not do anything")
+            {this.state.sliders > 1 ? 
+              <CircularSlider 
+                radius={this.props.radius}
+                lineWidth={this.props.lineWidth}
+                btnRadius={this.props.btnRadius}
+                startValue={this.state.angle[1]}
+                maxAngle={this.state.maxAngle[1]}
+                stopSlider={this.state.stopSlider}
+                onSlidingComplete = {
+                  ()=> {
+                    this.props.actionOnRelease ? 
+                    onSendDeviceState() : 
+                    console.log("Do not do anything")
+                  }}
+                onChangeAngle={(angle) => {
+                  this.state.fixRatio == false ? updateAngle(1, angle) : updateAngleByRatio(1, angle)
                 }}
-              onChangeAngle={(angle) => {
-                this.state.fixRatio == false ? updateAngle(1, angle) : updateAngleByRatio(1, angle)
-              }}
-              lineColor='blue'
-              circleColor='#f0bcff'
-              backgroundSource={this.props.background2}
-            />
+                lineColor='blue'
+                circleColor='#f0bcff'
+                backgroundSource={this.props.background2}
+              /> :
+              <View></View>
+            }
+
           </View>
         </View>
         <TouchableOpacity style={{alignItems: 'center'}}
@@ -150,48 +157,54 @@ class CircularSliderSet extends React.Component {
         </TouchableOpacity>
         <View style={styles.rowView}>
           <View>
-            <CircularSlider 
-              radius={this.props.radius}
-              lineWidth={this.props.lineWidth}
-              btnRadius={this.props.btnRadius}
-              startValue={this.state.angle[2]}
-              maxAngle={this.state.maxAngle[2]}
-              stopSlider={this.state.stopSlider}
-              onSlidingComplete = {
-                ()=> {
-                  this.props.actionOnRelease ? 
-                  onSendDeviceState() : 
-                  console.log("Do not do anything")
+            {this.state.sliders > 2 ?
+              <CircularSlider 
+                radius={this.props.radius}
+                lineWidth={this.props.lineWidth}
+                btnRadius={this.props.btnRadius}
+                startValue={this.state.angle[2]}
+                maxAngle={this.state.maxAngle[2]}
+                stopSlider={this.state.stopSlider}
+                onSlidingComplete = {
+                  ()=> {
+                    this.props.actionOnRelease ? 
+                    onSendDeviceState() : 
+                    console.log("Do not do anything")
+                  }}
+                onChangeAngle={(angle) => {
+                  this.state.fixRatio == false ? updateAngle(2, angle) : updateAngleByRatio(2, angle)
                 }}
-              onChangeAngle={(angle) => {
-                this.state.fixRatio == false ? updateAngle(2, angle) : updateAngleByRatio(2, angle)
-              }}
-              lineColor='black'
-              circleColor='#f0bcff'
-              backgroundSource={this.props.background3}
-            />
+                lineColor='black'
+                circleColor='#f0bcff'
+                backgroundSource={this.props.background3}
+              /> :
+              <View></View>
+            }
           </View>
           <View>
-            <CircularSlider 
-              radius={this.props.radius}
-              lineWidth={this.props.lineWidth}
-              btnRadius={this.props.btnRadius}
-              startValue={this.state.angle[3]}
-              maxAngle={this.state.maxAngle[3]}
-              stopSlider={this.state.stopSlider}
-              onSlidingComplete = {
-                ()=> {
-                  this.props.actionOnRelease ? 
-                  onSendDeviceState() : 
-                  console.log("Do not do anything")
+            {this.state.sliders > 3 ?
+              <CircularSlider 
+                radius={this.props.radius}
+                lineWidth={this.props.lineWidth}
+                btnRadius={this.props.btnRadius}
+                startValue={this.state.angle[3]}
+                maxAngle={this.state.maxAngle[3]}
+                stopSlider={this.state.stopSlider}
+                onSlidingComplete = {
+                  ()=> {
+                    this.props.actionOnRelease ? 
+                    onSendDeviceState() : 
+                    console.log("Do not do anything")
+                  }}
+                onChangeAngle={(angle) => {
+                  this.state.fixRatio == false ? updateAngle(3, angle) : updateAngleByRatio(3, angle)
                 }}
-              onChangeAngle={(angle) => {
-                this.state.fixRatio == false ? updateAngle(3, angle) : updateAngleByRatio(3, angle)
-              }}
-              lineColor='purple'
-              circleColor='#f0bcff'
-              backgroundSource={this.props.background4}
-            />
+                lineColor='purple'
+                circleColor='#f0bcff'
+                backgroundSource={this.props.background4}
+              /> :
+              <View></View>
+          }
           </View>
         </View>
         <TouchableOpacity 

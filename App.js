@@ -1,13 +1,16 @@
 import React from 'react';
 import EStyleSheet from 'react-native-extended-stylesheet';
 import reducers from './src/reducers';
+import _ from 'lodash';
+import Immutable from 'immutable'
 
 import { connect } from 'react-redux'
 import { createStackNavigator } from 'react-navigation';
 import { createStore, applyMiddleware, compose } from "redux"
 import { Provider } from "react-redux"
 import { AppLoading, Font } from 'expo';
-import { loadToken } from './src/actions/user';
+import { loadToken, userinfo } from './src/actions/user';
+import { getDeviceState } from './src/actions/device';
 
 //middlewares
 import { apiMiddleware } from 'redux-api-middleware';
@@ -61,6 +64,23 @@ const createStoreWithMiddleware = applyMiddleware(
 // create store
 const store = createStoreWithMiddleware(reducers);
 
+getDeviceStates = async() => {
+  await store.dispatch(userinfo());
+  devices = store.getState().getIn(['user','userinfo', 'data']).get('devices').keySeq().toArray();
+  jsonDevice = JSON.stringify(devices)
+  devices.map(x => {
+    console.log("asd", x);
+    getDeviceState(x);
+  }) 
+}
+
+setInterval( async() => {
+  if (_.toString(store.getState().getIn(['user', 'auth', 'token', 'auth_token'])) != '') {
+    // await store.dispatch(userinfo()
+    // console.log(devices););
+    this.getDeviceStates();
+  }
+}, 1000)
 
 export default class App extends React.Component {
   state = {
@@ -72,7 +92,7 @@ export default class App extends React.Component {
       console.log ("App.js isReady true");
       return (
         <Provider store={store}>
-          <Nav/>
+          <Nav />
         </Provider>
       );
     }

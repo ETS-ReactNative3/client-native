@@ -102,6 +102,7 @@ export default handleActions({
   [USERINFO_SUCCESS] (userState, {payload, meta}) {
     let userinfo = userTemplate.set ('data', Immutable.fromJS (payload.user_info));
     console.log ("user info success");
+
     return userState.setIn (["userinfo", meta.userId], userinfo);
   },
   [USERINFO_FAILURE] (userState, {payload, meta}) {
