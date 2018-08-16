@@ -66,7 +66,7 @@ const store = createStoreWithMiddleware(reducers);
 
 getDeviceStates = async() => {
   await store.dispatch(userinfo());
-  devices = store.getState().getIn(['user','userinfo', 'data']).get('devices').keySeq().toArray();
+  devices = store.getState().getIn(['user','userinfo','user', 'data']).get('devices').keySeq().toArray();
   jsonDevice = JSON.stringify(devices)
   devices.map(x => {
     console.log("asd", x);
