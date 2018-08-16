@@ -10,16 +10,22 @@ import {
   GET_DEVICE_STATE,
   GET_DEVICE_STATE_SUCCESS,
   GET_DEVICE_STATE_FAILURE,
+  SHARE_DEVICE,
+  SHARE_DEVICE_SUCCESS,
+  SHARE_DEVICE_FAILURE,
+  REGISTER_SHARE_DEVICE,
+  REGISTER_SHARE_DEVICE_SUCCESS,
+  REGISTER_SHARE_DEVICE_FAILURE,
 } from '../actions/device';
 
 const initialState = Immutable.fromJS({
-  devices: {
-  }
+
 });
 const deviceTemplate = Immutable.fromJS({
   loading: false,
   error: null,
-  state: undefined
+  state: undefined,
+  share: null,
 });
 
 export default handleActions({
@@ -67,6 +73,46 @@ export default handleActions({
     console.log ("Get device state failure");
     const device = deviceTemplate.set ('error', payload.response);
     return deviceState.set (meta.deviceId, device);
+  },
+  [SHARE_DEVICE] (deviceState, {payload, meta}) {
+    console.log ("SHARE_DEVICE");
+    const device = deviceTemplate.set ('loading', true);
+    return deviceState.set (meta.deviceId, device);
+  },
+  [SHARE_DEVICE_SUCCESS] (deviceState, {payload, meta}) {
+    console.log ("SHARE_DEVICE_SUCCESS");
+    const device = deviceTemplate.set ('share', payload);
+    return deviceState.set (meta.deviceId, device);
+  },
+  [SHARE_DEVICE_FAILURE] (deviceState, {payload, meta}) {
+    console.log ("SHARE_DEVICE_FAILURE");
+    console.log ("payload", payload);
+    const device = deviceTemplate.set ('error', payload);
+    return deviceState.set (meta.deviceId, device);
+  },
+  [REGISTER_SHARE_DEVICE] (deviceState, {payload}) {
+    console.log ("REGISTER_SHARE_DEVICE");
+    console.log ("payload ", payload);
+    const device = deviceTemplate.set ('loading', true);
+    return deviceState.set ("temp", device);
+  },
+  [REGISTER_SHARE_DEVICE_SUCCESS] (deviceState, {payload}) {
+    console.log ("REGISTER_SHARE_DEVICE_SUCCESS");
+    console.log ("payload ", payload);
+    const deviceId = payload.device_id;
+    deviceState.get ("temp").set ('loading', false);
+    const device = deviceTemplate.set ('state', payload);
+    return deviceState.set (deviceId, device);
+  },
+  [REGISTER_SHARE_DEVICE_FAILURE] (deviceState, {payload}) {
+    console.log ("REGISTER_SHARE_DEVICE_FAILURE");
+    deviceState.get ("temp").set ('loading', false);
+    console.log ("payload ", payload);
+    const device = deviceTemplate.set ('error', payload.message);
+    console.log ("device", device);
+    const deviceId = payload.device_id;
+    console.log ("deviceState ", deviceState);
+    return deviceState.set (deviceId, device);
   }
 },
 initialState

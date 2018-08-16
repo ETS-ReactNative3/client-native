@@ -42,11 +42,14 @@ const initialState = Immutable.fromJS({
     error: null
   },
   userinfo: {
-    loading: false,
-    error: null,
-    data: null,
   },
 });
+
+const userTemplate = Immutable.fromJS ({
+  loading: false,
+  error: null,
+  data: null,
+})
 
 export default handleActions({
   [SET_TOKEN] (userState, { payload }) {
@@ -90,36 +93,35 @@ export default handleActions({
     let signout = initialState.get('auth').set('error', payload);
     return userState.set('auth', signout);
   },
-  [USERINFO] (userState) {
-    console.log ("User Info loading");
-    let userinfo = initialState.get ('userinfo').set ('loading', true);
-    return userState.set ('userinfo', userinfo);
+  [USERINFO] (userState, {payload, meta}) {
+    console.log ("User Info loading meta is", meta);
+    let userinfo = userTemplate.set ('loading', true);
+
+    return userState.setIn (["userinfo", meta.userId], userinfo);
   },
-  [USERINFO_SUCCESS] (userState, {payload}) {
-    let userinfo = initialState.get ('userinfo').set ('data', Immutable.fromJS (payload.user_info));
+  [USERINFO_SUCCESS] (userState, {payload, meta}) {
+    let userinfo = userTemplate.set ('data', Immutable.fromJS (payload.user_info));
     console.log ("user info success");
-    // console.log("Payload is",payload.user_info);
-    return userState.set ('userinfo', userinfo);
+
+    return userState.setIn (["userinfo", meta.userId], userinfo);
   },
-  [USERINFO_FAILURE] (userState, {payload}) {
-    let userinfo = initialState.get ('userinfo').set ('error', payload);
-    console.log("Userinfo load fail")
-    console.log("Payload is", payload.user_info);
-    return userState.set ('userinfo', userinfo);
+  [USERINFO_FAILURE] (userState, {payload, meta}) {
+    let userinfo = userTemplate.set ('error', payload);
+    return userState.setIn (["userinfo", meta.userId], userinfo);
   },
-  [USERINFO_OTHERS] (userState) {
+  [USERINFO_OTHERS] (userState, {payload, meta}) {
     console.log ("User Others Info loading");
-    let userinfo = userState.get ('userinfo').set ('loading', true);
-    return userState.set ('userinfo', userinfo);
+    let userinfo = userTemplate.set ('loading', true);
+    return userState.setIn (["userinfo", meta.userId], userinfo);
   },
-  [USERINFO_OTHERS_SUCCESS] (userState, {payload}) {
-    let userinfo = userState.get ('userinfo').set ('data', Immutable.fromJS (payload.user_info));
+  [USERINFO_OTHERS_SUCCESS] (userState, {payload, meta}) {
+    let userinfo = userTemplate.set ('data', Immutable.fromJS (payload.user_info));
     console.log ("user info others success");
-    return userState.set ('userinfo', userinfo);
+    return userState.setIn (["userinfo", meta.userId], userinfo);
   },
-  [USERINFO_OTHERS_FAILURE] (userState, {payload}) {
-    let userinfo = userState.get ('userinfo').set ('error', payload);
-    return userState.set ('userinfo', userinfo);
+  [USERINFO_OTHERS_FAILURE] (userState, {payload, meta}) {
+    let userinfo = userTemplate.set ('error', payload);
+    return userState.setIn (["userinfo", meta.userId], userinfo);
   },
   [LOGINFB] (userState) {
     let auth = initialState.get('auth').set('loading', true);

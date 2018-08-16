@@ -98,7 +98,22 @@ export const userinfo = () => async (dispatch) => {
   console.log ("Get User information");
 
   const apiCall = createAuthorizedApiAction ({
-    types: [USERINFO, USERINFO_SUCCESS, USERINFO_FAILURE],
+    types: [{
+      type: USERINFO,
+      meta: {
+        userId: "user"
+      }
+    }, {
+      type: USERINFO_SUCCESS,
+      meta: {
+        userId: "user"
+      }
+    }, { 
+      type: USERINFO_FAILURE,
+      meta: {
+        userId: "user"
+      }
+    }],
     path: 'auth/user_info',
     method: 'GET',
   });
@@ -114,10 +129,25 @@ export const userinfoOthers = (user_id) => async (dispatch) => {
   console.log ("Get Other User information");
 
   const apiCall = createAuthorizedApiAction ({
-    types: [USERINFO_OTHERS, USERINFO_OTHERS_SUCCESS, USERINFO_OTHERS_FAILURE],
+    types: [{
+      type: USERINFO_OTHERS,
+      meta: {
+        userId: user_id
+      }
+    }, {
+      type: USERINFO_OTHERS_SUCCESS,
+      meta: {
+        userId: user_id
+      }
+    }, {
+      type: USERINFO_OTHERS_FAILURE,
+      meta: {
+        userId: user_id
+      }
+    }],
     path: 'auth/user_info',
     method: 'GET',
-    query: {user_id},
+    //query: {user_id},
   });
   await dispatch (apiCall);
 }

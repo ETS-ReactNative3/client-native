@@ -3,18 +3,20 @@ import { loadCollection } from '../../actions/recipe';
 import EachCollectionScreen from '../../components/CollectionScreen/EachCollectionScreen';
 import { connect } from 'react-redux';
 import { userinfoOthers } from '../../actions/user';
+import { userinfo } from '../../actions/user';
 import { getDeviceState } from '../../actions/device';
 import  { sendDeviceState } from '../../actions/device';
 
 
 
 const mapStateToProps = state => {
-  //console.log ("state is ", state);
+  console.log ("state is ", state);
   return ({
     //loading: state.getIn(['recipe', 'collection', 'loading']),
     //error: state.getIn(['recipe', 'collection', 'error']),
     //list: state.getIn(['recipe', 'collection', 'list']),
-    user_name: state.getIn (['user', 'userinfo', 'data', 'name']),
+    user: state.getIn (['user', 'userinfo']),
+    user_device: state.getIn (['user', 'userinfo', 'user' , 'data', 'devices']),
     device_state: state.getIn (['device']),
   })
 };
@@ -24,8 +26,12 @@ const mapDispatchToProps = (dispatch, props) => ({
     dispatch(loadCollection({}));
   },
 
-  async userinfo (user_id) {
+  async userinfoOthers (user_id) {
     dispatch (userinfoOthers (user_id));
+  },
+
+  async userinfo () {
+    dispatch (userinfo ());
   },
 
   async getDeviceState (device_id) {
@@ -40,11 +46,16 @@ const mapDispatchToProps = (dispatch, props) => ({
 
 export class EachCollectionScreenContainer extends React.Component {
 
-  onGetUserId = async (user_id) => {
-    await this.props.userinfo (user_id);
+  onGetUploaderId = async (user_id) => {
+    await this.props.userinfoOthers (user_id);
   }
 
-  onSendDeviceStatePress = async (device_id) => {
+  onGetUserInfo = async () => {
+    await this.props.userinfo ();
+  }
+
+  onSendDeviceStatePress = async (device_id, power, light, name, fan1, fan2, fan3, fan4) => {
+    console.log ("haha");
     await this.props.sendDeviceState (device_id, power, light, name, fan1, fan2, fan3, fan4);
   }
 
@@ -57,7 +68,8 @@ export class EachCollectionScreenContainer extends React.Component {
   render() {
     return <EachCollectionScreen
       {...this.props}
-      onGetUserId = {this.onGetUserId}
+      onGetUploaderId = {this.onGetUploaderId}
+      onGetUserInfo = {this.onGetUserInfo}
       onSendDeviceStatePress = {this.onSendDeviceStatePress}
       onGetDeviceStatePress = {this.onGetDeviceStatePress}
      />

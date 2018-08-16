@@ -3,8 +3,19 @@ import { Text, View, Dimensions, TouchableOpacity} from 'react-native';
 import PopupDialog from 'react-native-popup-dialog';
 import EStyleSheet from 'react-native-extended-stylesheet';
 
-export class AddDeviceScreen extends React.Component {
+class AddDeviceScreen extends React.Component {
+  constructor (props) {
+    super (props);
+
+  }
+
+  componentDidMount () {
+    
+  }
+
+
   render() {
+
     return ( 
       <View>
         <TouchableOpacity 
@@ -15,6 +26,8 @@ export class AddDeviceScreen extends React.Component {
         >
           <Text>새로운 아롬을 추가할래요</Text>
         </TouchableOpacity>
+        {
+        /*
         <TouchableOpacity
           onPress = {() => {
             this.PopupDialog.show()
@@ -29,6 +42,17 @@ export class AddDeviceScreen extends React.Component {
         </PopupDialog>
           <Text>아롬 공유할래요</Text>
         </TouchableOpacity>
+        */
+        }
+
+
+        <TouchableOpacity
+          onPress={ () => {this.props.onGenerateShareCode ("arom-WNcNQsMPZ4yykNvkxeiyHb") }}
+        >
+          <Text> generate share code </Text>
+        </TouchableOpacity>
+
+
         <TouchableOpacity
           onPress = {async () => {
             await this.props.getUserinfo()

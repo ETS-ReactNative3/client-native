@@ -83,6 +83,7 @@ class AddAlarmScreen extends React.Component {
     }
 
     var device = this.props.device.toJS ();
+    console.log ("device ", device);
     //var fromJS = Immutable.fromJS;
     var device_state = Immutable.Map (this.props.device_state);
     console.log ("device_State " ,device_state);
@@ -138,6 +139,7 @@ class AddAlarmScreen extends React.Component {
               console.log (result);
               console.log (_.keys(device)[result.selectedItem.value]);
               this.props.onGetDeviceStatePress (this.state.device_id);
+              console.log ("new device? ", this.state.device_name);
             }}
           />
           <Text> {this.state.device_name} </Text>

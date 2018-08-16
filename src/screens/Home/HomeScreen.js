@@ -24,10 +24,15 @@ export class HomeScreenContainer extends React.Component {
     this.props.navigation.push("AddDevice");
   }
 
+  onShareDeviceScreenPress = async () => {
+    await this.props.navigation.push ("RegisterShareDevice");
+  }
+
   render() {
     return <HomeScreen
       {...this.props}
-      onAddDeviceScreenPress = {this.onAddDeviceScreenPress} 
+      onAddDeviceScreenPress = {this.onAddDeviceScreenPress}
+      onShareDeviceScreenPress = {this.onShareDeviceScreenPress}
       todayScent = {[
         {name: "HappyOrange", icons: ["lavender", "peppermint","eucalyptus"], saves: 243, shares: 120},
         {name: "Relax Lavender", icons: ["lavendar", "grass"], saves: 250, shares: 108},
