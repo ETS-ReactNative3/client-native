@@ -106,7 +106,7 @@ export default handleActions({
   },
   [USERINFO_FAILURE] (userState, {payload, meta}) {
     let userinfo = userTemplate.set ('error', payload);
-    return userState.setIn (["userinfo", meta.uesrId], userinfo);
+    return userState.setIn (["userinfo", meta.userId], userinfo);
   },
   [USERINFO_OTHERS] (userState, {payload, meta}) {
     console.log ("User Others Info loading");
