@@ -4,9 +4,19 @@ import recipe from "./recipe";
 import device from "./device";
 import reservation from "./reservation";
 
-export default combineReducers({
+const appReducer = combineReducers({
   user,
   recipe,
   device,
   reservation
 });
+
+const rootReducer = (state, action) => {
+  if (action.type === 'USER/LOGOUT') {
+    state = undefined
+  }
+
+  return appReducer (state, action)
+};
+
+export default rootReducer;
